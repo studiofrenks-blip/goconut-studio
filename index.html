@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f1825">
+<title>GOCONUT Studio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --blue:#0077C8;--deep:#0057B7;--mint:#B9DCD2;--sage:#ADCAB8;
+  --terra:#DB7B51;--pink:#F1BDC8;--blush:#E4D5D3;
+  --bg:#080d17;--s1:#0f1825;--s2:#162035;--s3:#1e2d47;
+  --border:rgba(0,119,200,0.18);--text:#eef2ff;--muted:#7a90b0;
+  --gold:#e6c200;--green:#64c878;--purple:#c864c8;
+}
+
+/* ── RESET & BASE ── */
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+  display:flex;flex-direction:column;}
+
+/* ── API SCREEN ── */
+#apiscreen{position:fixed;inset:0;background:var(--bg);z-index:9999;
+  display:flex;align-items:center;justify-content:center;padding:20px;}
+.apic{background:var(--s1);border:1px solid var(--border);border-radius:16px;
+  padding:26px;max-width:420px;width:100%;display:flex;flex-direction:column;gap:13px;}
+.apic-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--blue),var(--deep));
+  border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.apic h2{font-size:17px;font-weight:800;color:#fff;}
+.apic .sub{font-size:11.5px;color:var(--muted);line-height:1.65;}
+.apic .sub a{color:#7ec8f5;text-decoration:none;}
+.api-steps{background:var(--s2);border:1px solid var(--border);border-radius:8px;
+  padding:11px;display:flex;flex-direction:column;gap:7px;}
+.api-step{display:flex;gap:8px;font-size:10.5px;color:var(--muted);line-height:1.5;align-items:flex-start;}
+.api-sn{background:var(--blue);color:#fff;width:17px;height:17px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;margin-top:1px;}
+.key-wrap{position:relative;}
+.key-inp{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:9px;
+  padding:11px 40px 11px 12px;font-family:'Courier New',monospace;font-size:11.5px;
+  color:var(--mint);outline:none;-webkit-appearance:none;transition:border-color .2s;}
+.key-inp:focus{border-color:var(--blue);}
+.key-inp::placeholder{color:var(--muted);font-family:'Inter',sans-serif;font-size:10.5px;}
+.key-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:15px;color:var(--muted);}
+.key-err{font-size:10.5px;color:var(--terra);display:none;text-align:center;}
+.key-err.show{display:block;}
+.key-submit{width:100%;background:var(--blue);border:none;border-radius:9px;padding:12px;
+  font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;color:#fff;cursor:pointer;}
+.key-submit:active{background:var(--deep);}
+.api-note{font-size:9.5px;color:var(--muted);text-align:center;line-height:1.5;}
+
+/* ── KEY MODAL ── */
+#keymodal{position:fixed;inset:0;background:rgba(8,13,23,.88);z-index:8888;
+  display:none;align-items:center;justify-content:center;padding:20px;}
+#keymodal.show{display:flex;}
+.km-card{background:var(--s1);border:1px solid var(--border);border-radius:13px;
+  padding:20px;max-width:360px;width:100%;display:flex;flex-direction:column;gap:11px;}
+.km-card h3{font-size:13.5px;font-weight:800;color:#fff;}
+.km-card p{font-size:11px;color:var(--muted);line-height:1.6;}
+.km-card p a{color:#7ec8f5;text-decoration:none;}
+.km-btns{display:flex;gap:7px;}
+.km-btn{flex:1;padding:9px;border-radius:7px;font-family:'Inter',sans-serif;
+  font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid var(--border);
+  background:transparent;color:var(--muted);transition:all .2s;}
+.km-btn.pri{background:var(--blue);border-color:var(--blue);color:#fff;}
+
+/* ── HEADER ── */
+.hdr{background:var(--s1);border-bottom:1px solid var(--border);
+  padding:9px 14px;display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.logo{display:flex;align-items:center;gap:8px;}
+.logo-ic{width:30px;height:30px;background:var(--blue);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.logo-tx strong{font-size:13px;font-weight:800;letter-spacing:.07em;color:#fff;display:block;line-height:1.2;}
+.logo-tx span{font-size:8px;color:var(--mint);letter-spacing:.14em;text-transform:uppercase;}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.keybadge{font-size:9px;padding:3px 9px;border-radius:8px;border:1px solid rgba(100,200,120,.3);
+  background:rgba(100,200,120,.08);color:var(--green);cursor:pointer;font-family:'Inter',sans-serif;}
+.gen-badge{font-size:9px;color:var(--muted);background:var(--s2);
+  border:1px solid var(--border);border-radius:10px;padding:2px 8px;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--sage);box-shadow:0 0 7px var(--sage);}
+
+/* ── PILLS BAR ── */
+.pills-bar{background:var(--s1);border-bottom:1px solid var(--border);
+  padding:7px 14px;display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;
+  flex-shrink:0;-webkit-overflow-scrolling:touch;position:relative;z-index:1;}
+.pills-bar::-webkit-scrollbar{display:none;}
+.spill{padding:4px 10px;border-radius:20px;font-size:9.5px;font-weight:600;
+  cursor:pointer;border:1px solid transparent;white-space:nowrap;flex-shrink:0;transition:all .2s;}
+.spill:active{transform:scale(.96);}
+.spill.selected{box-shadow:0 0 0 2px #fff;transform:translateY(-1px);}
+.sp1{background:rgba(0,119,200,.18);border-color:var(--blue);color:#7ec8f5;}
+.sp2{background:rgba(241,189,200,.18);border-color:var(--pink);color:var(--pink);}
+.sp3{background:rgba(173,202,184,.18);border-color:var(--sage);color:var(--sage);}
+.sp4{background:rgba(185,220,210,.18);border-color:var(--mint);color:var(--mint);}
+.sp5{background:rgba(219,123,81,.18);border-color:var(--terra);color:var(--terra);}
+.sp6{background:rgba(228,213,211,.15);border-color:var(--blush);color:var(--blush);}
+.sp7{background:rgba(139,160,190,.18);border-color:var(--muted);color:#b0c4de;}
+.sp8{background:rgba(255,220,80,.12);border-color:var(--gold);color:#ffe066;}
+.sp9{background:rgba(100,200,120,.15);border-color:var(--green);color:#90e8a0;}
+.sp10{background:rgba(200,100,200,.15);border-color:var(--purple);color:#e0a0e0;}
+
+/* ── PILL ACTION BAR ── */
+#pill-bar{display:none;background:var(--s3);border-bottom:1px solid var(--border);
+  padding:6px 14px;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap;}
+#pill-bar.show{display:flex;}
+#pill-label{font-size:9.5px;color:var(--mint);font-weight:700;}
+.pill-gen-btn{padding:4px 13px;border-radius:7px;background:var(--blue);border:none;
+  color:#fff;font-size:10px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.pill-clr-btn{padding:4px 9px;border-radius:7px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);font-size:10px;cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* ── OPTBARS ── */
+.optbar{background:var(--s1);border-bottom:1px solid var(--border);
+  padding:6px 14px;display:flex;align-items:center;gap:6px;
+  flex-shrink:0;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;
+  white-space:nowrap;min-height:36px;}
+.optbar::-webkit-scrollbar{height:0;display:none;}
+.optbar.no-bb{border-bottom:none;padding-bottom:3px;}
+.olbl{font-size:8.5px;color:var(--muted);font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
+.vopts{display:flex;gap:4px;flex-shrink:0;flex-wrap:nowrap;}
+.vbtn{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:500;cursor:pointer;
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  white-space:nowrap;font-family:'Inter',sans-serif;-webkit-appearance:none;
+  transition:all .2s;flex-shrink:0;}
+.vbtn:hover{border-color:var(--blue);color:#7ec8f5;}
+.vbtn.av{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;}
+.vbtn.ae{background:var(--terra);border-color:var(--terra);color:#fff;font-weight:700;}
+.vbtn.ad{background:#1a3a2a;border-color:var(--sage);color:var(--sage);font-weight:700;}
+.vbtn.ai{background:#2a1a3a;border-color:#9b8fd4;color:#c8b8f4;font-weight:700;}
+.vsep{width:1px;height:16px;background:var(--border);flex-shrink:0;margin:0 2px;}
+.tgroup{display:flex;background:var(--s2);border:1px solid var(--border);
+  border-radius:7px;overflow:hidden;flex-shrink:0;}
+.tgbtn{padding:4px 10px;font-size:10px;font-weight:600;cursor:pointer;
+  border:none;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;
+  white-space:nowrap;transition:all .2s;}
+.tgbtn.av{background:var(--blue);color:#fff;}
+.cr-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.cr-sl{-webkit-appearance:none;width:72px;height:3px;border-radius:2px;outline:none;cursor:pointer;flex-shrink:0;}
+.cr-sl::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;
+  border-radius:50%;background:#fff;border:2px solid var(--blue);cursor:pointer;}
+.cr-val{font-size:9px;color:var(--muted);min-width:65px;white-space:nowrap;}
+
+/* ── VOICE PANEL ── */
+.vp{background:var(--s2);border-bottom:1px solid var(--border);
+  overflow:hidden;flex-shrink:0;max-height:0;transition:max-height .3s ease;}
+.vp.open{max-height:140px;}
+.vp-inner{padding:8px 14px;display:flex;flex-direction:column;gap:7px;}
+.vp-row{display:flex;align-items:center;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.vp-row::-webkit-scrollbar{display:none;}
+
+/* ── MAIN LAYOUT ── */
+/* This is the critical part — a flex row taking remaining height */
+.main{display:flex;flex-direction:row;overflow:hidden;
+  flex:1 1 0px; /* grow, shrink, basis=0 so it only takes leftover space */
+  min-height:0; /* MUST have this or flex children won't shrink below content size */}
+
+/* Each tab panel */
+.pw{display:none;flex-direction:column;overflow:hidden;
+  flex:1 1 0px;min-width:0;min-height:0;}
+.pw.active{display:flex;}
+
+/* Scrollable content area inside each panel */
+.pnl{flex:1 1 0px;min-height:0;overflow-y:auto;padding:14px;
+  display:flex;flex-direction:column;gap:11px;-webkit-overflow-scrolling:touch;}
+.pnl::-webkit-scrollbar{width:3px;}
+.pnl::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* Sidebar — fixed width, never shrinks */
+.sidebar{width:200px;flex:0 0 200px;background:var(--s1);
+  border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── INPUT AREA ── */
+.inp-area{background:var(--s1);border-top:1px solid var(--border);
+  padding:10px 14px;padding-bottom:max(10px,env(safe-area-inset-bottom));
+  display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
+.inp-area textarea{flex:1;background:var(--s2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 12px;font-family:'Inter',sans-serif;font-size:13px;
+  color:var(--text);resize:none;outline:none;min-height:42px;max-height:120px;
+  line-height:1.5;-webkit-appearance:none;transition:border-color .2s;}
+.inp-area textarea:focus{border-color:var(--blue);}
+.inp-area textarea::placeholder{color:var(--muted);}
+.sbtn{width:42px;height:42px;border-radius:10px;background:var(--blue);border:none;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.sbtn:active{background:var(--deep);transform:scale(.95);}
+.sbtn:disabled{opacity:.4;cursor:not-allowed;}
+.sbtn svg{width:15px;height:15px;fill:#fff;}
+
+/* ── SIDEBAR INTERNALS ── */
+.sb-hd{padding:9px 12px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.sb-hd span{font-size:9.5px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.08em;}
+.sb-acts{display:flex;gap:4px;}
+.sb-act{padding:2px 6px;border-radius:5px;font-size:9px;cursor:pointer;
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  font-family:'Inter',sans-serif;transition:all .2s;}
+.sb-act:hover{border-color:var(--blue);color:#7ec8f5;}
+.hist-list{flex:1;overflow-y:auto;padding:6px;}
+.hist-list::-webkit-scrollbar{width:2px;}
+.hist-list::-webkit-scrollbar-thumb{background:var(--border);}
+.hist-empty{font-size:9.5px;color:var(--muted);text-align:center;padding:14px 6px;line-height:1.6;}
+.hitem{padding:7px 9px;border-radius:7px;border:1px solid var(--border);
+  background:var(--s2);margin-bottom:5px;cursor:pointer;transition:all .2s;}
+.hitem:hover{border-color:var(--blue);}
+.hi-s{font-size:8px;font-weight:700;color:var(--mint);text-transform:uppercase;margin-bottom:2px;}
+.hi-p{font-size:9.5px;color:var(--muted);line-height:1.4;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.hi-t{font-size:8px;color:rgba(122,144,176,.45);margin-top:3px;}
+
+/* ── MESSAGES ── */
+.msg{display:flex;gap:8px;animation:fu .25s ease;}
+@keyframes fu{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.msg.usr{align-self:flex-end;flex-direction:row-reverse;}
+.msg.ast{align-self:flex-start;}
+.chat-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;}
+.chat-av.ai{background:var(--blue);}.chat-av.me{background:var(--terra);}
+.bbl{padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.68;
+  max-width:min(680px,calc(100vw - 100px));}
+.msg.ast .bbl{background:var(--s2);border:1px solid var(--border);border-top-left-radius:3px;}
+.msg.usr .bbl{background:var(--blue);border-top-right-radius:3px;color:#fff;}
+.bbl h3{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--mint);margin:11px 0 5px;}
+.bbl h3:first-child{margin-top:0;}
+.bbl p{margin-bottom:7px;}.bbl p:last-child{margin-bottom:0;}
+.bbl ul{padding-left:13px;margin-bottom:7px;}.bbl li{margin-bottom:3px;}
+.bbl strong{color:#fff;font-weight:600;}
+.sb-b{border-left:3px solid var(--blue);background:rgba(0,119,200,.07);
+  border-radius:0 6px 6px 0;padding:7px 11px;margin:6px 0;font-size:12.5px;}
+.sb-b.t{border-color:var(--terra);background:rgba(219,123,81,.07);}
+.sb-b.m{border-color:var(--mint);background:rgba(185,220,210,.07);}
+.sb-b.s{border-color:var(--sage);background:rgba(173,202,184,.07);}
+.sb-b.y{border-color:var(--gold);background:rgba(230,194,0,.07);}
+.sb-b.g{border-color:var(--green);background:rgba(100,200,120,.07);}
+.sb-b.p{border-color:var(--purple);background:rgba(200,100,200,.07);}
+.sb-b.o{border-color:#ff8c00;background:rgba(255,140,0,.07);}
+
+/* TYPING */
+.typing{display:flex;align-items:center;gap:4px;padding:10px 13px;}
+.typing span{width:5px;height:5px;background:var(--muted);border-radius:50%;animation:bo 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bo{0%,60%,100%{transform:translateY(0);opacity:.4;}30%{transform:translateY(-4px);opacity:1;}}
+
+/* QA BUTTONS */
+.qa{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px;padding-left:34px;}
+.qbtn{padding:3px 9px;border-radius:12px;font-size:9.5px;font-weight:500;cursor:pointer;
+  border:1px solid var(--border);background:var(--s2);color:var(--muted);
+  font-family:'Inter',sans-serif;-webkit-appearance:none;transition:all .2s;}
+.qbtn:hover,.qbtn:active{border-color:var(--blue);color:#7ec8f5;}
+
+/* ── WELCOME ── */
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  flex:1;text-align:center;gap:10px;padding:16px;}
+.w-ic{width:46px;height:46px;background:linear-gradient(135deg,var(--blue),var(--deep));
+  border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:21px;box-shadow:0 8px 24px rgba(0,119,200,.3);}
+.welcome h2{font-size:18px;font-weight:800;}
+.welcome p{font-size:12px;color:var(--muted);max-width:420px;line-height:1.6;}
+.wgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;
+  max-width:min(760px,100%);width:100%;margin-top:4px;}
+.wcard{background:var(--s2);border:1px solid var(--border);border-radius:9px;
+  padding:10px;text-align:left;cursor:pointer;transition:all .2s;}
+.wcard:hover{border-color:var(--blue);background:rgba(0,119,200,.07);transform:translateY(-2px);}
+.wcard:active{transform:scale(.97);}
+.we{font-size:15px;margin-bottom:4px;display:block;}
+.wt{font-size:9.5px;font-weight:700;color:#fff;margin-bottom:2px;}
+.wd{font-size:8.5px;color:var(--muted);line-height:1.4;}
+
+/* ── CARDS ── */
+.sec-ttl{font-size:9px;font-weight:700;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;padding:6px 2px 3px;}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px;}
+.cgrid.g4{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}
+.ccard{background:var(--s2);border:1px solid var(--border);border-radius:10px;
+  padding:11px;cursor:pointer;transition:all .2s;}
+.ccard:hover{border-color:var(--blue);background:rgba(0,119,200,.07);transform:translateY(-2px);}
+.ccard:active{transform:scale(.97);}
+.cc-e{font-size:19px;margin-bottom:5px;display:block;}
+.cc-t{font-size:10.5px;font-weight:700;color:#fff;margin-bottom:3px;}
+.cc-d{font-size:9px;color:var(--muted);line-height:1.4;}
+.cc-b{display:inline-block;padding:2px 6px;border-radius:8px;font-size:8px;
+  font-weight:700;margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+.bn{background:rgba(185,220,210,.2);color:var(--mint);}
+.bf{background:rgba(219,123,81,.2);color:var(--terra);}
+.bi{background:rgba(0,119,200,.2);color:#7ec8f5;}
+.bfo{background:rgba(241,189,200,.2);color:var(--pink);}
+.bc{background:rgba(173,202,184,.2);color:var(--sage);}
+.bs{background:rgba(255,220,80,.2);color:var(--gold);}
+.bp{background:rgba(200,100,200,.2);color:#e0a0e0;}
+
+/* ── PRE-QUESTION ── */
+.pqbtn{padding:4px 10px;border-radius:12px;font-size:10px;font-weight:500;cursor:pointer;
+  border:1px solid var(--border);background:var(--s2);color:var(--muted);
+  transition:all .2s;font-family:'Inter',sans-serif;-webkit-appearance:none;}
+.pqbtn:hover,.pqbtn.pq-on{border-color:var(--blue);color:#7ec8f5;background:rgba(0,119,200,.12);}
+
+/* ── BRIEF ── */
+.brief-box{background:var(--s2);border:1px solid var(--border);border-radius:11px;padding:15px;}
+.brief-box h3{font-size:14px;font-weight:800;color:#fff;margin-bottom:5px;}
+.brief-box p{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:13px;}
+.dl{font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:6px;}
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:8px;}
+.dbt{border:1px solid var(--border);background:var(--s1);border-radius:8px;
+  padding:7px 3px;cursor:pointer;text-align:center;display:flex;flex-direction:column;
+  align-items:center;gap:2px;font-family:'Inter',sans-serif;-webkit-appearance:none;transition:all .2s;}
+.dbt.sel{background:rgba(0,119,200,.18);border-color:var(--blue);}
+.dbt .dn{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+.dbt.sel .dn{color:#7ec8f5;}
+.dbt .di{font-size:14px;font-weight:800;color:var(--text);}
+.dbt .dc{font-size:11px;height:13px;color:var(--mint);}
+.bqbts{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
+.bqbt{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:500;cursor:pointer;
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  font-family:'Inter',sans-serif;-webkit-appearance:none;transition:all .2s;}
+.bqbt:hover,.bqbt.bav{border-color:var(--blue);color:#7ec8f5;}
+.bqbt.bav{background:var(--blue);color:#fff;font-weight:700;}
+.brief-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:11px;}
+.bo-lbl{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.08em;white-space:nowrap;}
+.gen-bf-btn{width:100%;background:var(--blue);border:none;border-radius:9px;padding:12px;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;}
+.gen-bf-btn:active{background:var(--deep);}
+.gen-bf-btn:disabled{opacity:.4;cursor:not-allowed;}
+.sel-cnt{font-size:10px;color:var(--mint);font-weight:600;}
+.br-res{background:var(--s2);border:1px solid var(--border);border-radius:11px;
+  padding:13px;margin-top:9px;display:none;}
+.br-res.show{display:block;}
+
+/* ── GUIDE ── */
+.gsec{background:var(--s2);border:1px solid var(--border);border-radius:11px;
+  padding:13px;margin-bottom:9px;}
+.gsec h3{font-size:12.5px;font-weight:800;color:#fff;margin-bottom:9px;
+  display:flex;align-items:center;gap:7px;}
+.gsec h3 .tag{background:var(--blue);border-radius:5px;padding:1px 7px;font-size:9px;font-weight:700;}
+.gstep{display:flex;gap:9px;margin-bottom:11px;align-items:flex-start;}
+.gstep:last-child{margin-bottom:0;}
+.gsn{width:21px;height:21px;background:var(--blue);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;color:#fff;}
+.gsb{flex:1;}
+.gsb strong{font-size:12px;color:#fff;display:block;margin-bottom:3px;}
+.gsb p{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:5px;}
+.cblk{background:var(--bg);border:1px solid var(--border);border-radius:7px;
+  padding:9px 11px;font-family:'Courier New',monospace;font-size:10.5px;color:var(--mint);
+  line-height:1.7;margin-top:5px;position:relative;}
+.ccp{position:absolute;top:5px;right:7px;padding:2px 7px;border-radius:4px;font-size:9px;
+  cursor:pointer;border:1px solid var(--border);background:var(--s2);color:var(--muted);
+  font-family:'Inter',sans-serif;transition:all .2s;}
+.tipbox{background:rgba(100,200,120,.07);border:1px solid rgba(100,200,120,.2);
+  border-radius:7px;padding:8px 11px;font-size:11px;color:#90e8a0;line-height:1.6;margin-top:7px;}
+.vgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;}
+.vcard{background:var(--s1);border:1px solid var(--border);border-radius:9px;padding:11px 13px;}
+
+/* ── BOTTOM NAV ── */
+.bnav{background:var(--s1);border-top:1px solid var(--border);display:flex;
+  flex-shrink:0;padding-bottom:env(safe-area-inset-bottom);}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 4px 6px;cursor:pointer;border:none;background:transparent;color:var(--muted);
+  font-family:'Inter',sans-serif;gap:3px;border-top:2px solid transparent;transition:all .2s;}
+.bni.active,.bni:hover{color:#7ec8f5;border-top-color:var(--blue);}
+.bni .ni{font-size:19px;}.bni .nl{font-size:9px;font-weight:600;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){.sidebar{flex:0 0 170px;width:170px;}}
+@media(max-width:768px){
+  .sidebar{flex:0 0 150px;width:150px;}
+  .wgrid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:640px){
+  .sidebar{display:none;}
+  .logo-tx span{display:none;}
+  .gen-badge{display:none;}
+  .wgrid{grid-template-columns:repeat(2,1fr);max-width:100%;}
+  .bbl{max-width:calc(100vw - 70px);font-size:12.5px;}
+  .pnl{padding:10px;}
+  .inp-area{padding:8px 10px;}
+  .dgrid{grid-template-columns:repeat(4,1fr);}
+  .brief-opts{flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:420px){
+  .wgrid{grid-template-columns:repeat(2,1fr);}
+  .cgrid,.cgrid.g4{grid-template-columns:1fr;}
+  .vgrid{grid-template-columns:1fr;}
+  .dgrid{grid-template-columns:repeat(3,1fr);}
+}
+@media(min-width:1400px){
+  .sidebar{flex:0 0 230px;width:230px;}
+  .wgrid{grid-template-columns:repeat(5,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- API SCREEN -->
+<div id="apiscreen">
+  <div class="apic">
+    <div class="apic-icon">🔑</div>
+    <div><h2>Conecta tu API Key</h2>
+    <p class="sub">Necesitas una API key de Anthropic. Menos de <strong style="color:#fff;">$1 por cada 100 generaciones</strong>.</p></div>
+    <div class="api-steps">
+      <div class="api-step"><div class="api-sn">1</div><span>Ve a <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> e inicia sesión</span></div>
+      <div class="api-step"><div class="api-sn">2</div><span>Ve a <strong style="color:#fff;">Billing</strong> → añade mínimo <strong style="color:#fff;">$5</strong> en créditos</span></div>
+      <div class="api-step"><div class="api-sn">3</div><span>Ve a <strong style="color:#fff;">API Keys → Create Key</strong> y copia la key</span></div>
+      <div class="api-step"><div class="api-sn">4</div><span>Pégala abajo y pulsa <strong style="color:#fff;">Entrar al Studio</strong></span></div>
+    </div>
+    <div class="key-wrap">
+      <input class="key-inp" id="apikey-inp" type="password" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false">
+      <button class="key-eye" id="eye-btn" onclick="toggleEye()">👁️</button>
+    </div>
+    <div class="key-err" id="key-err">Pega tu API key completa</div>
+    <button class="key-submit" onclick="submitKey()">🥥 Entrar al Studio</button>
+    <p class="api-note">Tu key se guarda solo en tu navegador. Nunca se comparte con nadie.</p>
+  </div>
+</div>
+
+<!-- KEY MODAL -->
+<div id="keymodal">
+  <div class="km-card">
+    <h3>🔑 Cambiar API Key</h3>
+    <p>Pega tu nueva key de <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.</p>
+    <div class="key-wrap">
+      <input class="key-inp" id="newkey-inp" type="password" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false">
+      <button class="key-eye" id="neweye-btn" onclick="toggleNewEye()">👁️</button>
+    </div>
+    <div class="key-err" id="newkey-err">Pega tu API key completa</div>
+    <div class="km-btns">
+      <button class="km-btn" onclick="closeKeyModal()">Cancelar</button>
+      <button class="km-btn pri" onclick="submitNewKey()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="logo">
+    <div class="logo-ic">🥥</div>
+    <div class="logo-tx"><strong>GOCONUT</strong><span>TikTok AI Studio</span></div>
+  </div>
+  <div class="hdr-right">
+    <button class="keybadge" onclick="goHome()" style="background:rgba(0,119,200,.12);border-color:var(--blue);color:#7ec8f5;">🏠 Inicio</button>
+    <button class="keybadge" onclick="openKeyModal()">🔑 API Key</button>
+    <span class="gen-badge" id="gen-count">0 gen.</span>
+    <div class="sdot"></div>
+  </div>
+</div>
+
+<!-- PILLS -->
+<div class="pills-bar">
+  <span class="spill sp1" data-series="Un segundo en Madrid (City Escape): estres de ciudad vs escape a playa con Goconut" onclick="togglePill(this)">🏙️ City Escape</span>
+  <span class="spill sp2" data-series="Grupo Goconut: jovenes en Madrid descubriendo Goconut juntos" onclick="togglePill(this)">👥 Squad</span>
+  <span class="spill sp3" data-series="Y si? serie emocional y poetica: voz cinematografica sobre el escape mental de Goconut" onclick="togglePill(this)">💚 Emocional</span>
+  <span class="spill sp4" data-series="Fresh Check: lifestyle natural con Goconut integrado" onclick="togglePill(this)">✨ Fresh Check</span>
+  <span class="spill sp5" data-series="Madrid a Playa: contraste visual fuerte entre ciudad y playa" onclick="togglePill(this)">🌊 Contraste</span>
+  <span class="spill sp6" data-series="Goconut Showcase: producto como protagonista, macro shots apetecibles, proceso de preparacion" onclick="togglePill(this)">🛍️ Showcase</span>
+  <span class="spill sp7" data-series="Por que Goconut: argumentos educativos del coco vs competencia" onclick="togglePill(this)">🥊 vs Comp.</span>
+  <span class="spill sp8" data-series="Sabias que: dato impactante y sorprendente sobre el coco" onclick="togglePill(this)">💡 Sabías que</span>
+  <span class="spill sp9" data-series="Beneficios del coco: un beneficio especifico por video con base cientifica real" onclick="togglePill(this)">🌿 Beneficios</span>
+  <span class="spill sp10" data-series="Tendencias TikTok: BUSCA que esta viral AHORA y adaptalo a Goconut" onclick="togglePill(this)">🚀 Trends</span>
+</div>
+<div id="pill-bar">
+  <span id="pill-label"></span>
+  <button class="pill-gen-btn" onclick="generateFromPills()">🚀 Generar combinación</button>
+  <button class="pill-clr-btn" onclick="clearPills()">✖ Limpiar</button>
+</div>
+
+<!-- OPT ROW 1: VOZ + VOZ EN OFF + AUDIO -->
+<div class="optbar no-bb" id="bar-content-1">
+  <span class="olbl">Voz:</span>
+  <div class="vopts">
+    <button class="vbtn av" id="v1" onclick="setV('v','mujer-spain','v1',5)">🇪🇸 Mujer</button>
+    <button class="vbtn" id="v2" onclick="setV('v','hombre-spain','v2',5)">🇪🇸 Hombre</button>
+    <button class="vbtn" id="v3" onclick="setV('v','mujer-latam','v3',5)">🌎 Mujer</button>
+    <button class="vbtn" id="v4" onclick="setV('v','hombre-latam','v4',5)">🌎 Hombre</button>
+    <button class="vbtn" id="v5" onclick="setV('v','sin-voz','v5',5)">🔇</button>
+  </div>
+  <div class="vsep"></div>
+  <div class="tgroup">
+    <button class="tgbtn av" id="vo-off" onclick="setVOToggle('off')">Off</button>
+    <button class="tgbtn" id="vo-on" onclick="setVOToggle('on')">+ Voz en off</button>
+  </div>
+  <div class="vsep"></div>
+  <span class="olbl">Audio:</span>
+  <div class="tgroup">
+    <button class="tgbtn av" id="aud-none" onclick="setAudio('none')">Off</button>
+    <button class="tgbtn" id="aud-music" onclick="setAudio('music')">🎵 Música</button>
+    <button class="tgbtn" id="aud-viral" onclick="setAudio('viral')">🚀 Viral</button>
+  </div>
+  <div class="vsep"></div>
+  <span class="olbl">Dur:</span>
+  <div class="vopts">
+    <button class="vbtn ad" id="d1" onclick="setV('d','15s','d1',3)">15s</button>
+    <button class="vbtn" id="d2" onclick="setV('d','30s','d2',3)">30s</button>
+    <button class="vbtn" id="d3" onclick="setV('d','60s','d3',3)">60s</button>
+  </div>
+</div>
+<!-- OPT ROW 2: TONO + CREATIVIDAD -->
+<div class="optbar" id="bar-content-2">
+  <span class="olbl">🎭 Tono:</span>
+  <div class="cr-wrap">
+    <input type="range" class="cr-sl" id="tone" min="1" max="5" value="3"
+      style="background:linear-gradient(to right,#7a90b0,var(--terra));"
+      oninput="updateTone(this.value)">
+    <span class="cr-val" id="tone-val">⚖️ Balanceado</span>
+  </div>
+  <div class="vsep"></div>
+  <span class="olbl">🎨 Creatividad:</span>
+  <div class="cr-wrap">
+    <input type="range" class="cr-sl" id="cr" min="1" max="5" value="3"
+      style="background:linear-gradient(to right,var(--blue),var(--purple));"
+      oninput="updateCr(this.value)">
+    <span class="cr-val" id="cr-val">Balanceado</span>
+  </div>
+</div>
+<!-- VOICE PANEL -->
+<div class="vp" id="voice-panel">
+  <div class="vp-inner">
+    <div class="vp-row">
+      <span class="olbl">💫 Emoción:</span>
+      <div class="vopts">
+        <button class="vbtn ae" id="e1" onclick="setV('e','nostalgia','e1',7)">🌊 Nostalgia</button>
+        <button class="vbtn" id="e2" onclick="setV('e','humor','e2',7)">😂 Humor</button>
+        <button class="vbtn" id="e3" onclick="setV('e','inspiracion','e3',7)">✨ Inspiración</button>
+        <button class="vbtn" id="e4" onclick="setV('e','fomo','e4',7)">🔥 FOMO</button>
+        <button class="vbtn" id="e5" onclick="setV('e','calma','e5',7)">🌿 Calma</button>
+        <button class="vbtn" id="e6" onclick="setV('e','sorpresa','e6',7)">😱 Sorpresa</button>
+        <button class="vbtn" id="e7" onclick="setV('e','romantico','e7',7)">💕 Romántico</button>
+      </div>
+    </div>
+    <div class="vp-row">
+      <span class="olbl">🎚️ Intens.:</span>
+      <div class="vopts">
+        <button class="vbtn ai" id="i1" onclick="setV('i','sutil','i1',3)">Sutil</button>
+        <button class="vbtn" id="i2" onclick="setV('i','medio','i2',3)">Medio</button>
+        <button class="vbtn" id="i3" onclick="setV('i','dramatico','i3',3)">Dramático</button>
+      </div>
+      <div class="vsep"></div>
+      <span class="olbl">🎙️ Estilo:</span>
+      <div class="vopts">
+        <button class="vbtn av" id="vs1" onclick="setV('vs','asmr','vs1',4)">🎧 ASMR</button>
+        <button class="vbtn" id="vs2" onclick="setV('vs','directo','vs2',4)">💬 Directo</button>
+        <button class="vbtn" id="vs3" onclick="setV('vs','poetico','vs3',4)">🌙 Poético</button>
+        <button class="vbtn" id="vs4" onclick="setV('vs','monologo','vs4',4)">🧠 Monólogo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main">
+
+  <!-- CONTENT PANEL -->
+  <div class="pw active" id="pw-content">
+    <div class="pnl" id="pnl-content">
+      <div class="welcome" id="welcome">
+        <div class="w-ic">🥥</div>
+        <h2>GOCONUT TikTok AI Studio</h2>
+        <p>Crea contenido viral al 100% alineado con la marca. Configura las opciones arriba o elige una serie.</p>
+        <div class="wgrid">
+          <div class="wcard" onclick="askBefore('Serie Un segundo en Madrid (City Escape): estres de ciudad vs escape a playa con Goconut')"><span class="we">🏙️</span><div class="wt">City Escape</div><div class="wd">Madrid→playa. Estrés→paz.</div></div>
+          <div class="wcard" onclick="askBefore('Por que Goconut: argumentos del coco vs yogurt helado y competencia')"><span class="we">🥊</span><div class="wt">vs Competencia</div><div class="wd">Datos que convencen.</div></div>
+          <div class="wcard" onclick="askBefore('Sabias que: dato impactante sobre el coco para TikTok')"><span class="we">💡</span><div class="wt">Sabías que</div><div class="wd">Datos que la gente comparte.</div></div>
+          <div class="wcard" onclick="askBefore('Goconut Showcase: producto protagonista, macro shots apetecibles')"><span class="we">🛍️</span><div class="wt">Showcase</div><div class="wd">El producto como estrella.</div></div>
+          <div class="wcard" onclick="sq('Busca tendencias virales de TikTok AHORA MISMO esta semana y genera 2 conceptos para Goconut adaptados a esas tendencias.')"><span class="we">🚀</span><div class="wt">Trends Ahora</div><div class="wd">Viral HOY con sello Goconut.</div></div>
+          <div class="wcard" onclick="askBefore('Grupo Goconut: jovenes en Madrid descubriendo Goconut juntos')"><span class="we">👥</span><div class="wt">Grupo Goconut</div><div class="wd">Amigos, energía y FOMO.</div></div>
+          <div class="wcard" onclick="askBefore('Beneficios del coco: un beneficio especifico con base cientifica')"><span class="we">🌿</span><div class="wt">Beneficios</div><div class="wd">Razones para elegir coco.</div></div>
+          <div class="wcard" onclick="askBefore('Y si? serie emocional y poetica: voz cinematografica sobre el escape mental que da Goconut')"><span class="we">💚</span><div class="wt">¿Y si…?</div><div class="wd">Storytelling cinematográfico.</div></div>
+          <div class="wcard" onclick="sq('Genera 5 captions para Goconut TikTok: humor, dato, emocion, reto y pregunta.')"><span class="we">📱</span><div class="wt">Pack Captions</div><div class="wd">5 captions listos.</div></div>
+          <div class="wcard" onclick="showTab('brief')"><span class="we">📅</span><div class="wt">Brief Semanal</div><div class="wd">Elige los días que necesitas.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="inp-area">
+      <textarea id="inp-content" placeholder="Describe el contenido que necesitas..." rows="1"></textarea>
+      <button class="sbtn" id="sbtn-content" onclick="sendMsg('content')"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+
+  <!-- IMAGE PANEL -->
+  <div class="pw" id="pw-image">
+    <div class="optbar no-bb">
+      <span class="olbl">📐 Ratio:</span>
+      <div class="vopts">
+        <button class="vbtn av" id="r1" onclick="setV('r','9:16','r1',3)">9:16 TikTok</button>
+        <button class="vbtn" id="r2" onclick="setV('r','1:1','r2',3)">1:1 Feed</button>
+        <button class="vbtn" id="r3" onclick="setV('r','16:9','r3',3)">16:9 Banner</button>
+      </div>
+      <div class="vsep"></div>
+      <span class="olbl">🎨 Estilo:</span>
+      <div class="vopts">
+        <button class="vbtn av" id="es1" onclick="setV('es','cinematico','es1',4)">🎬 Cine</button>
+        <button class="vbtn" id="es2" onclick="setV('es','lifestyle','es2',4)">☀️ Lifestyle</button>
+        <button class="vbtn" id="es3" onclick="setV('es','producto','es3',4)">🛍️ Producto</button>
+        <button class="vbtn" id="es4" onclick="setV('es','editorial','es4',4)">✨ Editorial</button>
+      </div>
+      <div class="vsep"></div>
+      <span class="olbl">💡 Luz:</span>
+      <div class="vopts">
+        <button class="vbtn av" id="l1" onclick="setV('l','golden','l1',3)">🌅 Golden</button>
+        <button class="vbtn" id="l2" onclick="setV('l','natural','l2',3)">☁️ Natural</button>
+        <button class="vbtn" id="l3" onclick="setV('l','studio','l3',3)">💡 Studio</button>
+      </div>
+    </div>
+    <div class="pnl" id="pnl-image">
+      <p style="font-size:11px;color:var(--muted);text-align:center;padding:4px 0 6px;">Genera prompts detallados para Higgsfield. Configura ratio, estilo y luz arriba.</p>
+      <div class="sec-ttl">PRODUCTO</div>
+      <div class="cgrid g4">
+        <div class="ccard" onclick="genImg('Hero del producto Goconut: macro shot con condensacion, gota de agua cayendo, colores de marca')"><span class="cc-e">💧</span><div class="cc-t">Hero Producto</div><div class="cc-d">Macro + condensación.</div><span class="cc-b bi">Hero</span></div>
+        <div class="ccard" onclick="genImg('Flatlay overhead de productos Goconut con coco abierto, hojas de palma, flores tropicales y hielo')"><span class="cc-e">🌴</span><div class="cc-t">Flatlay Tropical</div><div class="cc-d">Vista cenital con props.</div><span class="cc-b bc">Flatlay</span></div>
+        <div class="ccard" onclick="genImg('Proceso de preparacion de Goconut: manos preparando, vertiendo, muy apetecible')"><span class="cc-e">👐</span><div class="cc-t">Proceso</div><div class="cc-d">Manos preparando en acción.</div><span class="cc-b bf">Making of</span></div>
+        <div class="ccard" onclick="genImg('Reveal dramatico de nuevo producto Goconut: fondo oscuro, luz spot en el producto')"><span class="cc-e">🚀</span><div class="cc-t">Lanzamiento</div><div class="cc-d">Reveal dramático.</div><span class="cc-b bp">Launch</span></div>
+        <div class="ccard" onclick="genImg('Menu completo de Goconut: todos los productos en imagen apetecible con colores de marca')"><span class="cc-e">🍽️</span><div class="cc-t">Menú Visual</div><div class="cc-d">Todos los productos.</div><span class="cc-b bf">Menú</span></div>
+      </div>
+      <div class="sec-ttl">LIFESTYLE</div>
+      <div class="cgrid g4">
+        <div class="ccard" onclick="genImg('Lifestyle: persona joven en Madrid (Gran Via, Retiro o Malasana) tomando Goconut, luz natural, golden hour, autentico')"><span class="cc-e">🏙️</span><div class="cc-t">Lifestyle Madrid</div><div class="cc-d">Persona real en Madrid.</div><span class="cc-b bi">Lifestyle</span></div>
+        <div class="ccard" onclick="genImg('Playa y relax: mano con Goconut, mar azul, palmeras, golden hour, menta #B9DCD2')"><span class="cc-e">🏖️</span><div class="cc-t">Playa & Relax</div><div class="cc-d">Goconut en mano, playa al fondo.</div><span class="cc-b bc">Escape</span></div>
+        <div class="ccard" onclick="genImg('Grupo de jovenes disfrutando Goconut en terraza de Madrid, energia social, risas, luz tarde')"><span class="cc-e">👥</span><div class="cc-t">Grupo Social</div><div class="cc-d">Amigos en terraza de Madrid.</div><span class="cc-b bfo">Squad</span></div>
+        <div class="ccard" onclick="genImg('Post-deporte o yoga en parque de Madrid con Goconut, bienestar real, outfit deportivo')"><span class="cc-e">🏃</span><div class="cc-t">Sport & Salud</div><div class="cc-d">Goconut como la elección sana.</div><span class="cc-b bs">Salud</span></div>
+      </div>
+      <div class="sec-ttl">REDES & EDUCATIVO</div>
+      <div class="cgrid g4">
+        <div class="ccard" onclick="genImg('Stories 9:16 con espacio para texto, producto Goconut con fondo de colores de marca')"><span class="cc-e">📱</span><div class="cc-t">Stories Template</div><div class="cc-d">9:16 con espacio para texto.</div><span class="cc-b bi">Stories</span></div>
+        <div class="ccard" onclick="genImg('Thumbnail TikTok muy clickeable: momento de impacto, producto visible, expresion genuina')"><span class="cc-e">🎯</span><div class="cc-t">Thumbnail TikTok</div><div class="cc-d">Muy clickeable y llamativo.</div><span class="cc-b bfo">Thumb</span></div>
+        <div class="ccard" onclick="genImg('Contraste: ciudad gris estresante vs Goconut y playa, split visual potente')"><span class="cc-e">⚡</span><div class="cc-t">Contraste</div><div class="cc-d">Estrés vs paz. El contraste vende.</div><span class="cc-b bf">Contraste</span></div>
+        <div class="ccard" onclick="genImg('Infografia visual 9:16: 3 beneficios principales del coco con iconos y texto, colores Goconut')"><span class="cc-e">📊</span><div class="cc-t">Infografía</div><div class="cc-d">3 beneficios en visual limpio.</div><span class="cc-b bs">Educativo</span></div>
+        <div class="ccard" onclick="genImg('Comparativa Goconut vs yogurt helado, diseno limpio, datos claros, colores de marca')"><span class="cc-e">🥊</span><div class="cc-t">Comparativa</div><div class="cc-d">Goconut vs competencia.</div><span class="cc-b bn">vs</span></div>
+        <div class="ccard" onclick="genImg('Pack de 4 imagenes de producto Goconut para feed de Instagram con cuadricula coherente')"><span class="cc-e">🎨</span><div class="cc-t">Pack Feed</div><div class="cc-d">4 imágenes para cuadrícula.</div><span class="cc-b bp">Pack</span></div>
+      </div>
+    </div>
+    <div class="inp-area">
+      <textarea id="inp-image" placeholder="Describe la imagen que necesitas..." rows="1"></textarea>
+      <button class="sbtn" onclick="sendMsg('image')"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+
+  <!-- BRIEF PANEL -->
+  <div class="pw" id="pw-brief">
+    <div class="pnl" id="pnl-brief">
+      <div class="brief-box">
+        <h3>🗓️ Brief de Contenido</h3>
+        <p>Selecciona los días que necesitas. Se genera un concepto completo para cada día con series y objetivos distintos.</p>
+        <div class="dl">¿Qué días? <span class="sel-cnt" id="sel-cnt">(0 días)</span></div>
+        <div class="dgrid">
+          <button class="dbt" data-day="Lunes" onclick="toggleDay(this)"><div class="dn">Lun</div><div class="di">L</div><div class="dc"></div></button>
+          <button class="dbt" data-day="Martes" onclick="toggleDay(this)"><div class="dn">Mar</div><div class="di">M</div><div class="dc"></div></button>
+          <button class="dbt" data-day="Miércoles" onclick="toggleDay(this)"><div class="dn">Mié</div><div class="di">X</div><div class="dc"></div></button>
+          <button class="dbt" data-day="Jueves" onclick="toggleDay(this)"><div class="dn">Jue</div><div class="di">J</div><div class="dc"></div></button>
+          <button class="dbt" data-day="Viernes" onclick="toggleDay(this)"><div class="dn">Vie</div><div class="di">V</div><div class="dc"></div></button>
+          <button class="dbt" data-day="Sábado" onclick="toggleDay(this)"><div class="dn">Sáb</div><div class="di">S</div><div class="dc"></div></button>
+          <button class="dbt" data-day="Domingo" onclick="toggleDay(this)"><div class="dn">Dom</div><div class="di">D</div><div class="dc"></div></button>
+        </div>
+        <div class="bqbts">
+          <button class="bqbt bav" onclick="selAllDays()">✅ Todos</button>
+          <button class="bqbt" onclick="clearDays()">✖ Limpiar</button>
+          <button class="bqbt" onclick="selWeekdays()">📅 L-V</button>
+          <button class="bqbt" onclick="selWeekend()">🎉 S-D</button>
+        </div>
+        <div class="brief-opts">
+          <span class="bo-lbl">🎙️ Voz:</span>
+          <div class="bqbts" style="margin-bottom:0">
+            <button class="bqbt bav" id="bv1" onclick="setBV('mujer-spain','bv1')">🇪🇸 Mujer</button>
+            <button class="bqbt" id="bv2" onclick="setBV('hombre-spain','bv2')">🇪🇸 Hombre</button>
+            <button class="bqbt" id="bv3" onclick="setBV('mujer-latam','bv3')">🌎 Mujer</button>
+            <button class="bqbt" id="bv4" onclick="setBV('hombre-latam','bv4')">🌎 Hombre</button>
+          </div>
+          <span class="bo-lbl" style="margin-left:4px">🎯 Enfoque:</span>
+          <div class="bqbts" style="margin-bottom:0">
+            <button class="bqbt bav" id="bf1" onclick="setBF('variado','bf1')">🌈 Variado</button>
+            <button class="bqbt" id="bf2" onclick="setBF('viral','bf2')">🚀 Máx. Viral</button>
+            <button class="bqbt" id="bf3" onclick="setBF('educativo','bf3')">💡 Educativo</button>
+            <button class="bqbt" id="bf4" onclick="setBF('producto','bf4')">🛍️ Producto</button>
+          </div>
+        </div>
+        <button class="gen-bf-btn" id="brief-btn" onclick="genBrief()" disabled>
+          🗓️ <span id="brief-btn-txt">Selecciona al menos 1 día</span>
+        </button>
+      </div>
+      <div class="br-res" id="br-res"></div>
+    </div>
+  </div>
+
+  <!-- GUIDE PANEL -->
+  <div class="pw" id="pw-guide">
+    <div class="pnl" id="pnl-guide">
+
+      <div class="gsec">
+        <h3>🎬 Tipos de Video <span class="tag">Qué genera cada serie</span></h3>
+        <p style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:11px;">Cada serie tiene un objetivo distinto. Selecciona varias pills a la vez para fusionarlas.</p>
+        <div class="vgrid">
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">🏙️</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">City Escape</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Estrés de Madrid como gancho. Metro, calor, caos — y de repente Goconut te transporta a una playa. La fórmula más viral de la marca.</div><div style="font-size:9px;color:#7ec8f5;font-weight:600;margin-top:5px">MEJOR PARA: alcance nuevo, primera impresión</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">👥</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Grupo Goconut</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Amigos jóvenes en Madrid descubriendo Goconut juntos. Energía social, risas, FOMO real. El espectador quiere estar ahí.</div><div style="font-size:9px;color:var(--pink);font-weight:600;margin-top:5px">MEJOR PARA: FOMO, comunidad, target 18-26</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">💚</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">¿Y si…?</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Voz en off poética con pregunta existencial. "¿Y si cada vez que abrías un Goconut llegabas al mar?" Cinematográfico y sensorial.</div><div style="font-size:9px;color:var(--sage);font-weight:600;margin-top:5px">MEJOR PARA: engagement emocional, guardados</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">✨</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Fresh Check</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Goconut como parte del día a día. Deporte, rutina de mañana, tarde en el parque. Sin drama, el producto integrado con naturalidad.</div><div style="font-size:9px;color:var(--mint);font-weight:600;margin-top:5px">MEJOR PARA: reconocimiento de marca, lifestyle</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">🌊</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Madrid→Playa</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Contraste visual puro. Pantalla dividida, ola que cubre, match cuts. Sin diálogo — la imagen lo dice todo. Muy rápido e impactante.</div><div style="font-size:9px;color:var(--terra);font-weight:600;margin-top:5px">MEJOR PARA: retención visual, repost</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">🛍️</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Goconut Showcase</div><div style="font-size:10px;color:var(--muted);line-height:1.5">El producto como protagonista. Macro de condensación, proceso de preparación, nuevo ítem del menú. Apetecible, con ASMR opcional.</div><div style="font-size:9px;color:var(--blush);font-weight:600;margin-top:5px">MEJOR PARA: conversión, lanzamientos</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">🥊</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Por qué Goconut</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Compara Goconut con yogurt helado y refrescos usando datos reales. Nunca agresivo. Simplemente explica por qué el coco gana.</div><div style="font-size:9px;color:#b0c4de;font-weight:600;margin-top:5px">MEJOR PARA: confianza, decisión de compra</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">💡</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Sabías que</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Un dato sorprendente sobre el coco por video. Empieza con el dato sin intro y termina conectándolo con Goconut. La gente lo guarda y comparte.</div><div style="font-size:9px;color:#ffe066;font-weight:600;margin-top:5px">MEJOR PARA: guardados, compartidos</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">🌿</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Beneficios del Coco</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Un beneficio por video con base científica real. Hidratación, piel, energía, digestión. Tono de revelación, no de lección.</div><div style="font-size:9px;color:var(--green);font-weight:600;margin-top:5px">MEJOR PARA: target salud, credibilidad</div></div>
+          <div class="vcard"><div style="font-size:14px;margin-bottom:4px">🚀</div><div style="font-size:11px;font-weight:800;color:#fff;margin-bottom:4px">Tendencias TikTok</div><div style="font-size:10px;color:var(--muted);line-height:1.5">Busca en tiempo real qué está viral en TikTok AHORA y adapta ese formato al universo Goconut. Cada vez es diferente.</div><div style="font-size:9px;color:#e0a0e0;font-weight:600;margin-top:5px">MEJOR PARA: viralidad inmediata</div></div>
+        </div>
+        <div class="tipbox" style="margin-top:10px">💡 <strong style="color:#fff">Tip:</strong> Combina pills — <strong style="color:#fff">City Escape + Sabías que</strong> para un video donde el dato científico ES el gancho del escape. O <strong style="color:#fff">Showcase + Trends</strong> para mostrar un producto con el formato viral del momento.</div>
+      </div>
+
+      <div class="gsec">
+        <h3>⚡ Flujo: Studio → Claude Code → Higgsfield <span class="tag">Flujo</span></h3>
+        <div class="gstep"><div class="gsn">1</div><div class="gsb"><strong>Genera el concepto aquí</strong><p>Elige serie, voz y audio. Recibirás el bloque 🤖 Prompt para Higgsfield listo para copiar.</p></div></div>
+        <div class="gstep"><div class="gsn">2</div><div class="gsb"><strong>Copia el prompt</strong><p>Toca "📋 Copiar" bajo la respuesta.</p></div></div>
+        <div class="gstep"><div class="gsn">3</div><div class="gsb"><strong>Pégalo en Claude Code</strong>
+          <div class="cblk">Genera este video en Higgsfield 9:16:<br>[pega aquí el prompt]<button class="ccp" onclick="copyCode(this,'Genera este video en Higgsfield 9:16:\n[pega aquí el prompt]')">Copiar</button></div>
+        </div></div>
+        <div class="gstep"><div class="gsn">4</div><div class="gsb"><strong>Instalar Claude Code + Higgsfield</strong>
+          <div class="cblk">npm install -g @anthropic-ai/claude-code<br>cd ~/goconut && claude<br>claude mcp add --transport http higgsfield https://mcp.higgsfield.ai/mcp<button class="ccp" onclick="copyCode(this,'npm install -g @anthropic-ai/claude-code\ncd ~/goconut && claude\nclaude mcp add --transport http higgsfield https://mcp.higgsfield.ai/mcp')">Copiar</button></div>
+        </div></div>
+      </div>
+
+      <div class="gsec">
+        <h3>📱 Usar desde el móvil <span class="tag">Mobile</span></h3>
+        <div class="gstep"><div class="gsn">A</div><div class="gsb"><strong>GitHub Pages (gratis)</strong><p>Sube el HTML a GitHub, activa Pages. URL permanente que funciona como app. En iPhone: Compartir → Añadir a pantalla de inicio.</p></div></div>
+        <div class="gstep"><div class="gsn">B</div><div class="gsb"><strong>Netlify Drop (30 segundos)</strong><p>Arrastra el HTML a netlify.com/drop. URL lista al instante. Sin cuenta necesaria.</p></div></div>
+        <div class="gstep"><div class="gsn">C</div><div class="gsb"><strong>iCloud Drive</strong><p>Guarda el HTML en iCloud Drive → app Archivos → Abrir en Safari → Añadir a pantalla de inicio.</p></div></div>
+        <div class="tipbox">💡 El Studio ya está optimizado para móvil: navegación inferior con pestañas, botones táctiles y scroll horizontal en las opciones.</div>
+      </div>
+
+      <div class="gsec">
+        <h3>🎵 Música y audios virales <span class="tag">Audio</span></h3>
+        <div class="gstep"><div class="gsn">1</div><div class="gsb"><strong>El Studio te da el nombre del audio</strong><p>Activa "Viral TikTok" en las opciones y Claude busca los audios trending de esta semana. Te da el nombre exacto para que lo busques en TikTok.</p></div></div>
+        <div class="gstep"><div class="gsn">2</div><div class="gsb"><strong>Cómo añadirlo al video</strong>
+          <div class="cblk">Opción A: Sube el video a TikTok → busca el audio por nombre → añádelo.<br>Opción B: Descárgalo con SnapTik → ponlo en CapCut → exporta.<br>Opción C: Graba en TikTok directamente usando ese sonido.</div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-hd">
+      <span>📋 Historial</span>
+      <div class="sb-acts">
+        <button class="sb-act" onclick="exportAll()">⬇️</button>
+        <button class="sb-act" onclick="clearHist()">🗑️</button>
+      </div>
+    </div>
+    <div class="hist-list" id="hist-list">
+      <p class="hist-empty">Las generaciones aparecerán aquí.</p>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <button class="bni active" id="bn-content" onclick="showTab('content')"><span class="ni">🎬</span><span class="nl">Contenido</span></button>
+  <button class="bni" id="bn-image" onclick="showTab('image')"><span class="ni">🖼️</span><span class="nl">Imágenes</span></button>
+  <button class="bni" id="bn-brief" onclick="showTab('brief')"><span class="ni">🗓️</span><span class="nl">Brief</span></button>
+  <button class="bni" id="bn-guide" onclick="showTab('guide')"><span class="ni">📖</span><span class="nl">Guía</span></button>
+</div>
+
+<script>
+// ── STATE ──
+const S={
+  v:'mujer-spain',e:'nostalgia',i:'sutil',vs:'directo',
+  d:'15s',r:'9:16',es:'cinematico',l:'golden',
+  voOn:false,audMode:'none',creativity:3,tone:3,
+  briefVoice:'mujer-spain',briefFocus:'variado'
+};
+const crLbls={1:'Conservador',2:'Seguro',3:'Balanceado',4:'Creativo',5:'Experimental'};
+const toneLbls={1:'🎭 Serio',2:'🎬 Cinematic',3:'⚖️ Balanceado',4:'😄 Divertido',5:'😂 Muy divertido'};
+const toneCtx={
+  1:'TONO: MUY SERIO Y CINEMATOGRAFICO. Sin humor. Planos lentos, musica instrumental, drama maximo.',
+  2:'TONO: CINEMATOGRAFICO. Drama visual con momentos de respiro.',
+  3:'TONO: BALANCEADO. Combina momento divertido con remate emocional.',
+  4:'TONO: DIVERTIDO. Situaciones comicas exageradas, reacciones autenticas, textos con humor. El humor ES la conexion.',
+  5:'TONO: MUY DIVERTIDO. Puro humor. Exageracion total, situaciones absurdas pero reconocibles, textos que hacen reir.'
+};
+
+let selectedPills=[],selDays=[],histItems=[],genCount=0;
+let isLoading=false,curTab='content';
+const msgs={content:[],image:[]};
+const pqA={target:'',trans:'',prod:''};
+
+// ── TAB SWITCHING ──
+function showTab(t){
+  curTab=t;
+  ['content','image','brief','guide'].forEach(tab=>{
+    document.getElementById('pw-'+tab).classList.toggle('active',tab===t);
+    document.getElementById('bn-'+tab).classList.toggle('active',tab===t);
+  });
+  // Show/hide content-specific optbars
+  const c=t==='content';
+  ['bar-content-1','bar-content-2','voice-panel'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.style.display='';
+  });
+  if(t!=='content'){
+    document.getElementById('bar-content-1').style.display='none';
+    document.getElementById('bar-content-2').style.display='none';
+    document.getElementById('voice-panel').style.display='none';
+  } else {
+    document.getElementById('bar-content-1').style.display='flex';
+    document.getElementById('bar-content-2').style.display='flex';
+    if(S.voOn)document.getElementById('voice-panel').classList.add('open');
+  }
+  const sb=document.querySelector('.sidebar');
+  if(sb)sb.style.display=(t==='guide'||t==='brief')?'none':'flex';
+}
+
+// ── SETTERS ──
+function setV(key,val,id,count){
+  S[key]=val;
+  const pfx=id.replace(/\d+$/,'');
+  for(let i=1;i<=count;i++){const b=document.getElementById(pfx+i);if(b)b.classList.remove('av','ae','ad','ai');}
+  const cls={v:'av',e:'ae',d:'ad',i:'ai',vs:'av',r:'av',es:'av',l:'av'}[key]||'av';
+  const el=document.getElementById(id);if(el)el.classList.add(cls);
+}
+function setVOToggle(v){
+  S.voOn=v==='on';
+  document.getElementById('vo-off').classList.toggle('av',v==='off');
+  document.getElementById('vo-on').classList.toggle('av',v==='on');
+  const vp=document.getElementById('voice-panel');
+  vp.classList.toggle('open',S.voOn);
+}
+function setAudio(m){
+  S.audMode=m;
+  ['none','music','viral'].forEach(k=>document.getElementById('aud-'+k).classList.toggle('av',k===m));
+}
+function updateTone(v){S.tone=parseInt(v);document.getElementById('tone-val').textContent=toneLbls[v];}
+function updateCr(v){S.creativity=parseInt(v);document.getElementById('cr-val').textContent=crLbls[v];}
+function setBV(v,id){S.briefVoice=v;['bv1','bv2','bv3','bv4'].forEach(i=>{const b=document.getElementById(i);if(b)b.classList.remove('bav');});const el=document.getElementById(id);if(el)el.classList.add('bav');}
+function setBF(v,id){S.briefFocus=v;['bf1','bf2','bf3','bf4'].forEach(i=>{const b=document.getElementById(i);if(b)b.classList.remove('bav');});const el=document.getElementById(id);if(el)el.classList.add('bav');}
+
+// ── PILLS ──
+function togglePill(el){
+  const s=el.dataset.series;
+  if(selectedPills.includes(s)){selectedPills=selectedPills.filter(x=>x!==s);el.classList.remove('selected');}
+  else{selectedPills.push(s);el.classList.add('selected');}
+  updatePillBar();
+}
+function updatePillBar(){
+  const bar=document.getElementById('pill-bar');
+  const lbl=document.getElementById('pill-label');
+  if(!selectedPills.length){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  const names=Array.from(document.querySelectorAll('.spill.selected')).map(n=>n.textContent.trim());
+  lbl.textContent=selectedPills.length===1?'Serie: '+names[0]:'Fusionando: '+names.join(' + ');
+}
+function clearPills(){
+  selectedPills=[];
+  document.querySelectorAll('.spill').forEach(p=>p.classList.remove('selected'));
+  updatePillBar();
+}
+function generateFromPills(){
+  if(!selectedPills.length)return;
+  const combined=selectedPills.length===1
+    ?'Serie elegida: '+selectedPills[0]
+    :'Fusiona estas series en un solo concepto: '+selectedPills.join(' COMBINADO CON ');
+  askBefore(combined);clearPills();
+}
+
+// ── DAYS ──
+function toggleDay(b){
+  const d=b.dataset.day;
+  if(selDays.includes(d)){selDays=selDays.filter(x=>x!==d);b.classList.remove('sel');b.querySelector('.dc').textContent='';}
+  else{selDays.push(d);b.classList.add('sel');b.querySelector('.dc').textContent='✓';}
+  updateBriefBtn();
+}
+function selAllDays(){document.querySelectorAll('.dbt').forEach(b=>{if(!b.classList.contains('sel')){b.classList.add('sel');b.querySelector('.dc').textContent='✓';selDays.push(b.dataset.day);}});updateBriefBtn();}
+function clearDays(){selDays=[];document.querySelectorAll('.dbt').forEach(b=>{b.classList.remove('sel');b.querySelector('.dc').textContent='';});updateBriefBtn();}
+function selWeekdays(){clearDays();document.querySelectorAll('.dbt').forEach(b=>{if(['Lunes','Martes','Miércoles','Jueves','Viernes'].includes(b.dataset.day)){b.classList.add('sel');b.querySelector('.dc').textContent='✓';selDays.push(b.dataset.day);}});updateBriefBtn();}
+function selWeekend(){clearDays();document.querySelectorAll('.dbt').forEach(b=>{if(['Sábado','Domingo'].includes(b.dataset.day)){b.classList.add('sel');b.querySelector('.dc').textContent='✓';selDays.push(b.dataset.day);}});updateBriefBtn();}
+function updateBriefBtn(){
+  const n=selDays.length;
+  document.getElementById('sel-cnt').textContent='('+n+' día'+(n!==1?'s':'')+')';
+  const btn=document.getElementById('brief-btn');
+  btn.disabled=n===0;
+  document.getElementById('brief-btn-txt').textContent=n===0?'Selecciona al menos 1 día':'Generar brief — '+n+' día'+(n!==1?'s':'');
+}
+
+// ── SYSTEM PROMPTS ──
+const BASE_SYS=`Eres el director creativo de GOCONUT para TikTok. Acceso a busqueda web para tendencias en tiempo real. NUNCA publicidad tradicional — siempre sentimientos, experiencias y datos que impactan.
+
+GOCONUT: tagline "Fresh Up Your Day" | Web: goconut.es | Instagram: @goconut_es
+Colores: Azul#0077C8, Deep Blue#0057B7, Menta#B9DCD2, Salvia#ADCAB8, Terracota#DB7B51, Blush#E4D5D3, Rosa#F1BDC8
+Logos: horizontal/vertical/monograma en azul, blanco y cream — siempre sin fondo
+Estilo visual real: fondos neutros claros o madera natural, producto centrado, luz natural lateral o cenital, texto minimal en mayusculas bold
+
+MENU REAL:
+COCONUT SHAKES: Original, Mango, Maracuya(NEW), Oreo, Matcha, Acai, Cafe bombon, Limonada de coco — P:3.95 M:4.50 G:4.95
+COCADAS: Tradicional, Maracuya(NEW), Pina Cocada — mismos precios
+GELATO COCO SHAKE: Grande con Gelato 2 toppings 5.50
+COCO GELATO & COCOGURT: P:2.95 M:3.75 | Coco Fruit 4.95 | COCO BOWLS 4.50 | COCO CAKE: bizcocho+chocolate+Coco Gelato
+TOPPINGS (+0.60): Maracuya, Choc.Blanco, Dulce de Leche, Lacasitos, Brownie, Kinder, Oreo, Lotus, Pistacho, Coco rallado, Almendra, Frutos rojos, Choc.negro vegan, Crunch
+
+VS COMPETENCIA:
+vs Yogurt helado(Llao Llao/Yogurfrut): azucar anadida+colorantes+lactosa vs coco 100%natural+libre lactosa+electrolitos+MCT+sin picos glucosa
+vs Refrescos: azucar refinada vs dulzor natural | vs Energeticas: estimulantes artificiales vs electrolitos naturales
+
+DATOS COCO: pH identico a la sangre(7.4)|Cruz Roja uso como suero emergencia|No es nuez es drupa|Kalpa vriksha=arbol que da todo|75 cocos/palmera/80anos|Mas potasio que platano(600mg)|Acido laurico como leche materna|Hidrata 5x mas que agua|Madrid=clima mas seco Europa|MCT=combustible cerebro sin picos glucosa
+
+ESCAPE MODE: HOOK(0-2s)para el scroll → TENSION(2-8s)estres Madrid → TRANSICION(1s)beben Goconut → ESCAPE(8-20s)playa/paz → RETORNO(20-25s)sonrisa → CTA Fresh Up Your Day
+
+SERIES: 1.Un segundo en Madrid 2.Grupo Goconut 3.Y si? 4.Fresh Check 5.Madrid-Playa 6.Goconut Showcase 7.Por que Goconut 8.Sabias que 9.Beneficios del coco 10.Tendencias(BUSCA TRENDING AHORA)
+
+TRANSICIONES ORGANICAS — NUNCA pantalla de color solido:
+- OLA QUE CUBRE: ola sube y cubre el frame, al descender aparece la playa
+- MATCH CUT: mismo angulo objeto ciudad → misma posicion en playa
+- WHIP PAN: barrido rapido que borra Madrid y aparece el mar
+- LUZ QUE INVADE: explosion de luz dorada que disuelve la ciudad
+- LIQUID WIPE: el liquido del coco al caer hace de cortina hacia agua de playa
+- BLUR ORGANICO: bokeh extremo en ciudad que al enfocar revela playa
+
+DISENO DE SONIDO — incluir siempre:
+Ciudad: bocinas+metro+pasos rapidos, aumenta hasta el sorbo
+Transicion: corte abrupto de sonido 80% en 0.3s — el silencio ES el efecto
+Playa: olas suaves+brisa, aparece gradualmente
+Retorno: ciudad de fondo muy baja + marino ganando
+
+HIGGSFIELD VIDEO: 9:16|luz natural/hora dorada|ciudad:handheld,gris-naranja|playa:slow glide,agua turquesa|producto:condensacion,liquid pour,macro|showcase:max3s/plano
+HIGGSFIELD IMAGEN: ratio+estilo+iluminacion+colores hex+props+fondo+composicion+mood. Prompt en ingles tecnico listo para copiar.
+
+REGLAS: NUNCA compra/oferta|NUNCA parecer anuncio|sentimiento>producto|Madrid=tension,mar=descanso,Goconut=la llave`;
+
+function getVoiceCtx(voice){
+  const m={
+    'mujer-spain':'VOZ: Mujer joven espanola peninsular. Expresiones: tio/tia,venga,que flipada,mola. Tutea siempre.',
+    'hombre-spain':'VOZ: Hombre joven espanol peninsular. Expresiones: tio,venga va,mola mazo,flipante. Tutea siempre.',
+    'mujer-latam':'VOZ: Mujer joven latinoamericana. Expresiones: chevere,bacano,que rico,de una. Tutea siempre.',
+    'hombre-latam':'VOZ: Hombre joven latinoamericano. Expresiones: brutal,buena onda,hermano,de una. Tutea siempre.',
+    'sin-voz':'SIN VOZ. Solo imagenes, musica y textos en pantalla. Incluye frases exactas y timing.'
+  };
+  return m[voice||S.v]||m['mujer-spain'];
+}
+
+function buildSys(tab){
+  if(tab==='image'){
+    const rMap={'9:16':'9:16 vertical TikTok/Stories','1:1':'1:1 cuadrado feed','16:9':'16:9 horizontal banner'};
+    const esMap={cinematico:'Cinematico: bokeh, profundidad de campo.',lifestyle:'Lifestyle: autentico, sin poses.',producto:'Producto: hero shot, fondo limpio.',editorial:'Editorial: composicion artistica.'};
+    const lMap={golden:'Golden hour: calida, dorada.',natural:'Natural: suave, difusa.',studio:'Studio: controlada, spot de luz.'};
+    return BASE_SYS+'\n\nCONFIG IMAGEN:\nRATIO: '+rMap[S.r]+'\n'+esMap[S.es]+'\n'+lMap[S.l]+'\nCREATIVIDAD: '+crLbls[S.creativity]+'\n\nFORMATO IMAGEN:\n- Tipo y uso\n- Prompt Higgsfield (ingles, tecnico, listo para copiar)\n- Especificaciones tecnicas\n- Donde usar\n- 2-3 variaciones';
+  }
+  const emoMap={nostalgia:'Nostalgica-recuerdos melancolia dulce',humor:'Humor-giro inesperado remate',inspiracion:'Inspiracional-vida mas ligera',fomo:'FOMO-urgencia social',calma:'Calma-ritmo lento naturaleza',sorpresa:'Sorpresa-dato impactante apertura',romantico:'Romantico-sensorial evocador'};
+  const intMap={sutil:'Sutil-murmurado sugerido',medio:'Media',dramatico:'Dramatica-maxima expresividad'};
+  const vsMap={asmr:'ASMR-muy susurrado pausado',directo:'Directo-como amigo contandote algo',poetico:'Poetico-frases evocadoras',monologo:'Monologo interno-pensamientos primera persona'};
+  var voCtx=S.voOn
+    ?'VOZ EN OFF ACTIVADA: '+getVoiceCtx()+'\nEmocion: '+(emoMap[S.e]||'Nostalgica')+'\nIntensidad: '+(intMap[S.i]||'Media')+'\nEstilo: '+(vsMap[S.vs]||'Directo')+'\nDuracion: '+S.d+' (15s=45pal, 30s=90pal, 60s=160pal)\nIncluir [stage directions] y ENFASIS en MAYUSCULAS. Al final herramienta TTS (ElevenLabs/Murf).'
+    :'SIN VOZ EN OFF. Solo textos en pantalla si aplica.';
+  var audCtx={
+    none:'SIN AUDIO. No incluir sugerencia.',
+    music:'MUSICA DE FONDO: estilo, BPM, referencias de artistas, donde buscarla y como evoluciona.',
+    viral:'AUDIO VIRAL TIKTOK: BUSCA EN TIEMPO REAL los audios mas virales esta semana. Da nombre EXACTO del sonido, por que esta viral, como encaja y en que momento usarlo.'
+  }[S.audMode]||'';
+  var crCtx={1:'CREATIVIDAD: Conservadora.',2:'CREATIVIDAD: Segura.',3:'CREATIVIDAD: Balanceada.',4:'CREATIVIDAD: Alta, original.',5:'CREATIVIDAD: Experimental, sin limites.'}[S.creativity]||'Balanceada.';
+  var tCtx=toneCtx[S.tone]||toneCtx[3];
+  return BASE_SYS+'\n\nCONFIG ACTIVA:\n'+voCtx+'\n'+audCtx+'\n'+crCtx+'\n'+tCtx+'\nDURACION VIDEO: '+S.d+'\n\nFORMATO:\n1. Serie+ep | 2. Hook 2s exactos | 3. Escenas plano+duracion'+(S.voOn?' | 4. Script voz con directions':'')+' | 5. Prompt Higgsfield (ingles tecnico)'+(S.audMode!=='none'?' | 6. Audio/Musica':'')+' | 7. Caption+hashtags | 8. Target | 9. Por que viral';
+}
+
+// ── PRE-QUESTION ──
+function askBefore(seriesCtx){
+  hideWelcome();
+  const panel=document.getElementById('pnl-content');
+  const div=document.createElement('div');div.className='msg ast';
+  const av=document.createElement('div');av.className='chat-av ai';av.textContent='🥥';
+  const bu=document.createElement('div');bu.className='bbl';bu.style.maxWidth='520px';
+  bu.innerHTML=`<p style="font-weight:700;color:#fff;margin-bottom:9px">Antes de generar — cuéntame un poco más 🎬</p>
+<p style="color:var(--muted);font-size:11.5px;margin-bottom:11px">Tengo listo <strong style="color:var(--mint)">${seriesCtx.length>55?seriesCtx.substring(0,55)+'...':seriesCtx}</strong>. Responde lo que quieras:</p>
+<div style="display:flex;flex-direction:column;gap:7px">
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:9px 12px">
+    <div style="font-size:9px;color:var(--mint);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">🎯 Target del video</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="pqbtn" onclick="pqSel(this,'target')">👥 Jóvenes 18-26</button>
+      <button class="pqbtn" onclick="pqSel(this,'target')">💼 Profesionales 25-35</button>
+      <button class="pqbtn" onclick="pqSel(this,'target')">🌍 Todos</button>
+    </div>
+  </div>
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:9px 12px">
+    <div style="font-size:9px;color:var(--mint);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">🌊 Transición ciudad → playa</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="pqbtn" onclick="pqSel(this,'trans')">🌊 Ola que cubre</button>
+      <button class="pqbtn" onclick="pqSel(this,'trans')">✂️ Match cut</button>
+      <button class="pqbtn" onclick="pqSel(this,'trans')">💧 Liquid wipe</button>
+      <button class="pqbtn" onclick="pqSel(this,'trans')">💡 Luz que invade</button>
+      <button class="pqbtn" onclick="pqSel(this,'trans')">🎲 Sorpréndeme</button>
+    </div>
+  </div>
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:9px 12px">
+    <div style="font-size:9px;color:var(--mint);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">🛍️ Producto de Goconut</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="pqbtn" onclick="pqSel(this,'prod')">🥥 Coconut Original</button>
+      <button class="pqbtn" onclick="pqSel(this,'prod')">🥭 Coconut Mango</button>
+      <button class="pqbtn" onclick="pqSel(this,'prod')">🍹 Coconut Maracuyá</button>
+      <button class="pqbtn" onclick="pqSel(this,'prod')">🍪 Coconut Oreo</button>
+      <button class="pqbtn" onclick="pqSel(this,'prod')">🍨 Coco Gelato Shake</button>
+      <button class="pqbtn" onclick="pqSel(this,'prod')">🎲 El que mejor encaje</button>
+    </div>
+  </div>
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:9px 12px">
+    <div style="font-size:9px;color:var(--mint);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">📍 Algo más que deba saber</div>
+    <textarea id="pq-extra" placeholder="Ej: quiero que salgan amigos, que sea en el Retiro, que tenga mucho humor..." style="width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:11px;color:var(--text);resize:none;outline:none;height:46px;line-height:1.5"></textarea>
+  </div>
+  <button onclick="submitPQ('${escH(seriesCtx)}')" style="background:var(--blue);border:none;border-radius:9px;padding:11px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#fff;cursor:pointer">🥥 Generar ahora</button>
+</div>`;
+  div.appendChild(av);div.appendChild(bu);panel.appendChild(div);panel.scrollTop=panel.scrollHeight;
+}
+
+function pqSel(btn,group){
+  const c=btn.closest('[style]');
+  if(c)c.querySelectorAll('.pqbtn').forEach(b=>b.classList.remove('pq-on'));
+  btn.classList.add('pq-on');
+  pqA[group]=btn.textContent.trim();
+}
+function submitPQ(ctx){
+  const extra=document.getElementById('pq-extra')?.value||'';
+  const parts=[];
+  if(pqA.target)parts.push('Target: '+pqA.target);
+  if(pqA.trans)parts.push('Transicion: '+pqA.trans);
+  if(pqA.prod)parts.push('Producto: '+pqA.prod);
+  if(extra.trim())parts.push('Detalles: '+extra.trim());
+  const fp=ctx+(parts.length?'\n\nPreferencias:\n'+parts.join('\n'):'');
+  const msgs2=document.querySelectorAll('#pnl-content .msg.ast');
+  if(msgs2.length)msgs2[msgs2.length-1].remove();
+  pqA.target='';pqA.trans='';pqA.prod='';
+  sq(fp);
+}
+
+// ── MESSAGES ──
+function hideWelcome(){const w=document.getElementById('welcome');if(w)w.remove();}
+function goHome(){
+  showTab('content');
+  const pnl=document.getElementById('pnl-content');
+  if(pnl){
+    pnl.innerHTML='';
+    const w=document.createElement('div');
+    w.id='welcome';w.className='welcome';
+    w.innerHTML='<div class="w-ic">🥥</div>'
+      +'<h2>GOCONUT TikTok AI Studio</h2>'
+      +'<p>Crea contenido viral al 100% alineado con la marca. Configura las opciones arriba o elige una serie.</p>'
+      +'<div class="wgrid">'
+      +'<div class="wcard" onclick="askBefore(\'Serie Un segundo en Madrid (City Escape): estres de ciudad vs escape a playa con Goconut\')"><span class="we">🏙️</span><div class="wt">City Escape</div><div class="wd">Madrid→playa. Estrés→paz.</div></div>'
+      +'<div class="wcard" onclick="askBefore(\'Por que Goconut: argumentos del coco vs yogurt helado y competencia\')"><span class="we">🥊</span><div class="wt">vs Competencia</div><div class="wd">Datos que convencen.</div></div>'
+      +'<div class="wcard" onclick="askBefore(\'Sabias que: dato impactante sobre el coco para TikTok\')"><span class="we">💡</span><div class="wt">Sabías que</div><div class="wd">Datos que la gente comparte.</div></div>'
+      +'<div class="wcard" onclick="askBefore(\'Goconut Showcase: producto protagonista, macro shots apetecibles\')"><span class="we">🛍️</span><div class="wt">Showcase</div><div class="wd">El producto como estrella.</div></div>'
+      +'<div class="wcard" onclick="sq(\'Busca tendencias virales de TikTok AHORA MISMO y genera 2 conceptos para Goconut.\')"><span class="we">🚀</span><div class="wt">Trends Ahora</div><div class="wd">Viral HOY con sello Goconut.</div></div>'
+      +'<div class="wcard" onclick="askBefore(\'Grupo Goconut: jovenes en Madrid descubriendo Goconut juntos\')"><span class="we">👥</span><div class="wt">Grupo Goconut</div><div class="wd">Amigos, energía y FOMO.</div></div>'
+      +'<div class="wcard" onclick="askBefore(\'Beneficios del coco: un beneficio especifico con base cientifica\')"><span class="we">🌿</span><div class="wt">Beneficios</div><div class="wd">Razones para elegir coco.</div></div>'
+      +'<div class="wcard" onclick="askBefore(\'Y si? serie emocional y poetica: voz cinematografica sobre el escape mental que da Goconut\')"><span class="we">💚</span><div class="wt">¿Y si…?</div><div class="wd">Storytelling cinematográfico.</div></div>'
+      +'<div class="wcard" onclick="sq(\'Genera 5 captions para Goconut TikTok: humor, dato, emocion, reto y pregunta.\')"><span class="we">📱</span><div class="wt">Pack Captions</div><div class="wd">5 captions listos.</div></div>'
+      +'<div class="wcard" onclick="showTab(\'brief\')"><span class="we">📅</span><div class="wt">Brief Semanal</div><div class="wd">Elige los días que necesitas.</div></div>'
+      +'</div>';
+    pnl.appendChild(w);
+  }
+  clearPills();
+  msgs.content=[];
+}
+function escH(t){return t.replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function addToHist(content,tab){
+  const s=content.match(/[🎬🖼️🎙️][^\n]*/)?.[0]||'Generación';
+  const prev=content.replace(/[^\w\s.,¿?¡!áéíóúñÁÉÍÓÚÑ]/g,' ').replace(/\s+/g,' ').trim().substring(0,80);
+  const time=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  histItems.unshift({s:s.substring(0,45),prev,time,content,tab});
+  const list=document.getElementById('hist-list');
+  const empty=list.querySelector('.hist-empty');if(empty)empty.remove();
+  const item=document.createElement('div');item.className='hitem';
+  item.innerHTML='<div class="hi-s">'+s.substring(0,42)+'</div><div class="hi-p">'+prev+'</div><div class="hi-t">'+time+'</div>';
+  const sc=content,st=tab;
+  item.onclick=()=>{showTab(st);addMsg('ast',sc,st,false);};
+  list.insertBefore(item,list.firstChild);
+  genCount++;document.getElementById('gen-count').textContent=genCount+' gen.';
+}
+
+function addMsg(role,content,tab,save=true){
+  const pnlId='pnl-'+(tab||curTab);
+  const panel=document.getElementById(pnlId);
+  if(!panel)return;
+  const div=document.createElement('div');div.className='msg '+role;
+  const av=document.createElement('div');av.className='chat-av '+(role==='ast'?'ai':'me');
+  av.textContent=role==='ast'?'🥥':'✍️';
+  const bu=document.createElement('div');bu.className='bbl';
+  bu.innerHTML=role==='ast'?fmt(content):esc(content);
+  div.appendChild(av);div.appendChild(bu);panel.appendChild(div);
+  if(role==='ast'){
+    const qa=document.createElement('div');qa.className='qa';
+    const t=tab||curTab;
+    if(t==='image'){
+      qa.innerHTML='<button class="qbtn" onclick="genImg(\'Dame 3 variaciones del mismo prompt\')">🔄 Variaciones</button><button class="qbtn" onclick="genImg(\'Adapta para 1:1 feed de Instagram\')">📸 Para Feed</button><button class="qbtn" onclick="genImg(\'Convierte en secuencia de 3 para carrusel\')">🎠 Carrusel</button><button class="qbtn" onclick="copyBbl(this)">📋 Copiar</button>';
+    } else {
+      qa.innerHTML='<button class="qbtn" onclick="sq(\'Dame otra version mas emocional\')">🔄 Otra versión</button><button class="qbtn" onclick="sq(\'Amplia el prompt Higgsfield con mas detalle tecnico\')">🤖 + Higgsfield</button><button class="qbtn" onclick="sq(\'Dame 3 variaciones del hook\')">⚡ Hooks</button><button class="qbtn" onclick="sq(\'5 captions alternativos con distintos enfoques\')">📱 Captions</button><button class="qbtn" onclick="sq(\'Adapta para Instagram Reels\')">📸 Reels</button><button class="qbtn" onclick="copyBbl(this)">📋 Copiar</button>';
+    }
+    panel.appendChild(qa);
+    if(save)addToHist(content,t);
+  }
+  panel.scrollTop=panel.scrollHeight;
+}
+
+function copyBbl(btn){
+  const b=btn.closest('.qa')?.previousElementSibling?.querySelector('.bbl');
+  if(!b)return;
+  navigator.clipboard.writeText(b.innerText||b.textContent).then(()=>{btn.textContent='✅';setTimeout(()=>{btn.textContent='📋 Copiar';},2000);});
+}
+function copyCode(btn,text){navigator.clipboard.writeText(text).then(()=>{btn.textContent='✅';setTimeout(()=>{btn.textContent='Copiar';},2000);});}
+
+function fmt(text){
+  let h=esc(text).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>');
+  h=h.replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h3>$1</h3>');
+  [[/^(🎬.+)$/gm,'sb-b'],[/^(⚡.+)$/gm,'sb-b t'],[/^(🎥.+)$/gm,'sb-b m'],[/^(🗣️.+)$/gm,'sb-b y'],
+   [/^(🤖.+)$/gm,'sb-b'],[/^(🎵.+)$/gm,'sb-b s'],[/^(📱.+)$/gm,'sb-b t'],[/^(🎯.+)$/gm,'sb-b s'],
+   [/^(💡.+)$/gm,'sb-b y'],[/^(🛍️.+)$/gm,'sb-b t'],[/^(🖼️.+)$/gm,'sb-b p'],[/^(📐.+)$/gm,'sb-b m'],
+   [/^(🎨.+)$/gm,'sb-b s'],[/^(⚙️.+)$/gm,'sb-b y'],[/^(🛠️.+)$/gm,'sb-b g'],[/^(🔊.+)$/gm,'sb-b s'],
+   [/^(📝.+)$/gm,'sb-b o']
+  ].forEach(([rx,cls])=>h=h.replace(rx,(_,c)=>`<div class="${cls}">${c}</div>`));
+  h=h.replace(/^[-•] (.+)$/gm,'<li>$1</li>').replace(/(<li>[\s\S]*?<\/li>\n?)+/g,m=>`<ul>${m}</ul>`);
+  return h.split('\n').map(l=>{const t=l.trim();if(!t)return'';return t.startsWith('<')?t:`<p>${t}</p>`;}).filter(Boolean).join('\n');
+}
+
+function showTyping(pnlId){
+  const p=document.getElementById(pnlId);if(!p)return;
+  const d=document.createElement('div');d.className='msg ast';d.id='typing-ind';
+  const av=document.createElement('div');av.className='chat-av ai';av.textContent='🥥';
+  const bu=document.createElement('div');bu.className='bbl';
+  bu.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
+  d.appendChild(av);d.appendChild(bu);p.appendChild(d);p.scrollTop=p.scrollHeight;
+}
+function removeTyping(){const t=document.getElementById('typing-ind');if(t)t.remove();}
+
+async function callAPI(prompt,sys,tab){
+  if(isLoading)return;
+  const apiKey=localStorage.getItem('gc_api_key');
+  if(!apiKey){showApiScreen();return;}
+  isLoading=true;
+  document.querySelectorAll('.sbtn').forEach(b=>b.disabled=true);
+  const pnlId='pnl-'+tab;
+  msgs[tab]?.push({role:'user',content:prompt});
+  addMsg('me',prompt,tab,false);
+  showTyping(pnlId);
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:msgs[tab]||[{role:'user',content:prompt}],tools:[{type:'web_search_20250305',name:'web_search'}]})
+    });
+    const data=await res.json();removeTyping();
+    if(data.error){
+      if(data.error.type==='authentication_error'){
+        localStorage.removeItem('gc_api_key');showApiScreen();
+        document.getElementById('key-err').textContent='API key invalida. Introduce una valida.';
+        document.getElementById('key-err').classList.add('show');
+      } else {addMsg('ast','Error: '+data.error.message,tab,false);}
+      isLoading=false;document.querySelectorAll('.sbtn').forEach(b=>b.disabled=false);return;
+    }
+    let reply='';if(data.content)for(const b of data.content)if(b.type==='text')reply+=b.text;
+    if(!reply)reply='Error al generar. Intenta de nuevo.';
+    msgs[tab]?.push({role:'assistant',content:reply});
+    addMsg('ast',reply,tab,true);
+  }catch(e){removeTyping();addMsg('ast','Error de conexion. Verifica tu internet.',tab,false);}
+  isLoading=false;
+  document.querySelectorAll('.sbtn').forEach(b=>b.disabled=false);
+}
+
+function sq(t){
+  const inp=document.getElementById('inp-content');
+  if(inp){inp.value=t;}
+  hideWelcome();
+  callAPI(t,buildSys('content'),'content');
+}
+function genImg(t){
+  showTab('image');
+  callAPI(t,buildSys('image'),'image');
+}
+function sendMsg(tab){
+  const inp=document.getElementById('inp-'+tab);
+  if(!inp)return;
+  const text=inp.value.trim();if(!text||isLoading)return;
+  if(tab==='content')hideWelcome();
+  inp.value='';inp.style.height='auto';
+  callAPI(text,buildSys(tab),tab);
+}
+
+// ── BRIEF ──
+async function genBrief(){
+  if(!selDays.length)return;
+  const btn=document.getElementById('brief-btn');
+  btn.disabled=true;btn.querySelector('span').textContent='Generando…';
+  const res=document.getElementById('br-res');res.classList.remove('show');
+  const apiKey=localStorage.getItem('gc_api_key');if(!apiKey){showApiScreen();return;}
+  const fMap={variado:'variado—series distintas cada dia',viral:'maximo viral—hooks impactantes y tendencias actuales',educativo:'educativo—Sabias que, Beneficios y Por que Goconut',producto:'producto—Showcase, lanzamientos y macro shots'};
+  const prompt='Genera un BRIEF DE CONTENIDO GOCONUT TIKTOK para: '+selDays.join(', ')+'.\n\nPara CADA dia:\n📅 DIA\n🎬 SERIE\n⚡ HOOK (2s)\n🎥 CONCEPTO\n🗣️ SCRIPT VOZ ('+S.briefVoice+')\n🤖 PROMPT HIGGSFIELD (ingles)\n🎵 AUDIO\n📱 CAPTION+hashtags\n🎯 OBJETIVO\n\nEnfoque: '+(fMap[S.briefFocus]||fMap.variado)+'. Total: '+selDays.length+' dias. Coherencia entre dias pero series distintas.';
+  const sys=BASE_SYS+'\n\nCONFIG BRIEF:\n'+getVoiceCtx(S.briefVoice)+'\nFOCUS: '+S.briefFocus;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:[{role:'user',content:prompt}],tools:[{type:'web_search_20250305',name:'web_search'}]})
+    });
+    const d=await r.json();
+    let reply='';if(d.content)for(const b of d.content)if(b.type==='text')reply+=b.text;
+    if(!reply)reply='Error al generar.';
+    res.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><strong style="font-size:12px;color:var(--mint)">📋 Brief — '+selDays.length+' dia'+(selDays.length!==1?'s':'')+'</strong><button class="sb-act" onclick="copyBrief()">📋 Copiar</button></div><div id="br-content">'+fmt(reply)+'</div>';
+    res.classList.add('show');
+    addToHist(reply,'brief');
+  }catch(e){res.innerHTML='<p style="color:var(--terra)">Error. Intenta de nuevo.</p>';res.classList.add('show');}
+  btn.disabled=false;
+  document.getElementById('brief-btn-txt').textContent='Generar brief — '+selDays.length+' dia'+(selDays.length!==1?'s':'');
+}
+function copyBrief(){
+  const c=document.getElementById('br-content');
+  if(c)navigator.clipboard.writeText(c.innerText||c.textContent).then(()=>alert('Brief copiado ✅'));
+}
+
+// ── EXPORT ──
+function exportAll(){
+  if(!histItems.length){alert('No hay generaciones aun.');return;}
+  let txt='GOCONUT TIKTOK AI STUDIO — EXPORT\n'+new Date().toLocaleString('es-ES')+'\n'+'='.repeat(60)+'\n\n';
+  histItems.forEach((item,i)=>{txt+='GEN '+(histItems.length-i)+' ['+item.tab.toUpperCase()+']\n'+'-'.repeat(40)+'\n'+item.s+'\nHORA: '+item.time+'\n\n'+item.content+'\n\n'+'='.repeat(60)+'\n\n';});
+  const blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='goconut-'+new Date().toISOString().split('T')[0]+'.txt';a.click();
+}
+function clearHist(){
+  if(!histItems.length)return;
+  if(confirm('Limpiar historial?')){
+    histItems.length=0;genCount=0;
+    document.getElementById('hist-list').innerHTML='<p class="hist-empty">Las generaciones apareceran aqui.</p>';
+    document.getElementById('gen-count').textContent='0 gen.';
+  }
+}
+
+// ── API KEY ──
+function showApiScreen(){document.getElementById('apiscreen').style.display='flex';}
+function hideApiScreen(){document.getElementById('apiscreen').style.display='none';}
+function toggleEye(){const i=document.getElementById('apikey-inp'),b=document.getElementById('eye-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁️':'🙈';}
+function toggleNewEye(){const i=document.getElementById('newkey-inp'),b=document.getElementById('neweye-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁️':'🙈';}
+function submitKey(){
+  const key=document.getElementById('apikey-inp').value.trim();
+  const err=document.getElementById('key-err');
+  if(!key||key.length<20){err.classList.add('show');return;}
+  err.classList.remove('show');
+  localStorage.setItem('gc_api_key',key);
+  hideApiScreen();
+}
+function openKeyModal(){document.getElementById('keymodal').classList.add('show');}
+function closeKeyModal(){document.getElementById('keymodal').classList.remove('show');document.getElementById('newkey-inp').value='';}
+function submitNewKey(){
+  const key=document.getElementById('newkey-inp').value.trim();
+  const err=document.getElementById('newkey-err');
+  if(!key||key.length<20){err.classList.add('show');return;}
+  err.classList.remove('show');
+  localStorage.setItem('gc_api_key',key);
+  closeKeyModal();
+}
+
+// ── INIT ──
+(function(){
+  if(localStorage.getItem('gc_api_key'))hideApiScreen();
+  document.getElementById('apikey-inp').addEventListener('keydown',e=>{if(e.key==='Enter')submitKey();});
+  document.getElementById('newkey-inp').addEventListener('keydown',e=>{if(e.key==='Enter')submitNewKey();});
+  ['inp-content','inp-image'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,110)+'px';});
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();
+        sendMsg(id==='inp-content'?'content':'image');
+      }
+    });
+  });
+  // Init optbar visibility
+  showTab('content');
+})();
+</script>
+</body>
+</html>
