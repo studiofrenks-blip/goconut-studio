@@ -1201,6 +1201,15 @@ body{
         <span class="sl-lbl" id="cr-val">Balanceado</span>
       </div>
     </div>
+    <!-- ROW 5: Modo de producción -->
+    <div class="drawer-row">
+      <span class="dl">Producción</span>
+      <div class="seg">
+        <button class="seg-btn" id="prod-hf" onclick="setProd('higgsfield')">🤖 Higgsfield</button>
+        <button class="seg-btn on" id="prod-both" onclick="setProd('ambos')">✨ Ambos</button>
+        <button class="seg-btn" id="prod-real" onclick="setProd('real')">🎬 Vida Real</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1419,7 +1428,8 @@ const S={
   v:'mujer-spain',i:'sutil',
   d:'15s',r:'9:16',es:'cinematico',l:'golden',
   voOn:false,audMode:'none',creativity:3,tone:3,
-  briefVoice:'mujer-spain',briefFocus:'variado'
+  briefVoice:'mujer-spain',briefFocus:'variado',
+  prodMode:'ambos'
 };
 const multiSel={emo:['nostalgia'],estilo:['directo']};
 const crLbls={1:'Conservador',2:'Seguro',3:'Balanceado',4:'Creativo',5:'Experimental'};
@@ -1443,11 +1453,12 @@ function toggleSettings(){
   document.getElementById('st-arrow').classList.toggle('open',settingsOpen);
 }
 function updateSummary(){
-  const vMap={'mujer-spain':'🇪🇸 Mujer España','hombre-spain':'🇪🇸 Hombre España','mujer-latam':'🌎 Mujer Latam','hombre-latam':'🌎 Hombre Latam','sin-voz':'🔇 Sin voz'};
+  const vMap={'mujer-spain':'🇪🇸 Mujer','hombre-spain':'🇪🇸 Hombre','mujer-latam':'🌎 Mujer','hombre-latam':'🌎 Hombre','sin-voz':'🔇 Sin voz'};
   const audMap={none:'Sin audio',music:'🎵 Música',viral:'🚀 Viral TikTok'};
+  const prodMap={higgsfield:'🤖 Higgsfield',ambos:'✨ Ambos',real:'🎬 Vida Real'};
   const toneStr=toneLbls[S.tone]||'Balanceado';
   document.getElementById('st-summary').textContent=
-    (vMap[S.v]||S.v)+' · '+(audMap[S.audMode]||'Sin audio')+' · '+S.d+' · '+toneStr;
+    (vMap[S.v]||S.v)+' · '+(audMap[S.audMode]||'Sin audio')+' · '+S.d+' · '+(prodMap[S.prodMode]||'✨ Ambos');
 }
 
 // ── SETTERS ──
@@ -1487,6 +1498,22 @@ function setImg(key,val,id,count){
 }
 function updateTone(v){S.tone=parseInt(v);document.getElementById('tone-val').textContent=toneLbls[v]||v;updateSummary();}
 function updateCr(v){S.creativity=parseInt(v);document.getElementById('cr-val').textContent=crLbls[v]||v;}
+
+function setProd(m){
+  S.prodMode=m;
+  ['hf','both','real'].forEach(k=>document.getElementById('prod-'+k)?.classList.remove('on'));
+  const idMap={higgsfield:'prod-hf',ambos:'prod-both',real:'prod-real'};
+  document.getElementById(idMap[m])?.classList.add('on');
+  updateSummary();
+}
+// alias for HTML id naming
+function setProd(m){
+  S.prodMode=m;
+  document.getElementById('prod-hf')?.classList.toggle('on',m==='higgsfield');
+  document.getElementById('prod-both')?.classList.toggle('on',m==='ambos');
+  document.getElementById('prod-real')?.classList.toggle('on',m==='real');
+  updateSummary();
+}
 
 function toggleMulti(btn,group,val){
   const idx=multiSel[group].indexOf(val);
@@ -1641,6 +1668,7 @@ function buildSys(tab){
     const lM={golden:'Golden hour: calida dorada',natural:'Natural: suave difusa',studio:'Studio: controlada spot de luz'};
     return BASE+'\n\nCONFIG IMAGEN: RATIO:'+rM[S.r]+' | '+eM[S.es]+' | '+lM[S.l]+' | CREATIVIDAD:'+crLbls[S.creativity]+'\n\nFORMATO: tipo+uso | prompt Higgsfield ingles tecnico | specs | donde usar | 2-3 variaciones';
   }
+
   const eM={nostalgia:'Nostalgica-recuerdos melancolia',humor:'Humor-giro inesperado',inspiracion:'Inspiracional-vida mas ligera',fomo:'FOMO-urgencia social',calma:'Calma-ritmo lento',sorpresa:'Sorpresa-dato impactante',romantico:'Romantico-sensorial'};
   const iM={sutil:'Sutil-murmurado',medio:'Media',dramatico:'Dramatica-maxima expresividad'};
   const vM={asmr:'ASMR-susurrado pausado',directo:'Directo-como amigo',poetico:'Poetico-frases evocadoras',monologo:'Monologo interno'};
@@ -1650,7 +1678,79 @@ function buildSys(tab){
   const audCtx={none:'SIN AUDIO.',music:'MUSICA: estilo,BPM,referencias,donde buscar,como evoluciona.',viral:'AUDIO VIRAL: BUSCA ahora los mas virales TikTok. Da nombre EXACTO, por que viral, como encaja.'}[S.audMode]||'';
   const crCtx='CREATIVIDAD:'+crLbls[S.creativity];
   const tCtx=toneCtx[S.tone]||toneCtx[3];
-  return BASE+'\n\nCONFIG: '+voCtx+' | '+audCtx+' | '+crCtx+' | '+tCtx+' | DUR:'+S.d+'\n\nFORMATO:\n1.🎬 Serie+ep\n2.⚡ Hook exacto 2s\n3.🎥 Escenas plano+duracion'+(S.voOn?'\n4.🗣️ Script voz con [directions] y ENFASIS':'')+'\n5.🤖 Prompt Higgsfield ingles tecnico'+(S.audMode!=='none'?'\n6.🎵 Audio/Musica':'')+'\n7.📱 Caption+hashtags\n8.🎯 Target\n9.💡 Por que viral';
+
+  const base_config='\n\nCONFIG: '+voCtx+' | '+audCtx+' | '+crCtx+' | '+tCtx+' | DUR:'+S.d;
+
+  // ── HIGGSFIELD ONLY ──
+  const fmt_hf=`
+
+FORMATO OBLIGATORIO — MODO HIGGSFIELD (magia de la IA):
+
+1.🎬 CONCEPTO + SERIE
+2.⚡ HOOK (seg 0-2, texto exacto en pantalla)
+3.🎥 BEATS DEL VIDEO — plano por plano con segundos
+${S.voOn?'4.🗣️ SCRIPT VOZ EN OFF con [stage directions] y ENFASIS':''}
+5.🤖 PROMPT HIGGSFIELD AI — aqui es donde la IA puede hacer lo imposible:
+   Usa toda la magia de Higgsfield: slow-motion imposible del liquido del coco en microgravedad, transiciones donde la ciudad se disuelve en particulas de agua, planos subacuaticos sin mojarse, luz que parece viva, el producto que aparece de la nada, efectos de particulas tropicales, el calor de Madrid visualizado como ondas de calor que se convierten en olas del mar, condensacion en super macro imposible de grabar a mano, etc.
+   SIEMPRE en ingles tecnico cinematico, listo para copiar directamente en Higgsfield.
+   Formato: [Ratio: 9:16] [Dur: Xs] | Scene: [descripcion] | Lighting: [tipo] | Camera: [movimiento+angulo] | Color: [hex exactos] | VFX: [efectos IA especificos] | Mood: [palabra] | Style: [ref cinematica]
+${S.audMode!=='none'?'6.🎵 AUDIO/MUSICA':''}
+7.📱 CAPTION + hashtags
+8.💡 POR QUE VIRAL este concepto`;
+
+  // ── VIDA REAL ONLY ──
+  const fmt_real=`
+
+FORMATO OBLIGATORIO — MODO VIDA REAL (filmable con movil en Madrid):
+
+1.🎬 CONCEPTO + SERIE
+2.⚡ HOOK (seg 0-2, texto exacto en pantalla)
+3.🎥 BEATS DEL VIDEO — plano por plano con segundos
+${S.voOn?'4.🗣️ SCRIPT VOZ EN OFF con [stage directions] y ENFASIS':''}
+5.📍 GUIA DE GRABACION REAL — esto es lo mas importante:
+   LOCALIZACION: lugar especifico en Madrid donde grabar (Retiro, Gran Via, Malasana, La Latina, Chueca, mercados, terrazas, calles especificas) o dentro de la tienda Goconut
+   EQUIPO: que usar (iPhone en modo cinematico, gimbal, reflector portatil, nada mas — nada de estudio)
+   LUZ: a que hora del dia grabar y como usar la luz natural (golden hour tarde, luz de mañana suave, sombra lateral de edificio, etc.)
+   SHOT LIST detallada:
+     - Plano 1: [tipo de plano] [angulo exacto] [accion del modelo/producto] [duracion]
+     - Plano 2: etc.
+   PROPS REALES necesarios: [lista de cosas que necesitas llevar]
+   MODELO/PERSONA: descripcion del perfil y lo que hace (no de pie posando — siempre en accion real)
+   ERRORES A EVITAR: [los 3 errores tipicos de este tipo de plano]
+   TIEMPO DE GRABACION ESTIMADO: [X minutos realista]
+${S.audMode!=='none'?'6.🎵 AUDIO/MUSICA':''}
+7.📱 CAPTION + hashtags
+8.💡 POR QUE VIRAL + cuando publicar`;
+
+  // ── AMBOS ──
+  const fmt_both=`
+
+FORMATO OBLIGATORIO — MODO AMBOS (Higgsfield + Vida Real):
+
+1.🎬 CONCEPTO + SERIE
+2.⚡ HOOK (seg 0-2, texto exacto en pantalla)
+3.🎥 BEATS DEL VIDEO — plano por plano con segundos
+${S.voOn?'4.🗣️ SCRIPT VOZ EN OFF con [stage directions] y ENFASIS':''}
+
+── VERSION HIGGSFIELD (magia IA) ──
+5.🤖 PROMPT HIGGSFIELD: usa toda la magia imposible de la IA — slow-motion imposible, particulas tropicales, ciudad que se disuelve en agua, condensacion en super macro, luz que parece viva, transiciones de otro mundo. En ingles tecnico cinematico listo para copiar.
+   [Ratio: 9:16] [Dur: Xs] | Scene: | Lighting: | Camera: | Color: [hex] | VFX: [efectos IA] | Mood: | Style:
+
+── VERSION VIDA REAL (grabable hoy en Madrid) ──
+6.📍 LOCALIZACION: lugar concreto en Madrid o tienda Goconut
+7.📋 SHOT LIST REAL plano a plano:
+   - Plano 1: [tipo] [angulo] [accion] [seg]
+   - Plano 2: etc.
+8.💡 PROPS: lista exacta de lo que necesitas llevar
+9.⏱️ EQUIPO + LUZ: iPhone modo cinematico, hora del dia, como usar la luz
+10.❌ ERRORES A EVITAR en este tipo de plano
+${S.audMode!=='none'?'11.🎵 AUDIO/MUSICA':''}
+12.📱 CAPTION + hashtags
+13.🔥 POR QUE VIRAL`;
+
+  const fmt = S.prodMode==='higgsfield' ? fmt_hf : S.prodMode==='real' ? fmt_real : fmt_both;
+
+  return BASE+base_config+fmt;
 }
 
 // ── MESSAGES ──
