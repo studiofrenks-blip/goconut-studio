@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CtaBand from "@/components/CtaBand";
+import PageHero from "@/components/PageHero";
 import ProductCard from "@/components/ProductCard";
 import { categories, getCategory, productsIn } from "@/lib/products";
 
@@ -17,13 +19,22 @@ export default async function Categoria({ params }: { params: Promise<{ categori
   const c = getCategory((await params).categoria);
   if (!c) notFound();
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <nav aria-label="Migas de pan" className="text-sm"><Link href="/catalogo" className="underline-offset-2 hover:underline">Catálogo</Link> / {c.name}</nav>
-      <h1 className="font-display mt-3 text-4xl sm:text-5xl">{c.title}</h1>
-      <p className="mt-4 max-w-2xl text-lg">{c.intro}</p>
-      <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-        {productsIn(c.slug).map((p) => <li key={p.slug}><ProductCard p={p} /></li>)}
-      </ul>
-    </section>
+    <>
+      <PageHero eyebrow="Catálogo" title={c.title} text={c.intro}>
+        <nav aria-label="Categorías" className="mt-8 flex flex-wrap gap-2">
+          <Link href="/catalogo" className="rounded-full border border-white/30 px-4 py-2 text-sm hover:border-[var(--gold)]">Todo</Link>
+          {categories.map((k) => (
+            <Link key={k.slug} href={`/catalogo/${k.slug}`} aria-current={k.slug === c.slug ? "page" : undefined}
+              className={`rounded-full px-4 py-2 text-sm ${k.slug === c.slug ? "bg-[var(--gold)] text-[var(--night)]" : "border border-white/30 hover:border-[var(--gold)]"}`}>{k.name}</Link>
+          ))}
+        </nav>
+      </PageHero>
+      <section className="mx-auto mt-16 max-w-6xl px-4 sm:px-6">
+        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+          {productsIn(c.slug).map((p) => <li key={p.slug}><ProductCard p={p} /></li>)}
+        </ul>
+      </section>
+      <CtaBand />
+    </>
   );
 }
