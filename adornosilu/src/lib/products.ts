@@ -2,7 +2,7 @@
 // Fuente definitiva prevista: Supabase. Mientras tanto, este archivo es la fuente.
 import images from "./product-images.json";
 
-export type Category = { slug: string; name: string; title: string; intro: string; legacy: string };
+export type Category = { slug: string; name: string; title: string; intro: string; legacy: string; seo: string };
 export type Model = { code: string; specs: [string, string][] };
 export type Product = {
   slug: string;
@@ -20,10 +20,10 @@ export type Product = {
 };
 
 export const categories: Category[] = [
-  { slug: "pinos", legacy: "pinos-navidenos", name: "Pinos navideños", title: "Pinos de Navidad", intro: "Pinos artificiales frondosos y de fácil armado que conservan su forma, color y estructura temporada tras temporada." },
-  { slug: "pinos-gigantes", legacy: "gigante", name: "Pinos gigantes", title: "Pinos gigantes y estructurales", intro: "Estructuras metálicas para pinos navideños de hasta 20 metros, con montaje profesional en toda Venezuela." },
-  { slug: "coronas", legacy: "coronas", name: "Coronas", title: "Coronas navideñas", intro: "Coronas de pino canadiense para puertas, paredes y mesas, de 41 cm a 1,80 m de diámetro." },
-  { slug: "guirnaldas", legacy: "guirnaldas", name: "Guirnaldas", title: "Guirnaldas navideñas", intro: "Guirnaldas moldeables para vestir escaleras, barandas, chimeneas y fachadas." },
+  { slug: "pinos", legacy: "pinos-navidenos", seo: "Pinos de Navidad Adornos ILU: Canadian King, Slim, Slim Deluxe, Prince, Monterrey, Victoria y pinos de mesa. Frondosos, de fácil armado y hechos en Venezuela.", name: "Pinos navideños", title: "Pinos de Navidad", intro: "Pinos artificiales frondosos y de fácil armado que conservan su forma, color y estructura temporada tras temporada." },
+  { slug: "pinos-gigantes", legacy: "gigante", seo: "Pinos gigantes y estructurales de hasta 20 metros para plazas, centros comerciales y avenidas. Estructura metálica cableada y montaje en toda Venezuela.", name: "Pinos gigantes", title: "Pinos gigantes y estructurales", intro: "Estructuras metálicas para pinos navideños de hasta 20 metros, con montaje profesional en toda Venezuela." },
+  { slug: "coronas", legacy: "coronas", seo: "Coronas navideñas Canadian King y Canadian King Junior para puertas, paredes y mesas, de 41 cm a 1,80 m de diámetro, en verde, blanco y nevado.", name: "Coronas", title: "Coronas navideñas", intro: "Coronas de pino canadiense para puertas, paredes y mesas, de 41 cm a 1,80 m de diámetro." },
+  { slug: "guirnaldas", legacy: "guirnaldas", seo: "Guirnaldas navideñas Canadian King y flexibles para escaleras, barandas, chimeneas y fachadas. Moldeables, listas para iluminar y fabricadas en Venezuela.", name: "Guirnaldas", title: "Guirnaldas navideñas", intro: "Guirnaldas moldeables para vestir escaleras, barandas, chimeneas y fachadas." },
 ];
 
 const img = (slug: string) => (images as Record<string, string[]>)[slug] ?? [];

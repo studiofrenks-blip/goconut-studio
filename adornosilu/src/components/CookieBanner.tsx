@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { Lang } from "@/lib/i18n";
+
+const TX = {
+  es: { title: "Usamos cookies", body: "Usamos cookies necesarias para que la web funcione. Con tu permiso, también usaremos cookies de análisis y de marketing. Puedes aceptarlas, rechazarlas o elegir cuáles. Más información en la", link: "política de cookies", href: "/cookies", types: "Tipos de cookies", nec: "Necesarias", necD: "seguridad y esta elección. Siempre activas.", an: "Análisis", anD: "nos ayudan a saber qué páginas se visitan.", mk: "Marketing", mkD: "miden nuestros anuncios.", reject: "Rechazar", config: "Configurar", save: "Guardar selección", accept: "Aceptar" },
+  en: { title: "We use cookies", body: "We use necessary cookies to make the site work. With your permission, we will also use analytics and marketing cookies. You can accept them, reject them or choose which ones. More information in our", link: "cookie policy", href: "/en/cookies", types: "Cookie types", nec: "Necessary", necD: "security and this choice. Always on.", an: "Analytics", anD: "help us know which pages are visited.", mk: "Marketing", mkD: "measure our ads.", reject: "Reject", config: "Settings", save: "Save selection", accept: "Accept" },
+};
 
 // Consentimiento: "necessary" siempre; "analytics" y "marketing" solo si el usuario acepta.
 export type Consent = { v: 1; analytics: boolean; marketing: boolean; date: string };
@@ -25,7 +31,8 @@ function saveConsent(analytics: boolean, marketing: boolean) {
   window.dispatchEvent(new CustomEvent("ilu:consent", { detail: value }));
 }
 
-export default function CookieBanner() {
+export default function CookieBanner({ lang }: { lang: Lang }) {
+  const x = TX[lang];
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState(false);
   const [analytics, setAnalytics] = useState(false);
@@ -55,7 +62,7 @@ export default function CookieBanner() {
 
   // Rechazar y Aceptar comparten exactamente el mismo estilo, tamaño y posición jerárquica.
   const btn =
-    "min-h-11 flex-1 rounded-full border-2 border-[var(--ink)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--night)] hover:text-[var(--paper)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gold)]";
+    "min-h-12 flex-1 rounded-full border-2 border-[var(--cream)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--cream)] hover:text-[var(--bg)]";
 
   return (
     <div
@@ -64,27 +71,25 @@ export default function CookieBanner() {
       aria-labelledby="cookie-title"
       className="fixed inset-x-0 bottom-0 z-50 p-4 sm:p-6"
     >
-      <div className="mx-auto max-w-3xl rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-5 text-[var(--ink)] shadow-2xl sm:p-6">
+      <div className="mx-auto max-w-3xl rounded-2xl border border-[var(--line)] bg-[var(--bg-2)] p-5 text-[var(--cream)] shadow-2xl sm:p-6">
         <h2 id="cookie-title" className="text-base font-semibold">
-          Usamos cookies
+          {x.title}
         </h2>
         <p className="mt-2 text-sm leading-relaxed">
-          Usamos cookies necesarias para que la web funcione. Con tu permiso, también
-          usaremos cookies de análisis y de marketing. Puedes aceptarlas, rechazarlas o elegir cuáles.
-          Más información en la{" "}
-          <Link href="/cookies" className="underline underline-offset-2">
-            política de cookies
+          {x.body}{" "}
+          <Link href={x.href} className="underline underline-offset-2">
+            {x.link}
           </Link>
           .
         </p>
 
         {settings && (
           <fieldset className="mt-4 space-y-3 text-sm">
-            <legend className="sr-only">Tipos de cookies</legend>
+            <legend className="sr-only">{x.types}</legend>
             <label className="flex items-start gap-3">
               <input type="checkbox" checked disabled className="mt-1 size-4" />
               <span>
-                <strong>Necesarias</strong> — seguridad y esta elección. Siempre activas.
+                <strong>{x.nec}</strong> — {x.necD}
               </span>
             </label>
             <label className="flex items-start gap-3">
@@ -95,7 +100,7 @@ export default function CookieBanner() {
                 className="mt-1 size-4"
               />
               <span>
-                <strong>Análisis</strong> — nos ayudan a saber qué páginas se visitan.
+                <strong>{x.an}</strong> — {x.anD}
               </span>
             </label>
             <label className="flex items-start gap-3">
@@ -106,7 +111,7 @@ export default function CookieBanner() {
                 className="mt-1 size-4"
               />
               <span>
-                <strong>Marketing</strong> — miden nuestros anuncios.
+                <strong>{x.mk}</strong> — {x.mkD}
               </span>
             </label>
           </fieldset>
@@ -114,19 +119,19 @@ export default function CookieBanner() {
 
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <button type="button" className={btn} onClick={() => decide(false, false)}>
-            Rechazar
+            {x.reject}
           </button>
           {settings ? (
             <button type="button" className={btn} onClick={() => decide(analytics, marketing)}>
-              Guardar selección
+              {x.save}
             </button>
           ) : (
             <button type="button" className={btn} onClick={() => setSettings(true)}>
-              Configurar
+              {x.config}
             </button>
           )}
           <button type="button" className={btn} onClick={() => decide(true, true)}>
-            Aceptar
+            {x.accept}
           </button>
         </div>
       </div>
@@ -134,14 +139,14 @@ export default function CookieBanner() {
   );
 }
 
-export function OpenCookieSettings({ className }: { className?: string }) {
+export function OpenCookieSettings({ className, label = "Configurar cookies" }: { className?: string; label?: string }) {
   return (
     <button
       type="button"
       className={className}
       onClick={() => window.dispatchEvent(new Event("ilu:open-cookies"))}
     >
-      Configurar cookies
+      {label}
     </button>
   );
 }

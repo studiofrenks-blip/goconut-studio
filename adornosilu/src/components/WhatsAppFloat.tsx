@@ -1,3 +1,7 @@
+"use client";
+import { useEffect, useRef } from "react";
+import { t } from "@/lib/dict";
+import type { Lang } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
 export function WhatsAppIcon({ className = "size-5" }: { className?: string }) {
@@ -8,15 +12,25 @@ export function WhatsAppIcon({ className = "size-5" }: { className?: string }) {
   );
 }
 
-export default function WhatsAppFloat() {
+// Burbuja en colores de marca. Se esconde cuando ya hay otro botón de WhatsApp a la vista.
+export default function WhatsAppFloat({ lang }: { lang: Lang }) {
+  const d = t(lang);
+  const ref = useRef<HTMLAnchorElement>(null);
+  useEffect(() => {
+    const visible = new Set<Element>();
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+      ref.current?.setAttribute("data-hidden", visible.size ? "1" : "0");
+    });
+    const watch = () => document.querySelectorAll("[data-wa]").forEach((el) => io.observe(el));
+    watch();
+    const mo = new MutationObserver(watch);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => { io.disconnect(); mo.disconnect(); };
+  }, []);
   return (
-    <a
-      href={`https://wa.me/${site.company.whatsapp}?text=${encodeURIComponent("Hola, quiero información sobre sus productos.")}`}
-      target="_blank"
-      rel="noopener"
-      aria-label="Escríbenos por WhatsApp"
-      className="wa-float fixed bottom-24 right-4 z-30 sm:bottom-5 sm:right-5 grid size-14 place-items-center rounded-full bg-[#25d366] text-white shadow-[0_10px_30px_rgba(0,0,0,.25)] transition-transform hover:scale-105"
-    >
+    <a ref={ref} href={`https://wa.me/${site.company.whatsapp}?text=${encodeURIComponent(d.whatsappMsg)}`} target="_blank" rel="noopener" aria-label={d.whatsappCta}
+      className="wa-float fixed bottom-5 right-4 z-30 grid size-14 place-items-center rounded-full border border-[var(--accent)]/40 bg-[#6f1321] text-[var(--accent)] shadow-[0_10px_30px_rgba(0,0,0,.4)] transition-[opacity,transform] duration-300 sm:right-6">
       <WhatsAppIcon className="size-7" />
     </a>
   );
