@@ -1,3 +1,4 @@
+import PageHero from "@/components/PageHero";
 import ContactForm from "@/components/ContactForm";
 import { href, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
@@ -20,13 +21,7 @@ export default async function Contact({ params }: P) {
 
   return (
     <>
-      <section className="page-hero">
-        <div className="wrap">
-          <p className="kicker">{t["contact.kicker"]}</p>
-          <h1 className="h-xl">{t["contact.h1"]}</h1>
-          <p className="lead">{t["contact.lead"]}</p>
-        </div>
-      </section>
+      <PageHero kicker={t["contact.kicker"]} title={t["contact.h1"]} lead={t["contact.lead"]} watermark="Hola" size="xl" />
       <section className="wrap contact-grid">
         <ContactForm
           locale={lang}

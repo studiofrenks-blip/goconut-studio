@@ -7,17 +7,15 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
-  eyebrow: string;
-  h1a: string;
-  h1b: string;
-  lead: string;
-  primary: { href: string; label: string };
-  secondary: { href: string; label: string };
-  scrollHint: string;
-  imgAlt: string;
+  kicker: string;
+  a: string;
+  b: string;
+  body: string;
+  cta: { href: string; label: string };
+  img: { src: string; alt: string };
 };
 
-export default function HeroExpand(p: Props) {
+export default function ExpandReveal(p: Props) {
   const ref = useRef<HTMLElement>(null);
   const [isStatic, setStatic] = useState(false);
   const [live, setLive] = useState(false);
@@ -30,29 +28,28 @@ export default function HeroExpand(p: Props) {
       return;
     }
     let raf = 0;
-    // Hueco libre entre las dos mitades del titular: ahí va la foto pequeña.
     let small = 0.3;
     let offY = 0;
+    const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    // Hueco libre entre las dos mitades del titular: ahí va la foto pequeña.
     const measure = () => {
-      const a = el.querySelector<HTMLElement>(".line.a");
-      const b = el.querySelector<HTMLElement>(".line.b");
+      const a = el.querySelector<HTMLElement>(".xr-line.a");
+      const b = el.querySelector<HTMLElement>(".xr-line.b");
       if (!a || !b) return;
       const vh = window.innerHeight;
       const top = a.offsetTop + a.offsetHeight + 20;
       const bottom = b.offsetTop - 20;
-      const gap = Math.max(80, bottom - top);
-      small = Math.min(0.55, Math.max(0.16, gap / vh));
+      small = Math.min(0.55, Math.max(0.16, (bottom - top) / vh));
       offY = (top + bottom) / 2 - vh / 2;
     };
-    const clamp = (v: number) => Math.min(1, Math.max(0, v));
-    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
     const update = () => {
       raf = 0;
       const r = el.getBoundingClientRect();
       const total = el.offsetHeight - window.innerHeight;
       const prog = clamp(-r.top / (total || 1));
-      const grow = ease(clamp(prog / 0.6)); // 0 → 0.6: la foto crece
-      const after = clamp((prog - 0.55) / 0.3); // 0.55 → 0.85: aparece el texto
+      const grow = ease(clamp(prog / 0.6));
+      const after = clamp((prog - 0.55) / 0.3);
       el.style.setProperty("--hs", String(small + (1 - small) * grow));
       el.style.setProperty("--hy", String(offY * (1 - grow)));
       el.style.setProperty("--hr", String(28 * (1 - grow)));
@@ -81,44 +78,26 @@ export default function HeroExpand(p: Props) {
     };
   }, []);
 
+  const on = live || isStatic;
   return (
-    <section className="hero" ref={ref} data-static={isStatic ? "1" : "0"} aria-labelledby="hero-title">
-      <div className="hero-stage">
-        <div className="hero-glow" />
-        <div className="hero-eyebrow wrap">
-          <span>{p.eyebrow}</span>
+    <section className="xr" ref={ref} data-static={isStatic ? "1" : "0"} aria-labelledby="xr-title">
+      <div className="xr-stage">
+        <div className="xr-media">
+          <Image src={p.img.src} alt={p.img.alt} fill sizes="100vw" />
         </div>
-        <div className="hero-media">
-          <Image
-            src="/img/show-en-directo-publico.jpg"
-            alt={p.imgAlt}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: "cover" }}
-          />
+        <div className="xr-title wrap">
+          <p className="kicker xr-kicker">{p.kicker}</p>
+          <h2 id="xr-title">
+            <span className="xr-line a">{p.a}</span> <span className="xr-line b">{p.b}</span>
+          </h2>
         </div>
-        <div className="hero-title wrap">
-          <h1 id="hero-title">
-            <span className="line a">{p.h1a}</span> <span className="line b grad-text">{p.h1b}</span>
-          </h1>
-        </div>
-        <div className="hero-after" data-live={live || isStatic ? "1" : "0"}>
+        <div className="xr-after" data-live={on ? "1" : "0"}>
           <div className="wrap">
-            <p className="lead">{p.lead}</p>
-            <div className="ctas">
-              <Link className="btn btn-lime" href={p.primary.href} tabIndex={live || isStatic ? 0 : -1}>
-                {p.primary.label} <span className="arrow" aria-hidden="true">→</span>
-              </Link>
-              <Link className="btn btn-ghost" href={p.secondary.href} tabIndex={live || isStatic ? 0 : -1}>
-                {p.secondary.label}
-              </Link>
-            </div>
+            <p className="xr-body">{p.body}</p>
+            <Link className="btn btn-lime btn-xl" href={p.cta.href} tabIndex={on ? 0 : -1}>
+              {p.cta.label} <span className="arrow" aria-hidden="true">→</span>
+            </Link>
           </div>
-        </div>
-        <div className="scroll-hint" aria-hidden="true">
-          {p.scrollHint}
-          <i />
         </div>
       </div>
     </section>

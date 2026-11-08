@@ -51,8 +51,14 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
         <div className="orbit-ping b" />
         <div className="orbit-core" aria-live="polite">
           <div>
-            <strong>{cur ? cur.label : core}</strong>
-            {cur && <p>{cur.text}</p>}
+            {cur ? (
+              <>
+                <strong>{cur.label}</strong>
+                <p>{cur.text}</p>
+              </>
+            ) : (
+              <img src="/img/ideaholiks-logo.svg" alt={core} width={150} height={64} className="orbit-logo" />
+            )}
           </div>
         </div>
         {items.map((it, i) => (
@@ -61,7 +67,7 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
             ref={(n) => {
               nodes.current[i] = n;
             }}
-            className="orbit-node"
+            className={`orbit-node n${i + 1}`}
             aria-pressed={active === i}
             onClick={() => setActive((v) => (v === i ? -1 : i))}
           >

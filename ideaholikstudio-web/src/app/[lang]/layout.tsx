@@ -5,11 +5,17 @@ import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
+import Cursor from "@/components/Cursor";
 import { href, isLocale, locales, siteUrl, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
 import { JsonLd, orgJsonLd } from "@/lib/seo";
 
-const display = localFont({ src: "../../fonts/bricolage.woff2", variable: "--font-display", display: "swap", weight: "200 800" });
+const display = localFont({
+  src: [{ path: "../../fonts/bricolage.woff2", weight: "200 800", style: "normal" }],
+  variable: "--font-display",
+  display: "swap",
+  declarations: [{ prop: "font-stretch", value: "75% 100%" }],
+});
 const sans = localFont({ src: "../../fonts/inter.woff2", variable: "--font-sans", display: "swap", weight: "100 900" });
 
 export const revalidate = 300;
@@ -68,6 +74,7 @@ export default async function LangLayout({ children, params }: { children: React
             more: t["cookies.more"],
           }}
         />
+        <Cursor />
         <JsonLd data={orgJsonLd(locale)} />
       </body>
     </html>

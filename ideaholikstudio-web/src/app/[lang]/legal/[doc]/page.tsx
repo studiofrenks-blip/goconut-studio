@@ -1,3 +1,4 @@
+import PageHero from "@/components/PageHero";
 import { notFound } from "next/navigation";
 import { legal, lastUpdated, PENDING } from "@/content/legal";
 import { type Locale } from "@/lib/i18n";
@@ -45,13 +46,7 @@ export default async function LegalPage({ params }: P) {
   });
   return (
     <>
-      <section className="page-hero">
-        <div className="wrap">
-          <p className="kicker">Legal</p>
-          <h1 className="h-lg">{d.title}</h1>
-          <p className="lead">{d.intro}</p>
-        </div>
-      </section>
+      <PageHero kicker="Legal" title={d.title} lead={d.intro} />
       <article className="wrap legal">
         {d.sections.map((s) => (
           <section key={s.h}>

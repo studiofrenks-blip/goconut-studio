@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import PageHero from "@/components/PageHero";
+import ScrollFill from "@/components/ScrollFill";
+import LightThreads from "@/components/LightThreads";
 import CtaBand from "@/components/CtaBand";
 import { href, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
@@ -22,18 +25,28 @@ export default async function About({ params }: P) {
   ];
   return (
     <>
-      <section className="page-hero">
-        <div className="wrap">
-          <p className="kicker">{t["about.kicker"]}</p>
-          <h1 className="h-lg">{t["about.h1"]}</h1>
-        </div>
+      <PageHero kicker={t["about.kicker"]} title={t["about.h1"]} watermark="Ideaholiks" />
+
+      <section className="wrap about-fill">
+        <ScrollFill className="fill-lg" text={t["about.p1"]} />
+        <Reveal className="about-p2">
+          <p className="lead">{t["about.p2"]}</p>
+        </Reveal>
       </section>
 
-      <section className="wrap">
-        <Reveal className="prose-cols">
-          <p>{t["about.p1"]}</p>
-          <p>{t["about.p2"]}</p>
-        </Reveal>
+      <section className="section flow-sec" aria-labelledby="flow-title">
+        <div className="wrap flow-grid">
+          <Reveal>
+            <p className="kicker">{t["about.flowKicker"]}</p>
+            <h2 id="flow-title" className="mega">
+              {t["about.flowTitle"]}
+            </h2>
+            <p className="lead" style={{ marginTop: 26 }}>
+              {t["about.flowBody"]}
+            </p>
+          </Reveal>
+          <LightThreads center="Ideaholiks Studio" nodes={[t["about.flow1"], t["about.flow2"], t["about.flow3"], t["about.flow4"]]} />
+        </div>
       </section>
 
       <section className="section manifesto" aria-label={lang === "es" ? "Manifiesto" : "Manifesto"}>
@@ -52,7 +65,7 @@ export default async function About({ params }: P) {
         <div className="wrap">
           <Reveal>
             <p className="kicker">{t["about.teamKicker"]}</p>
-            <h2 id="team-title" className="h-lg">
+            <h2 id="team-title" className="mega">
               {t["about.teamTitle"]}
             </h2>
             <p className="lead" style={{ marginTop: 20 }}>

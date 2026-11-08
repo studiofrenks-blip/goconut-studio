@@ -1,10 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
-import HeroExpand from "@/components/HeroExpand";
+import SpotlightHero from "@/components/SpotlightHero";
+import Tapes from "@/components/Tapes";
+import ScrollFill from "@/components/ScrollFill";
 import Orbit from "@/components/Orbit";
-import SpotlightCards from "@/components/SpotlightCards";
+import StackServices from "@/components/StackServices";
+import ExpandReveal from "@/components/ExpandReveal";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
+import Globe from "@/components/Globe";
 import { href, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
 import { pageMeta } from "@/lib/seo";
@@ -20,117 +23,101 @@ export async function generateMetadata({ params }: P) {
 export default async function Home({ params }: P) {
   const { lang } = await params;
   const t = await getTexts(lang);
-  const words = [t["home.trait1"], t["nav.work"], t["home.trait4"], "Branding", "Web", "Shows", t["home.trait2"], "CRM", t["home.trait3"]];
+  const n4 = [1, 2, 3, 4] as const;
 
   return (
     <>
-      <HeroExpand
+      <SpotlightHero
         eyebrow={t["home.eyebrow"]}
-        h1a={t["home.h1a"]}
-        h1b={t["home.h1b"]}
+        titleA={t["home.titleA"]}
+        rotPrefix={t["home.rotPrefix"]}
+        words={[t["home.rot1"], t["home.rot2"], t["home.rot3"]]}
+        fullTitle={`${t["home.h1a"]} ${t["home.h1b"]}`}
         lead={t["home.lead"]}
         primary={{ href: href(lang, "contact"), label: t["home.ctaPrimary"] }}
         secondary={{ href: href(lang, "work"), label: t["home.ctaSecondary"] }}
-        scrollHint={t["home.scrollHint"]}
+        stickers={n4.map((n) => t[`home.sticker${n}`])}
+        hint={t["home.spotHint"]}
         imgAlt={t["home.heroAlt"]}
       />
 
-      <section className="section" aria-labelledby="who-title">
-        <div className="wrap who">
-          <Reveal>
-            <p className="kicker">{t["home.whoKicker"]}</p>
-            <h2 id="who-title" className="h-lg">
-              {t["home.whoTitle"]}
-            </h2>
-            <p className="lead">{t["home.whoBody"]}</p>
-          </Reveal>
-          <Reveal delay={120}>
+      <Tapes
+        a={[t["home.trait1"], "Branding", t["home.trait4"], "Web & CRM", t["home.trait2"], "Influencers"]}
+        b={["Shows", t["home.trait3"], "Live", "Content", t["home.rot1"], "Ideaholiks"]}
+      />
+
+      <section className="section who-sec" aria-labelledby="who-title">
+        <div className="wrap">
+          <p className="kicker">{t["home.whoKicker"]}</p>
+          <h2 id="who-title" className="mega">
+            {t["home.whoTitle"]}
+          </h2>
+          <div className="who">
+            <ScrollFill className="who-fill" text={t["home.whoBody"]} />
             <Orbit
               core={t["home.orbitCore"]}
               hint={t["home.orbitHint"]}
-              items={[1, 2, 3, 4].map((n) => ({
-                label: t[`home.trait${n}` as "home.trait1"],
-                text: t[`home.trait${n}Text` as "home.trait1Text"],
-              }))}
+              items={n4.map((n) => ({ label: t[`home.trait${n}`], text: t[`home.trait${n}Text`] }))}
             />
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {[...words, ...words].map((w, i) => (
-            <span key={i}>{w} ✦</span>
-          ))}
-        </div>
-      </div>
-
-      <section className="section" id="servicios" aria-labelledby="services-title">
+      <section className="section services-sec" id="servicios" aria-labelledby="services-title">
         <div className="wrap">
           <Reveal className="services-head">
             <div>
               <p className="kicker">{t["home.servicesKicker"]}</p>
-              <h2 id="services-title" className="h-lg">
+              <h2 id="services-title" className="mega">
                 {t["home.servicesTitle"]}
               </h2>
             </div>
             <p className="lead">{t["home.servicesBody"]}</p>
           </Reveal>
-          <SpotlightCards
-            cards={[1, 2, 3, 4].map((n) => ({
-              title: t[`home.s${n}Title` as "home.s1Title"],
-              text: t[`home.s${n}Text` as "home.s1Text"],
-            }))}
+          <StackServices
+            cards={n4.map((n) => ({ title: t[`home.s${n}Title`], text: t[`home.s${n}Text`], tags: t[`home.servicesTags${n}`] }))}
           />
         </div>
       </section>
 
-      <section className="section" aria-labelledby="stage-title" style={{ paddingTop: 0 }}>
-        <div className="wrap">
-          <Reveal className="stage-intro">
-            <div>
-              <p className="kicker">{t["home.showKicker"]}</p>
-              <h2 id="stage-title" className="h-lg">
-                {t["home.showTitle"]}
-              </h2>
-            </div>
-            <div>
-              <p className="lead">{t["home.showBody"]}</p>
-              <p style={{ marginTop: 26 }}>
-                <Link className="btn btn-ghost" href={href(lang, "work")}>
-                  {t["home.showCta"]} <span className="arrow" aria-hidden="true">→</span>
-                </Link>
-              </p>
-            </div>
+      <ExpandReveal
+        kicker={t["home.showKicker"]}
+        a={t["home.stageA"]}
+        b={t["home.stageB"]}
+        body={t["home.showBody"]}
+        cta={{ href: href(lang, "work"), label: t["home.showCta"] }}
+        img={{ src: "/img/manu-alerod-escenario.jpg", alt: t["home.stageAlt"] }}
+      />
+
+      <section className="section crew-sec" aria-label={t["work.p3Title"]}>
+        <div className="wrap crew">
+          <Reveal className="crew-photo">
+            <Image src="/img/personajes-del-show.png" alt={t["work.p3Alt"]} width={853} height={935} sizes="(max-width: 760px) 90vw, 40vw" />
           </Reveal>
-          <div className="stage-grid">
-            <Reveal as="figure" className="tall">
-              <Image
-                src="/img/personajes-del-show.png"
-                alt={t["work.p3Alt"]}
-                width={853}
-                height={935}
-                sizes="(max-width: 760px) 100vw, 55vw"
-              />
-            </Reveal>
-            <Reveal as="figure" delay={100}>
-              <Image
-                src="/img/manu-alerod-escenario.jpg"
-                alt={t["work.p2Alt"]}
-                width={2000}
-                height={1334}
-                sizes="(max-width: 760px) 100vw, 42vw"
-              />
-            </Reveal>
-            <Reveal as="figure" delay={200}>
-              <Image
-                src="/img/show-en-directo-publico.jpg"
-                alt={t["work.p1Alt"]}
-                width={2000}
-                height={1414}
-                sizes="(max-width: 760px) 100vw, 42vw"
-              />
-            </Reveal>
+          <Reveal className="crew-text" delay={120}>
+            <p className="kicker">{t["work.p3Tag"]}</p>
+            <h2 className="mega">{t["work.p3Title"]}</h2>
+            <p className="lead">{t["work.p3Text"]}</p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section globe-sec" aria-labelledby="globe-title">
+        <div className="wrap globe-grid">
+          <Reveal>
+            <p className="kicker">{t["home.globeKicker"]}</p>
+            <h2 id="globe-title" className="mega">
+              {t["home.globeTitle"]}
+            </h2>
+            <p className="lead" style={{ marginTop: 26 }}>
+              {t["home.globeBody"]}
+            </p>
+          </Reveal>
+          <div className="globe-wrap">
+            <Globe label={t["home.globeLabel"]} />
+            <p className="globe-hint" aria-hidden="true">
+              ✦ {t["home.globeHint"]}
+            </p>
           </div>
         </div>
       </section>

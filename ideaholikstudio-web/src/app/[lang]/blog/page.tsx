@@ -1,3 +1,4 @@
+import PageHero from "@/components/PageHero";
 import Image from "next/image";
 import Link from "next/link";
 import { href, type Locale } from "@/lib/i18n";
@@ -22,13 +23,7 @@ export default async function Blog({ params }: P) {
   const fmt = new Intl.DateTimeFormat(lang === "es" ? "es-ES" : "en-GB", { day: "numeric", month: "long", year: "numeric" });
   return (
     <>
-      <section className="page-hero">
-        <div className="wrap">
-          <p className="kicker">{t["blog.kicker"]}</p>
-          <h1 className="h-xl">{t["blog.h1"]}</h1>
-          <p className="lead">{t["blog.lead"]}</p>
-        </div>
-      </section>
+      <PageHero kicker={t["blog.kicker"]} title={t["blog.h1"]} lead={t["blog.lead"]} watermark="Blog" size="xl" />
       <section className="wrap">
         {posts.length === 0 ? (
           <div className="empty">

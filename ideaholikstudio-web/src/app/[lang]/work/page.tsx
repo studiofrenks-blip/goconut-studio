@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import PageHero from "@/components/PageHero";
 import CtaBand from "@/components/CtaBand";
 import { href, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
@@ -23,13 +24,7 @@ export default async function Work({ params }: P) {
   ];
   return (
     <>
-      <section className="page-hero">
-        <div className="wrap">
-          <p className="kicker">{t["work.kicker"]}</p>
-          <h1 className="h-xl">{t["work.h1"]}</h1>
-          <p className="lead">{t["work.lead"]}</p>
-        </div>
-      </section>
+      <PageHero kicker={t["work.kicker"]} title={t["work.h1"]} lead={t["work.lead"]} watermark="Shows" size="xl" />
       <section className="wrap work-list">
         {items.map(({ n, src, w, h }) => (
           <Reveal as="article" className="work-item" key={n}>
@@ -37,6 +32,7 @@ export default async function Work({ params }: P) {
               <Image src={src} alt={t[`work.p${n}Alt` as "work.p1Alt"]} width={w} height={h} sizes="(max-width: 760px) 100vw, 58vw" />
             </div>
             <div>
+              <span className="work-num" aria-hidden="true">0{n}</span>
               <span className="tag">{t[`work.p${n}Tag` as "work.p1Tag"]}</span>
               <h2>{t[`work.p${n}Title` as "work.p1Title"]}</h2>
               <p>{t[`work.p${n}Text` as "work.p1Text"]}</p>
