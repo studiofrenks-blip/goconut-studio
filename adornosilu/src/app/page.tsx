@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { categories } from "@/lib/products";
+import HeroExpand from "@/components/HeroExpand";
+import ProductCard from "@/components/ProductCard";
+import { categories, getProduct } from "@/lib/products";
+
+const featured = ["pino-monterrey-pm", "pino-canadian-king-pck", "corona-canadian-king-rck", "guirnalda-canadian-king"].map((s) => getProduct(s)!);
 
 const steps = [
   { n: "01", t: "Diseños únicos", d: "Creamos estilos únicos adaptados a las tendencias y a las necesidades de cada cliente." },
@@ -12,40 +16,20 @@ const steps = [
 export default function Home() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 pb-20 pt-16 sm:px-6 sm:pt-24">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--gold-ink)]">
-          Más de 60 años de tradición
-        </p>
-        <h1 className="font-display mt-4 max-w-3xl text-4xl leading-tight sm:text-6xl">
-          El lugar donde nace la Navidad en Venezuela
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed">
-          Adornos ILU es una marca venezolana dedicada a llenar cada rincón del país con la magia, el
-          color y la emoción de la Navidad. Transformamos simples espacios en escenarios llenos de luz
-          y recuerdos inolvidables.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/catalogo" className="rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-[var(--paper)]">
-            Ver productos
-          </Link>
-          <Link href="/nosotros" className="rounded-full border-2 border-[var(--ink)] px-6 py-3 text-sm font-semibold">
-            Nuestra historia
-          </Link>
-        </div>
-      </section>
+      <HeroExpand />
 
-      <section aria-labelledby="cats" className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 id="cats" className="font-display text-3xl">Nuestros productos</h2>
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {categories.map((c) => (
-            <li key={c.slug}>
-              <Link href={`/catalogo/${c.slug}`} className="block h-full rounded-2xl border border-[var(--line)] p-6 hover:border-[var(--gold)]">
-                <h3 className="font-display text-xl">{c.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed">{c.intro}</p>
-              </Link>
-            </li>
-          ))}
+      <section aria-labelledby="cats" className="mx-auto max-w-6xl px-4 pt-20 sm:px-6">
+        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--gold-ink)]">Pinos, coronas y guirnaldas</p>
+        <h2 id="cats" className="font-display mt-2 text-4xl sm:text-5xl">Nuestros productos</h2>
+        <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+          {featured.map((p) => <li key={p.slug}><ProductCard p={p} /></li>)}
         </ul>
+        <div className="mt-8 flex flex-wrap gap-2">
+          {categories.map((c) => (
+            <Link key={c.slug} href={`/catalogo/${c.slug}`} className="rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm hover:border-[var(--gold)]">{c.name}</Link>
+          ))}
+          <Link href="/catalogo" className="rounded-full bg-[var(--night)] px-4 py-2 text-sm text-white">Ver todo el catálogo →</Link>
+        </div>
       </section>
 
       <section aria-labelledby="proceso" className="mx-auto mt-24 max-w-6xl px-4 sm:px-6">
@@ -65,7 +49,7 @@ export default function Home() {
         </ol>
       </section>
 
-      <section aria-labelledby="gigantes" className="mx-auto mt-24 max-w-6xl rounded-3xl bg-[var(--ink)] px-6 py-14 text-[var(--paper)] sm:px-12">
+      <section aria-labelledby="gigantes" className="mx-auto mt-24 max-w-6xl rounded-3xl bg-[var(--night)] px-6 py-14 text-[var(--paper)] sm:px-12">
         <div className="grid items-center gap-10 lg:grid-cols-2">
         <div>
         <h2 id="gigantes" className="font-display text-3xl sm:text-4xl">Pinos gigantes de hasta 20 metros</h2>

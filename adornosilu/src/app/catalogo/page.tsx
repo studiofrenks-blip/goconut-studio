@@ -18,7 +18,7 @@ export default function Catalogo() {
           <Link key={c.slug} href={`/catalogo/${c.slug}`} className="rounded-full border border-[var(--line)] px-4 py-2 text-sm hover:border-[var(--gold)]">{c.name}</Link>
         ))}
       </nav>
-      <ul className="mt-10 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
         {products.map((p) => <li key={p.slug}><ProductCard p={p} /></li>)}
       </ul>
     </section>

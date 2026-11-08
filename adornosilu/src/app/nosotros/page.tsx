@@ -33,7 +33,7 @@ export default function Nosotros() {
         </p>
       </div>
       {/* PENDIENTE: collage con fotos de la planta y del personal (indicación del documento). */}
-      <Link href="/catalogo" className="mt-10 inline-block rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-[var(--paper)]">
+      <Link href="/catalogo" className="mt-10 inline-block rounded-full bg-[var(--night)] px-6 py-3 text-sm font-semibold text-[var(--paper)]">
         Ver productos
       </Link>
     </article>

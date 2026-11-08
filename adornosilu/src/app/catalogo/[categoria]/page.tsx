@@ -21,7 +21,7 @@ export default async function Categoria({ params }: { params: Promise<{ categori
       <nav aria-label="Migas de pan" className="text-sm"><Link href="/catalogo" className="underline-offset-2 hover:underline">Catálogo</Link> / {c.name}</nav>
       <h1 className="font-display mt-3 text-4xl sm:text-5xl">{c.title}</h1>
       <p className="mt-4 max-w-2xl text-lg">{c.intro}</p>
-      <ul className="mt-10 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
         {productsIn(c.slug).map((p) => <li key={p.slug}><ProductCard p={p} /></li>)}
       </ul>
     </section>

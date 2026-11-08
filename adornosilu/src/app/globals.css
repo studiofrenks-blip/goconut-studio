@@ -1,31 +1,34 @@
 @import "tailwindcss";
 
-/* Tokens provisionales: el diseño definitivo llega con las fotos y el Kit Frenks. */
+/* Identidad Adornos ILU: verde noche del logo, crema, blanco y el dorado de la estrella. */
 :root {
-  --paper: #fbf8f2;
-  --ink: #14261d;
-  --line: #e4ddcf;
-  --gold: #c9a24a;
-  --gold-ink: #8a6a1f;
+  --night: #0f1f17;
+  --night-2: #183226;
+  --paper: #f7f3ea;
+  --ink: #12261c;
+  --line: #e2dccd;
+  --gold: #d4ae55;
+  --gold-ink: #7f611c;
   --berry: #8f1d2c;
 }
 
 @theme inline {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", Georgia, serif;
 }
 
-html {
-  scroll-behavior: smooth;
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
+.font-display { font-family: var(--font-display); font-optical-sizing: auto; }
+
+/* Animación 1 del Kit Frenks: tarjetas que se encienden siguiendo el puntero. */
+.spot { position: relative; isolation: isolate; }
+.spot::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; z-index: -1; pointer-events: none;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--gold) 75%, transparent), transparent 70%);
+  opacity: var(--on, 0); transition: opacity .3s;
 }
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-}
-.font-display {
-  font-family: var(--font-display);
-}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }

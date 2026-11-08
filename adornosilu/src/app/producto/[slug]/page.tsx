@@ -92,7 +92,7 @@ export default async function Producto({ params }: { params: Promise<{ slug: str
             <dt className="font-semibold">Material</dt><dd>PVC no inflamable, inodoro, que no se decolora</dd>
           </dl>
 
-          <a href={wa} target="_blank" rel="noopener" className="mt-8 inline-flex min-h-12 items-center rounded-full bg-[var(--ink)] px-7 text-sm font-semibold text-[var(--paper)]">
+          <a href={wa} target="_blank" rel="noopener" className="mt-8 inline-flex min-h-12 items-center rounded-full bg-[var(--night)] px-7 text-sm font-semibold text-[var(--paper)]">
             {p.quote ? "Pedir presupuesto por WhatsApp" : "Pedir por WhatsApp"}
           </a>
         </div>

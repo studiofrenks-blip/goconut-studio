@@ -5,7 +5,7 @@ import { OpenCookieSettings } from "./CookieBanner";
 export default function Footer() {
   const c = site.company;
   return (
-    <footer className="mt-24 border-t border-[var(--line)] bg-[var(--ink)] text-[var(--paper)]">
+    <footer className="mt-24 border-t border-[var(--line)] bg-[var(--night)] text-[var(--paper)]">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6">
         <div className="text-sm leading-relaxed">
           <p className="font-display text-lg">{site.name}</p>

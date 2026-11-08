@@ -55,7 +55,7 @@ export default function CookieBanner() {
 
   // Rechazar y Aceptar comparten exactamente el mismo estilo, tamaño y posición jerárquica.
   const btn =
-    "min-h-11 flex-1 rounded-full border-2 border-[var(--ink)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--ink)] hover:text-[var(--paper)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gold)]";
+    "min-h-11 flex-1 rounded-full border-2 border-[var(--ink)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--night)] hover:text-[var(--paper)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gold)]";
 
   return (
     <div

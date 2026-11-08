@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { chromium, devices } = require('playwright');
 const B=process.env.QA_URL||'http://localhost:3100';
 (async () => {
@@ -17,6 +18,6 @@ const B=process.env.QA_URL||'http://localhost:3100';
   // redirecciones WP
   for(const u of ['/product/guirnaldas-flexible/','/product/pino-monterrey-pm/','/productos/','/product-category/pinos-navidenos/','/home/']){const r=await p.request.get(B+u,{maxRedirects:0}); console.log('redir',u,r.status(),r.headers()['location']);}
   // enlaces externos
-  for(const u of [...new Set([].concat(...[]))]){}
+  
   await b.close();
 })();

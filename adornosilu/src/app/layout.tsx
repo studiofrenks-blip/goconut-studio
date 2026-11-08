@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/fraunces";
+import "@fontsource-variable/dm-sans";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
   robots: site.indexable ? { index: true, follow: true } : { index: false, follow: false },
 };
 
-export const viewport: Viewport = { themeColor: "#14261d", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#0f1f17", width: "device-width", initialScale: 1 };
 
 const orgJsonLd = {
   "@context": "https://schema.org",
