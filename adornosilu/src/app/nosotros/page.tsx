@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import CtaBand from "@/components/CtaBand";
+import Marquee from "@/components/Marquee";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 
@@ -20,8 +21,15 @@ const values = [
 export default function Nosotros() {
   return (
     <>
-      <PageHero eyebrow="Nosotros" title="Más de 60 años iluminando la Navidad en Venezuela" image="/marca/pino-gigante-patio.jpg"
-        text="Somos fabricantes. Una empresa familiar que transforma espacios en escenarios llenos de luz y recuerdos." />
+      <PageHero eyebrow="Nosotros · desde hace +60 años" before="Fabricamos" pill="/marca/pino-gigante-plaza.jpg" after="la Navidad."
+        text="Una empresa familiar venezolana que transforma espacios en escenarios llenos de luz y recuerdos."
+        images={[
+          { src: "/marca/montaje-pino-gigante.jpg", alt: "Equipo de Adornos ILU montando la estructura de un pino gigante" },
+          { src: "/marca/pino-gigante-patio.jpg", alt: "Pino gigante decorado en un patio colonial" },
+          { src: "/productos/pino-monterrey-pm/pino-monterrey-pm-4.jpg", alt: "Detalle de las ramas del pino Monterrey" },
+        ]} />
+
+      <div className="mt-20"><Marquee items={["Tradición", "Calidad", "Hecho en Venezuela", "Hasta 20 metros", "Desde hace +60 años"]} /></div>
 
       <section className="mx-auto mt-24 grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center">
         <Reveal className="grid grid-cols-2 gap-3">

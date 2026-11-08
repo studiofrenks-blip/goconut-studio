@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/inter-tight";
+import "@fontsource-variable/inter";
 import "@fontsource-variable/fraunces";
-import "@fontsource-variable/dm-sans";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";

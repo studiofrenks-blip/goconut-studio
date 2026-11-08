@@ -20,12 +20,12 @@ export default async function Categoria({ params }: { params: Promise<{ categori
   if (!c) notFound();
   return (
     <>
-      <PageHero eyebrow="Catálogo" title={c.title} text={c.intro}>
+      <PageHero eyebrow="Catálogo" before={c.title} text={c.intro}>
         <nav aria-label="Categorías" className="mt-8 flex flex-wrap gap-2">
-          <Link href="/catalogo" className="rounded-full border border-white/30 px-4 py-2 text-sm hover:border-[var(--gold)]">Todo</Link>
+          <Link href="/catalogo" className="rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm hover:border-[var(--gold)]">Todo</Link>
           {categories.map((k) => (
             <Link key={k.slug} href={`/catalogo/${k.slug}`} aria-current={k.slug === c.slug ? "page" : undefined}
-              className={`rounded-full px-4 py-2 text-sm ${k.slug === c.slug ? "bg-[var(--gold)] text-[var(--night)]" : "border border-white/30 hover:border-[var(--gold)]"}`}>{k.name}</Link>
+              className={`rounded-full px-4 py-2 text-sm ${k.slug === c.slug ? "bg-[var(--night)] text-white" : "border border-[var(--line)] bg-white hover:border-[var(--gold)]"}`}>{k.name}</Link>
           ))}
         </nav>
       </PageHero>

@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 export default function Catalogo() {
   return (
     <>
-      <PageHero eyebrow="Catálogo" title="Pinos, coronas y guirnaldas" text="Fabricados en Venezuela. Elige el modelo y te enviamos disponibilidad por WhatsApp.">
+      <PageHero eyebrow="Catálogo 2026" before="Pinos," pill="/productos/corona-canadian-king-rck/corona-canadian-king-rck-1.jpg" after="coronas y guirnaldas." text="Fabricados en Venezuela. Elige el modelo y te enviamos disponibilidad por WhatsApp.">
         <nav aria-label="Categorías" className="mt-8 flex flex-wrap gap-2">
           {categories.map((c) => (
-            <a key={c.slug} href={`#${c.slug}`} className="rounded-full border border-white/30 px-4 py-2 text-sm hover:border-[var(--gold)] hover:text-[var(--gold)]">{c.name}</a>
+            <a key={c.slug} href={`#${c.slug}`} className="rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm hover:border-[var(--gold)]">{c.name}</a>
           ))}
         </nav>
       </PageHero>
