@@ -5,7 +5,7 @@ import { crumbsLd, pageMeta } from "@/lib/seo";
 import Split from "@/components/Split";
 import CtaBlock from "@/components/CtaBlock";
 import JsonLd from "@/components/JsonLd";
-import ServiceCards from "@/components/ServiceCards";
+import ServiceList from "@/components/ServiceList";
 
 export const metadata = pageMeta({
   title: "Nosotros: la agencia creativa que hace crecer tu negocio",
@@ -34,6 +34,8 @@ export default async function Nosotros() {
             ))}
           </div>
           <div data-fx="01">
+            <p className="kicker">Nuestra historia</p>
+            <h2 className="h-lg" style={{ marginBottom: 24 }}>De la idea a la ejecución</h2>
             {a.body.map((p) => <p className="lead" key={p.slice(0, 20)} style={{ marginBottom: 24 }}>{p}</p>)}
           </div>
         </div>
@@ -51,7 +53,7 @@ export default async function Nosotros() {
         <div className="wrap">
           <p className="kicker">Qué hacemos</p>
           <h2 id="svc2-t" className="h-lg" data-fx="03" style={{ marginBottom: 48 }}><Split text="Seis disciplinas, un equipo" /></h2>
-          <ServiceCards items={services} />
+          <ServiceList items={services} />
         </div>
       </section>
       <CtaBlock title="¿Damos el siguiente paso juntos?" line="Una agencia que entiende lo que tu marca necesita. Cuéntanos tu proyecto." />

@@ -20,7 +20,7 @@ export default function Contacto() {
         <div className="wrap">
           <nav className="crumbs" aria-label="Migas de pan"><Link href="/">Inicio</Link>/<span aria-current="page">Contacto</span></nav>
           <p className="kicker">Hablemos de tu próximo proyecto</p>
-          <h1 data-fx="03"><Split text="Contáctanos" /> <span className="grad"><Split text="ya" offset={1} /></span></h1>
+          <h1 data-fx="03"><Split text="Contáctanos" /></h1>
           <p className="lead" data-fx="01">Cuéntanos tu marca, tus metas y tus ideas. Diseñaremos una propuesta estratégica que una creatividad, tecnología y resultados.</p>
         </div>
       </section>

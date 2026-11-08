@@ -62,7 +62,8 @@ export default async function ServicePage({ params }: P) {
 
       <section className="section section--tight" aria-labelledby="pitch-t">
         <div className="wrap">
-          <h2 id="pitch-t" className="h-lg" data-fx="03" style={{ maxWidth: "20ch" }}><Split text={s.pitchTitle} /></h2>
+          <p className="kicker">Qué incluye</p>
+          <h2 id="pitch-t" className="h-lg" data-fx="03" style={{ maxWidth: "26ch" }}><Split text={s.pitchTitle} /></h2>
           <p className="lead" data-fx="01" style={{ marginTop: 28 }}>{s.pitch}</p>
           <div className="groups" data-fx="06" style={{ marginTop: 56 }}>
             {s.groups.map((g) => (
@@ -78,7 +79,7 @@ export default async function ServicePage({ params }: P) {
       <section className="section" aria-labelledby="proc-t">
         <div className="wrap">
           <p className="kicker">Metodología</p>
-          <h2 id="proc-t" className="h-lg" data-fx="03" style={{ maxWidth: "18ch" }}><Split text={s.processTitle} /></h2>
+          <h2 id="proc-t" className="h-lg" data-fx="03" style={{ maxWidth: "26ch" }}><Split text={s.processTitle} /></h2>
           <ol className="steps" style={{ listStyle: "none", padding: 0 }}>
             {s.process.map((p) => (
               <li className="step" key={p.title}><h3>{p.title}</h3><p>{p.text}</p></li>
@@ -101,7 +102,7 @@ export default async function ServicePage({ params }: P) {
         <div className="wrap split" style={{ alignItems: "start" }}>
           <div>
             <p className="kicker">Preguntas frecuentes</p>
-            <h2 id="faq-t" className="h-md">Lo que suelen preguntarnos sobre {s.name.toLowerCase().replace("&", "y")}</h2>
+            <h2 id="faq-t" className="h-lg">Lo que suelen preguntarnos sobre {s.name.toLowerCase().replace("&", "y")}</h2>
           </div>
           <div className="faq">
             {s.faq.map((f) => (

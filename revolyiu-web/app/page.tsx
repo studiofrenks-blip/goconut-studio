@@ -6,7 +6,7 @@ import ServiceCards from "@/components/ServiceCards";
 import CtaBlock from "@/components/CtaBlock";
 import Split from "@/components/Split";
 import PostCard from "@/components/PostCard";
-import { Arrow, PillarIcon } from "@/components/Icons";
+import { Arrow } from "@/components/Icons";
 
 export const metadata = {
   ...pageMeta({
@@ -72,7 +72,7 @@ export default async function Home() {
           <div className="svc-head">
             <div>
               <p className="kicker">Nuestros servicios</p>
-              <h2 id="svc-t" className="h-lg" data-fx="03"><Split text="Todo lo que tu marca necesita," /> <span className="grad"><Split text="en un solo equipo" offset={5} /></span></h2>
+              <h2 id="svc-t" className="h-lg" data-fx="03"><Split text="Todo lo que tu marca necesita," /> <Split text="en un solo equipo" offset={5} /></h2>
             </div>
             <p className="lead" style={{ maxWidth: "38ch" }}>Seis disciplinas coordinadas para que estrategia, imagen y ejecución vayan en la misma dirección.</p>
           </div>
@@ -80,7 +80,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }} aria-labelledby="pil-t">
+      <section className="section" aria-labelledby="pil-t">
         <div className="wrap">
           <p className="kicker">{home.pillarsKicker}</p>
           <h2 id="pil-t" className="h-lg" data-fx="03"><Split text={home.pillarsTitle} /></h2>
@@ -88,7 +88,7 @@ export default async function Home() {
             {home.pillars.map((p, i) => (
               <article className="pillar" key={p.title}>
                 <span className="pillar__n">0{i + 1} / 03</span>
-                <PillarIcon n={i} />
+                <span className="pillar__ico3d"><img src={["/img/icono-Chess-Icon.svg", "/img/icono-megaphone.svg", "/img/icono-vector.svg"][i]} alt="" width="56" height="56" loading="lazy" /></span>
                 <h3>{p.title}</h3>
                 <p>{p.text}</p>
               </article>
@@ -124,7 +124,7 @@ export default async function Home() {
             <h2 id="ab-t" className="h-lg" data-fx="03"><Split text={home.aboutTitle} /></h2>
             <div data-fx="01" style={{ marginTop: 28 }}>
               {home.about.map((p) => <p className="muted" key={p.slice(0, 20)}>{p}</p>)}
-              <p style={{ fontSize: 20, margin: "24px 0 28px" }}><span className="grad">{home.motto}</span></p>
+              <p className="motto">{home.motto}</p>
               <Link href="/nosotros/" className="btn" data-magnetic>Conócenos mejor <Arrow /></Link>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default async function Home() {
       </section>
 
       {posts.length > 0 && (
-        <section className="section" style={{ paddingTop: 0 }} aria-labelledby="blog-t">
+        <section className="section" aria-labelledby="blog-t">
           <div className="wrap">
             <div className="svc-head">
               <div>
