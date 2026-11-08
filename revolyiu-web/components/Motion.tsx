@@ -42,7 +42,7 @@ export default function Motion() {
 
     // FX 07 magnético (solo con ratón)
     const fine = window.matchMedia("(pointer: fine)").matches;
-    const mags = fine ? Array.from(document.querySelectorAll<HTMLElement>("[data-magnetic]")) : [];
+    const mags: HTMLElement[] = []; void fine;
     const mm = (e: MouseEvent) => {
       const el = e.currentTarget as HTMLElement;
       const r = el.getBoundingClientRect();
@@ -61,26 +61,6 @@ export default function Motion() {
       mags.forEach((m) => { m.removeEventListener("mousemove", mm); m.removeEventListener("mouseleave", ml); });
     };
   }, [path]);
-
-  // Cursor propio: crece sobre enlaces (solo ratón)
-  useEffect(() => {
-    if (!window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
-    const c = document.querySelector<HTMLElement>(".cursor");
-    if (!c) return;
-    document.documentElement.classList.add("has-cursor");
-    let raf = 0;
-    const move = (e: PointerEvent) => {
-      c.classList.add("is-on");
-      const t = e.target as Element | null;
-      c.classList.toggle("is-big", !!t?.closest?.("a, button, summary, label"));
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => { c.style.left = `${e.clientX}px`; c.style.top = `${e.clientY}px`; });
-    };
-    const out = () => c.classList.remove("is-on");
-    window.addEventListener("pointermove", move, { passive: true });
-    document.addEventListener("pointerleave", out);
-    return () => { window.removeEventListener("pointermove", move); document.removeEventListener("pointerleave", out); document.documentElement.classList.remove("has-cursor"); };
-  }, []);
 
   return null;
 }

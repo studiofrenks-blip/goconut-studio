@@ -6,7 +6,7 @@ const base = process.env.BASE || "http://localhost:3100";
 const out = process.argv[2];
 const pages = (process.argv[3] || "/").split(",");
 const b = await chromium.launch();
-for (const [name, ctxOpts] of [["desk", { viewport: { width: 1440, height: 900 } }], ["mob", { ...devices["iPhone 13"] }]]) {
+for (const [name, ctxOpts] of [["desk", { viewport: { width: 1440, height: 900 } }], ["tab", { ...devices["iPad Mini"] }], ["mob", { ...devices["iPhone 13"] }]]) {
   const ctx = await b.newContext({ ...ctxOpts, reducedMotion: "no-preference" });
   const p = await ctx.newPage();
   for (const path of pages) {

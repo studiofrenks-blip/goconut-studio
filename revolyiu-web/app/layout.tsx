@@ -6,6 +6,7 @@ import CookieBanner from "@/components/CookieBanner";
 import Motion from "@/components/Motion";
 import JsonLd from "@/components/JsonLd";
 import { WhatsApp } from "@/components/Icons";
+import MobileBar from "@/components/MobileBar";
 import { site } from "@/lib/content";
 import { isProd, orgLd } from "@/lib/seo";
 
@@ -28,11 +29,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <a href="#main" className="skip">Saltar al contenido</a>
-                <div className="cursor" aria-hidden="true" />
-        <Header />
+                        <Header />
         <main id="main">{children}</main>
         <Footer />
         <a className="wa" href={site.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp"><WhatsApp /></a>
+        <MobileBar />
         <CookieBanner />
         <Motion />
         <JsonLd data={orgLd} />

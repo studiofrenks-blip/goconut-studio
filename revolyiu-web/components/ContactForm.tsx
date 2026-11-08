@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { services, site } from "@/lib/content";
 import { Arrow } from "./Icons";
 
@@ -9,6 +9,8 @@ type State = "idle" | "sending" | "ok" | "err";
 export default function ContactForm() {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState("");
+  const [pre, setPre] = useState<string | null>(null);
+  useEffect(() => { setPre(new URLSearchParams(window.location.search).get("s")); }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -51,7 +53,7 @@ export default function ContactForm() {
       <fieldset className="field chips">
         <legend>¿Qué necesitas?</legend>
         {services.map((s) => (
-          <label className="chip" key={s.slug}><input type="checkbox" name="services" value={s.name} /><span>{s.name}</span></label>
+          <label className="chip" key={s.slug}><input type="checkbox" name="services" value={s.name} defaultChecked={pre === s.slug} key={`${s.slug}-${pre}`} /><span>{s.name}</span></label>
         ))}
       </fieldset>
       <div className="field"><label htmlFor="f-msg">Cuéntanos tu proyecto *</label><textarea id="f-msg" name="message" required minLength={10} maxLength={5000} /></div>

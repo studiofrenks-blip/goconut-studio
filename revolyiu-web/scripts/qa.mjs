@@ -80,7 +80,7 @@ const contrastScript = () => {
 const browser = await chromium.launch();
 const linkSet = new Set();
 
-for (const [label, opts] of [["móvil", devices["iPhone 13"]], ["escritorio", { viewport: { width: 1440, height: 900 } }]]) {
+for (const [label, opts] of [["móvil", devices["iPhone 13"]], ["tablet", devices["iPad Mini"]], ["tablet horizontal", devices["iPad Mini landscape"]], ["escritorio", { viewport: { width: 1440, height: 900 } }]]) {
   const ctx = await browser.newContext({ ...opts, reducedMotion: "reduce" });
   const page = await ctx.newPage();
   const consoleErrors = [];

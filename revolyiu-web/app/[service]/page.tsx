@@ -7,7 +7,6 @@ import { crumbsLd, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/content";
 import Split from "@/components/Split";
 import Gallery from "@/components/Gallery";
-import TalentOrbit from "@/components/TalentOrbit";
 import CtaBlock from "@/components/CtaBlock";
 import JsonLd from "@/components/JsonLd";
 import { Arrow } from "@/components/Icons";
@@ -30,6 +29,15 @@ export default async function ServicePage({ params }: P) {
   if (idx < 0) notFound();
   const s = all[idx];
   const next = all[(idx + 1) % all.length];
+  const REL: Record<string, string[]> = {
+    "diseno-grafico-branding": ["desarrollo-web", "marketing-creativo"],
+    "desarrollo-web": ["soluciones-crm", "marketing-creativo"],
+    "marketing-creativo": ["diseno-grafico-branding", "gestion-de-talentos"],
+    "soluciones-crm": ["desarrollo-web", "marketing-creativo"],
+    "gestion-de-talentos": ["marketing-creativo", "diseno-grafico-branding"],
+    "arquitectura-interiorismo": ["diseno-grafico-branding", "marketing-creativo"],
+  };
+  const related = (REL[s.slug] || []).map((r) => all.find((x) => x.slug === r)!).filter(Boolean);
 
   return (
     <>
@@ -51,7 +59,7 @@ export default async function ServicePage({ params }: P) {
             <p className="lead" data-fx="01" style={{ ["--d" as string]: "0.3s" }}>{s.intro}</p>
             <div data-fx="01" style={{ ["--d" as string]: "0.45s", marginTop: 32 }}>
               <p style={{ fontSize: 20, marginBottom: 18 }}>{s.ctaLine}</p>
-              <Link href="/contacto/" className="btn btn--primary" data-magnetic>Escríbenos <Arrow /></Link>
+              <Link href={`/contacto/?s=${s.slug}`} className="btn btn--primary">Pide tu propuesta <Arrow /></Link>
             </div>
           </div>
           <div className="duo">
@@ -89,15 +97,23 @@ export default async function ServicePage({ params }: P) {
         </div>
       </section>
 
-      {s.orbit && (
-        <section className="section section--tight" aria-labelledby="orb-t">
-          <div className="wrap split">
-            <div>
-              <p className="kicker">Gestión de talentos</p>
-              <h2 id="orb-t" className="h-lg stretch">{s.orbit.title}</h2>
-              <p className="lead" style={{ marginTop: 24 }}>Toca cada servicio para ver qué incluye.</p>
+      {s.slug === "gestion-de-talentos" && (
+        <section className="section section--tight" aria-labelledby="who-t">
+          <div className="wrap">
+            <p className="kicker">¿Por dónde empezamos?</p>
+            <h2 id="who-t" className="h-lg" data-fx="01">Elige tu camino</h2>
+            <div className="who" data-fx="06">
+              <div className="who__col">
+                <h3>Soy marca</h3>
+                <p>Te ayudamos a encontrar el talento adecuado y gestionamos la campaña de principio a fin.</p>
+                <Link href="/contacto/?s=gestion-de-talentos" className="btn btn--primary">Quiero trabajar con talentos <Arrow /></Link>
+              </div>
+              <div className="who__col">
+                <h3>Soy talento</h3>
+                <p>Representamos a influencers, artistas y creadores. Cuéntanos quién eres y qué haces.</p>
+                <a href={`mailto:${site.talentEmail}`} className="btn">Escribir a la agencia de talentos <Arrow /></a>
+              </div>
             </div>
-            <TalentOrbit items={s.orbit.items} />
           </div>
         </section>
       )}
@@ -126,6 +142,22 @@ export default async function ServicePage({ params }: P) {
         </div>
       </section>
 
+      <section className="section section--tight" aria-labelledby="rel-t">
+        <div className="wrap">
+          <p className="kicker">Suele ir con</p>
+          <h2 id="rel-t" className="h-lg" data-fx="01" style={{ marginBottom: 32 }}>Servicios que se complementan</h2>
+          <div className="rel" data-fx="06">
+            {related.map((r) => (
+              <Link key={r.slug} href={`/${r.slug}/`} className="rel__card">
+                <strong>{r.name}</strong>
+                <span>{r.short}</span>
+                <span className="rel__go">Ver servicio <Arrow /></span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <div className="wrap">
         <Link href={`/${next.slug}/`} className="next-svc">
           <div><span>Siguiente servicio · {next.code}</span><strong>{next.name}</strong></div>
@@ -133,7 +165,7 @@ export default async function ServicePage({ params }: P) {
         </Link>
       </div>
 
-      <CtaBlock title={s.ctaLine} />
+      <CtaBlock title={s.ctaLine} href={`/contacto/?s=${s.slug}`} />
     </>
   );
 }

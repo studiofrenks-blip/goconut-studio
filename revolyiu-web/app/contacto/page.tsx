@@ -16,12 +16,12 @@ export default function Contacto() {
   return (
     <>
       <JsonLd data={crumbsLd([{ name: "Inicio", path: "/" }, { name: "Contacto", path: "/contacto/" }])} />
-      <section className="phero">
+      <section className="phero phero--compact">
         <div className="wrap">
           <nav className="crumbs" aria-label="Migas de pan"><Link href="/">Inicio</Link>/<span aria-current="page">Contacto</span></nav>
           <p className="kicker">Hablemos de tu próximo proyecto</p>
           <h1 data-fx="03"><Split text="Contáctanos" /></h1>
-          <p className="lead" data-fx="01">Cuéntanos tu marca, tus metas y tus ideas. Diseñaremos una propuesta estratégica que una creatividad, tecnología y resultados.</p>
+          <p className="lead">Cuéntanos tu proyecto y te respondemos con una propuesta a medida.</p>
         </div>
       </section>
       <section className="section section--tight" style={{ paddingTop: 0 }}>

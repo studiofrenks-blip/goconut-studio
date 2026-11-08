@@ -5,7 +5,7 @@ import { getHome, getPosts, getServices } from "@/lib/data";
 import { pageMeta } from "@/lib/seo";
 import HeroMorph from "@/components/HeroMorph";
 import ServiceStack from "@/components/ServiceStack";
-import Ribbons from "@/components/Ribbons";
+import ServiceList from "@/components/ServiceList";
 import LitText from "@/components/LitText";
 import CtaBlock from "@/components/CtaBlock";
 import PostCard from "@/components/PostCard";
@@ -24,7 +24,7 @@ export const metadata = {
 const P = (k: keyof typeof imgs, alt = "") => ({ ...imgs[k], alt });
 const morphPhotos = [
   P("arq-la-cachapera-valencia-1"), P("branding-1"), P("portada-musical-2"), P("web-1"),
-  P("arq-trattoria-1"), P("marketing-1"), P("logo-cliente-07"), P("crm-1"),
+  P("arq-trattoria-1"), P("marketing-1"), P("crm-1"),
   P("arq-vestidor-1"), P("portada-musical-4"), P("arq-pista-vista-aerea"), P("marketing-2"),
 ];
 const ICONS = ["/img/icono-Chess-Icon.svg", "/img/icono-megaphone.svg", "/img/icono-vector.svg"];
@@ -53,7 +53,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="section" aria-label="Quiénes somos">
+      <section className="section section--tight" aria-label="Quiénes somos">
         <div className="wrap">
           <p className="kicker">Agencia creativa integral</p>
           <LitText text="Unimos *estrategia,* *diseño* y *tecnología* para que tu marca, tu web y tus espacios cuenten la misma historia. De la idea a la ejecución, con un solo equipo." />
@@ -63,17 +63,16 @@ export default async function Home() {
       <section className="section" style={{ paddingTop: 0 }} aria-labelledby="svc-t">
         <div className="wrap">
           <p className="kicker">Nuestros servicios</p>
-          <h2 id="svc-t" className="h-sec stretch" style={{ marginBottom: 56 }}>Seis disciplinas, un equipo</h2>
-          <ServiceStack items={services} />
+          <h2 id="svc-t" className="h-sec" data-fx="01" style={{ marginBottom: 56 }}>Seis disciplinas, un equipo</h2>
+          <div className="only-desk"><ServiceStack items={services} /></div>
+          <div className="only-mob"><ServiceList items={services} /></div>
         </div>
       </section>
-
-      <Ribbons a={services.map((s) => s.name)} b={["Estrategia", "Diseño", "Tecnología", "Espacios", "Talento", "Resultados"]} />
 
       <section className="section" aria-labelledby="pil-t">
         <div className="wrap">
           <p className="kicker">{home.pillarsKicker}</p>
-          <h2 id="pil-t" className="h-sec stretch">{home.pillarsTitle}</h2>
+          <h2 id="pil-t" className="h-sec" data-fx="01">{home.pillarsTitle}</h2>
           <div className="pillars" data-fx="06">
             {home.pillars.map((p, i) => (
               <article className="pillar" key={p.title}>
@@ -94,7 +93,7 @@ export default async function Home() {
           </div>
           <div>
             <p className="kicker">{home.aboutKicker}</p>
-            <h2 id="ab-t" className="h-sec stretch">{home.aboutTitle}</h2>
+            <h2 id="ab-t" className="h-sec" data-fx="01">{home.aboutTitle}</h2>
             <div data-fx="01" style={{ marginTop: 28 }}>
               {home.about.map((p) => <p className="lead" key={p.slice(0, 20)} style={{ marginBottom: 20 }}>{p}</p>)}
               <div className="btn-row" style={{ display: "flex", gap: 12, marginTop: 12 }}>
@@ -109,7 +108,7 @@ export default async function Home() {
         <section className="section" style={{ paddingTop: 0 }} aria-labelledby="blog-t">
           <div className="wrap">
             <p className="kicker">Blog</p>
-            <h2 id="blog-t" className="h-sec stretch" style={{ marginBottom: 40 }}>Ideas de marketing y diseño</h2>
+            <h2 id="blog-t" className="h-sec" data-fx="01" style={{ marginBottom: 40 }}>Ideas de marketing y diseño</h2>
             <div className="posts" data-fx="06">{posts.slice(0, 3).map((p) => <PostCard key={p.slug} post={p} />)}</div>
           </div>
         </section>

@@ -35,16 +35,22 @@ export default function Header() {
             <img src={site.logo.src} width={site.logo.w} height={site.logo.h} alt="Revolyiu" />
           </Link>
           <nav className="hdr__nav" aria-label="Principal">
-            {services.map((s) => (
-              <Link key={s.slug} href={`/${s.slug}/`} aria-current={path?.startsWith(`/${s.slug}`) ? "page" : undefined}>
-                {s.navLabel}
-              </Link>
-            ))}
+            <div className="dd">
+              <Link href="/servicios/" className="dd__btn" aria-current={isCurrent("/servicios/") ? "page" : undefined} aria-haspopup="true">Servicios <span aria-hidden="true">▾</span></Link>
+              <div className="dd__panel">
+                {services.map((s) => (
+                  <Link key={s.slug} href={`/${s.slug}/`} className="dd__item" aria-current={path?.startsWith(`/${s.slug}`) ? "page" : undefined}>
+                    <strong>{s.name}</strong><span>{s.kicker}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
             <Link href="/nosotros/" aria-current={isCurrent("/nosotros/") ? "page" : undefined}>Nosotros</Link>
             <Link href="/blog/" aria-current={isCurrent("/blog/") ? "page" : undefined}>Blog</Link>
+            <Link href="/contacto/" aria-current={isCurrent("/contacto/") ? "page" : undefined}>Contacto</Link>
           </nav>
-          <Link href="/contacto/" className="btn btn--primary hdr__cta" data-magnetic>
-            Escríbenos <Arrow />
+          <Link href="/contacto/" className="btn btn--primary hdr__cta">
+            Pide propuesta <Arrow />
           </Link>
           <button className="hdr__burger" aria-expanded={open} aria-controls="menu" aria-label={open ? "Cerrar menú" : "Abrir menú"} onClick={() => setOpen(!open)}>
             <span /><span />
@@ -52,19 +58,22 @@ export default function Header() {
         </div>
       </header>
       <div id="menu" className={`menu${open ? " is-open" : ""}`} aria-hidden={!open} inert={!open}>
-        <Link href="/">Inicio</Link>
-        <Link href="/nosotros/">Nosotros</Link>
-        <Link href="/servicios/">Servicios</Link>
+        <Link href="/servicios/" aria-current={isCurrent("/servicios/") ? "page" : undefined}>Servicios</Link>
         <div className="menu__sub">
           {services.map((s) => (
-            <Link key={s.slug} href={`/${s.slug}/`}>{s.name}</Link>
+            <Link key={s.slug} href={`/${s.slug}/`} aria-current={path?.startsWith(`/${s.slug}`) ? "page" : undefined}>{s.name}</Link>
           ))}
         </div>
-        <Link href="/blog/">Blog</Link>
-        <Link href="/contacto/">Contacto</Link>
+        <Link href="/nosotros/" aria-current={isCurrent("/nosotros/") ? "page" : undefined}>Nosotros</Link>
+        <Link href="/blog/" aria-current={isCurrent("/blog/") ? "page" : undefined}>Blog</Link>
+        <Link href="/contacto/" aria-current={isCurrent("/contacto/") ? "page" : undefined}>Contacto</Link>
         <div className="menu__foot">
-          <a href={site.phoneHref}>{site.phone}</a>
-          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <Link href="/contacto/" className="btn btn--primary">Pide tu propuesta <Arrow /></Link>
+          <div className="menu__links">
+            <a href={site.phoneHref}>Llamar</a>
+            <a href={site.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href={`mailto:${site.email}`}>Email</a>
+          </div>
         </div>
       </div>
     </>
