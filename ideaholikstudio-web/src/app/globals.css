@@ -115,20 +115,28 @@ p {
 }
 
 /* ── Tipografía grande ───────────────────── */
+/* Escala tipográfica cerrada: nada fuera de estos tamaños.
+   Portada 88 px · H1 interior 64 px · H2 48 px · H3 30 px · cierre 96 px (máximos). */
+:root {
+  --fs-hero: clamp(40px, min(6.2vw, 9.5vh), 88px);
+  --fs-h1: clamp(36px, 4.6vw, 64px);
+  --fs-h2: clamp(30px, 3.4vw, 48px);
+  --fs-h3: clamp(22px, 2vw, 30px);
+  --fs-cta: clamp(44px, 6.4vw, 96px);
+}
 .mega,
 .mega-xl {
   font-family: var(--display);
-  font-weight: 800;
-  font-stretch: 78%;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  line-height: 0.88;
+  font-weight: 750;
+  font-stretch: 88%;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 .mega {
-  font-size: clamp(34px, 5vw, 80px);
+  font-size: var(--fs-h2);
 }
 .mega-xl {
-  font-size: clamp(42px, 7.6vw, 124px);
+  font-size: var(--fs-h1);
 }
 .kicker {
   display: inline-flex;
@@ -441,8 +449,8 @@ p {
   font-stretch: 76%;
   text-transform: uppercase;
   font-weight: 800;
-  font-size: clamp(44px, min(8.4vw, 12vh), 136px);
-  line-height: 0.84;
+  font-size: var(--fs-hero);
+  line-height: 0.92;
   letter-spacing: -0.01em;
   text-shadow: 0 6px 40px rgba(11, 8, 23, 0.55);
 }
@@ -620,7 +628,7 @@ p {
 /* ── Cintas cruzadas ─────────────────────── */
 .tapes {
   position: relative;
-  height: clamp(110px, 13vw, 170px);
+  height: clamp(80px, 9vw, 110px);
   overflow: hidden;
   margin-top: -40px;
   z-index: 4;
@@ -641,6 +649,7 @@ p {
   z-index: 2;
 }
 .tape-b {
+  display: none;
   background: var(--brand-a);
   color: #fff;
   transform: translateY(-50%) rotate(2deg);
@@ -693,12 +702,12 @@ p {
 .fill {
   font-family: var(--display);
   font-weight: 600;
-  font-size: clamp(26px, 3vw, 42px);
+  font-size: clamp(22px, 2.3vw, 32px);
   line-height: 1.15;
   letter-spacing: -0.015em;
 }
 .fill-lg {
-  font-size: clamp(28px, 3.6vw, 52px);
+  font-size: clamp(24px, 2.6vw, 36px);
 }
 .fw {
   color: rgba(211, 205, 234, 0.48);
@@ -888,14 +897,13 @@ p {
   font-family: var(--display);
   font-stretch: 76%;
   font-weight: 800;
-  font-size: clamp(64px, 10vw, 150px);
+  font-size: clamp(48px, 6vw, 88px);
   line-height: 0.8;
   opacity: 0.9;
 }
 .stack-body h3 {
-  font-stretch: 78%;
-  text-transform: uppercase;
-  font-size: clamp(28px, 3.8vw, 58px);
+  font-stretch: 88%;
+  font-size: var(--fs-h3);
   line-height: 0.9;
   margin-bottom: 20px;
 }
@@ -923,7 +931,7 @@ p {
 /* Kit 5 · Foto que se abre al bajar */
 .xr {
   position: relative;
-  height: 260vh;
+  height: 190vh;
 }
 .xr-stage {
   position: sticky;
@@ -975,9 +983,8 @@ p {
 }
 .xr-line {
   display: block;
-  font-stretch: 76%;
-  text-transform: uppercase;
-  font-size: clamp(38px, min(6.4vw, 9vh), 104px);
+  font-stretch: 84%;
+  font-size: clamp(32px, min(4.6vw, 7vh), 68px);
   line-height: 0.86;
   max-width: 11ch;
   opacity: var(--tl, 1);
@@ -1006,7 +1013,7 @@ p {
 .xr-body {
   font-family: var(--display);
   font-weight: 600;
-  font-size: clamp(22px, 2.6vw, 38px);
+  font-size: clamp(20px, 2vw, 28px);
   line-height: 1.15;
   max-width: 28ch;
   margin-bottom: 30px;
@@ -1080,9 +1087,8 @@ p {
   border-top: 1px solid var(--line);
 }
 .big-cta-title {
-  font-stretch: 74%;
-  text-transform: uppercase;
-  font-size: clamp(52px, 10vw, 168px);
+  font-stretch: 84%;
+  font-size: var(--fs-cta);
   line-height: 0.82;
   letter-spacing: -0.01em;
   background: linear-gradient(100deg, #fff 30%, var(--lime));
@@ -1152,7 +1158,7 @@ p {
   font-stretch: 74%;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(110px, 20vw, 320px);
+  font-size: clamp(90px, 14vw, 220px);
   line-height: 0.8;
   color: transparent;
   -webkit-text-stroke: 1px rgba(211, 205, 234, 0.09);
@@ -1173,9 +1179,8 @@ p {
 .manifesto li {
   list-style: none;
   font-family: var(--display);
-  font-stretch: 78%;
-  text-transform: uppercase;
-  font-size: clamp(28px, 4.4vw, 68px);
+  font-stretch: 88%;
+  font-size: clamp(26px, 3.2vw, 46px);
   font-weight: 800;
   line-height: 0.92;
   padding-block: 26px;
@@ -1298,7 +1303,7 @@ p {
   font-family: var(--display);
   font-stretch: 76%;
   font-weight: 800;
-  font-size: clamp(54px, 6.4vw, 100px);
+  font-size: clamp(40px, 4.4vw, 64px);
   line-height: 0.8;
   color: transparent;
   -webkit-text-stroke: 1.5px var(--lilac);
@@ -1314,9 +1319,8 @@ p {
   margin-bottom: 14px;
 }
 .work-item h2 {
-  font-stretch: 78%;
-  text-transform: uppercase;
-  font-size: clamp(30px, 3.6vw, 54px);
+  font-stretch: 88%;
+  font-size: var(--fs-h2);
   margin-bottom: 18px;
 }
 .work-item p {
@@ -1429,9 +1433,8 @@ p {
   overflow: hidden;
 }
 .faq h2 {
-  font-stretch: 80%;
-  text-transform: uppercase;
-  font-size: clamp(30px, 3.4vw, 46px);
+  font-stretch: 88%;
+  font-size: var(--fs-h3);
   margin-bottom: 20px;
 }
 .faq details {
@@ -1761,10 +1764,7 @@ p {
   border-radius: 50%;
   display: none;
 }
-.has-cursor .cur-dot,
-.has-cursor .cur-ring {
-  display: block;
-}
+
 .cur-dot {
   width: 8px;
   height: 8px;
@@ -2068,4 +2068,63 @@ p {
     font-size: 12px;
     padding: 10px 13px;
   }
+}
+
+/* Botón fijo «Hablemos» en el móvil: aparece tras la portada y se esconde en el pie. */
+.float-cta {
+  display: none;
+}
+@media (max-width: 900px) {
+  .float-cta {
+    display: inline-flex;
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 60;
+    min-height: 52px;
+    padding: 0 22px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    transform: translateY(140%);
+    transition: transform 0.35s var(--ease);
+  }
+  .float-cta[data-on="1"] {
+    transform: none;
+  }
+}
+.stack-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-weight: 700;
+  font-size: 16px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+  min-height: 32px;
+}
+.stack-link:hover .arrow {
+  transform: translateX(4px);
+}
+.stack-link .arrow {
+  transition: transform 0.25s var(--ease);
+}
+.orbit-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.orbit-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-2);
+  transition: background 0.3s, width 0.3s;
+}
+.orbit-dots i[data-on="1"] {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--lime);
 }

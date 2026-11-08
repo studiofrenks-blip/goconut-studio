@@ -1,4 +1,3 @@
-import Image from "next/image";
 import SpotlightHero from "@/components/SpotlightHero";
 import Tapes from "@/components/Tapes";
 import ScrollFill from "@/components/ScrollFill";
@@ -75,7 +74,13 @@ export default async function Home({ params }: P) {
             <p className="lead">{t["home.servicesBody"]}</p>
           </Reveal>
           <StackServices
-            cards={n4.map((n) => ({ title: t[`home.s${n}Title`], text: t[`home.s${n}Text`], tags: t[`home.servicesTags${n}`] }))}
+            cards={n4.map((n) => ({
+              title: t[`home.s${n}Title`],
+              text: t[`home.s${n}Text`],
+              tags: t[`home.servicesTags${n}`],
+              href: `${href(lang, "contact")}?s=${n}`,
+              cta: t["home.serviceCta"],
+            }))}
           />
         </div>
       </section>
@@ -88,19 +93,6 @@ export default async function Home({ params }: P) {
         cta={{ href: href(lang, "work"), label: t["home.showCta"] }}
         img={{ src: "/img/manu-alerod-escenario.jpg", alt: t["home.stageAlt"] }}
       />
-
-      <section className="section crew-sec" aria-label={t["work.p3Title"]}>
-        <div className="wrap crew">
-          <Reveal className="crew-photo">
-            <Image src="/img/personajes-del-show.png" alt={t["work.p3Alt"]} width={853} height={935} sizes="(max-width: 760px) 90vw, 40vw" />
-          </Reveal>
-          <Reveal className="crew-text" delay={120}>
-            <p className="kicker">{t["work.p3Tag"]}</p>
-            <h2 className="mega">{t["work.p3Title"]}</h2>
-            <p className="lead">{t["work.p3Text"]}</p>
-          </Reveal>
-        </div>
-      </section>
 
       <section className="section globe-sec" aria-labelledby="globe-title">
         <div className="wrap globe-grid">

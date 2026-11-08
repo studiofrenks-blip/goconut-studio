@@ -1,7 +1,9 @@
 "use client";
 // Servicios en tarjetas que se apilan al bajar. Cada tarjeta se enciende
 // siguiendo el dedo o el ratón (Kit Frenks nº 1).
-type Card = { title: string; text: string; tags: string };
+import Link from "next/link";
+
+type Card = { title: string; text: string; tags: string; href: string; cta: string };
 
 export default function StackServices({ cards }: { cards: Card[] }) {
   const paint = (e: React.PointerEvent<HTMLElement>) => {
@@ -29,6 +31,9 @@ export default function StackServices({ cards }: { cards: Card[] }) {
             <h3>{c.title}</h3>
             <p>{c.text}</p>
             <p className="stack-tags">{c.tags}</p>
+            <Link className="stack-link" href={c.href}>
+              {c.cta} <span className="arrow" aria-hidden="true">→</span>
+            </Link>
           </div>
         </article>
       ))}

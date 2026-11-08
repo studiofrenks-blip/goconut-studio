@@ -7,6 +7,7 @@ type Item = { label: string; text: string };
 
 export default function Orbit({ core, items, hint }: { core: string; items: Item[]; hint: string }) {
   const [active, setActive] = useState(-1);
+  const [manual, setManual] = useState(false);
   const box = useRef<HTMLDivElement>(null);
   const nodes = useRef<(HTMLButtonElement | null)[]>([]);
   const activeRef = useRef(active);
@@ -42,6 +43,22 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
     };
   }, [items.length]);
 
+  // Sin tocar nada, la órbita va enseñando cada pieza: el contenido no queda escondido.
+  useEffect(() => {
+    if (manual || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = box.current;
+    let visible = false;
+    const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.4 });
+    if (el) io.observe(el);
+    const iv = window.setInterval(() => {
+      if (visible) setActive((a) => (a + 1) % items.length);
+    }, 3200);
+    return () => {
+      clearInterval(iv);
+      io.disconnect();
+    };
+  }, [manual, items.length]);
+
   const cur = active >= 0 ? items[active] : null;
   return (
     <div>
@@ -69,10 +86,18 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
             }}
             className={`orbit-node n${i + 1}`}
             aria-pressed={active === i}
-            onClick={() => setActive((v) => (v === i ? -1 : i))}
+            onClick={() => {
+              setManual(true);
+              setActive((v) => (v === i ? -1 : i));
+            }}
           >
             {it.label}
           </button>
+        ))}
+      </div>
+      <div className="orbit-dots" aria-hidden="true">
+        {items.map((it, i) => (
+          <i key={it.label} data-on={i === active ? "1" : "0"} />
         ))}
       </div>
       <p className="orbit-hint">{hint}</p>

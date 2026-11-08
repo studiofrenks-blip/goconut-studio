@@ -1,5 +1,5 @@
 "use client";
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { sendContact, type ContactState } from "@/app/actions";
 
 type T = Record<
@@ -20,6 +20,12 @@ export default function ContactForm({
   privacyHref: string;
 }) {
   const [state, action, pending] = useActionState<ContactState, FormData>(sendContact, { status: "idle" });
+  // Si vienes desde un servicio (?s=1..4), ya viene elegido.
+  const [subject, setSubject] = useState("");
+  useEffect(() => {
+    const n = Number(new URLSearchParams(window.location.search).get("s"));
+    if (n >= 1 && n <= services.length) setSubject(services[n - 1]);
+  }, [services]);
   const err = (f: string) => (state.status === "invalid" && state.fields?.includes(f) ? true : undefined);
 
   if (state.status === "ok") {
@@ -50,7 +56,7 @@ export default function ContactForm({
       </div>
       <div className="field">
         <label htmlFor="f-subject">{t.subject}</label>
-        <select id="f-subject" name="subject" defaultValue="">
+        <select id="f-subject" name="subject" value={subject} onChange={(e) => setSubject(e.target.value)}>
           <option value="" disabled>
             {t.subjectPick}
           </option>
