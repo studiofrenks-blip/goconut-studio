@@ -1,0 +1,277 @@
+{
+ "arq-interior-residencial-1": {
+  "src": "/img/arq-interior-residencial-1.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-interior-residencial-2": {
+  "src": "/img/arq-interior-residencial-2.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-interior-residencial-3": {
+  "src": "/img/arq-interior-residencial-3.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-la-cachapera-valencia-1": {
+  "src": "/img/arq-la-cachapera-valencia-1.webp",
+  "w": 1600,
+  "h": 1067
+ },
+ "arq-la-cachapera-valencia-2": {
+  "src": "/img/arq-la-cachapera-valencia-2.webp",
+  "w": 1600,
+  "h": 1067
+ },
+ "arq-la-desayuneria-1": {
+  "src": "/img/arq-la-desayuneria-1.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-la-desayuneria-2": {
+  "src": "/img/arq-la-desayuneria-2.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-parque-alejandra-1": {
+  "src": "/img/arq-parque-alejandra-1.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-parque-alejandra-2": {
+  "src": "/img/arq-parque-alejandra-2.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-pista-techada-exterior": {
+  "src": "/img/arq-pista-techada-exterior.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-pista-techada-interior": {
+  "src": "/img/arq-pista-techada-interior.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-pista-vista-aerea": {
+  "src": "/img/arq-pista-vista-aerea.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-sala-lectura-exterior": {
+  "src": "/img/arq-sala-lectura-exterior.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-sala-lectura-pasillo": {
+  "src": "/img/arq-sala-lectura-pasillo.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-sala-lectura-recepcion": {
+  "src": "/img/arq-sala-lectura-recepcion.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-trattoria-1": {
+  "src": "/img/arq-trattoria-1.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-trattoria-2": {
+  "src": "/img/arq-trattoria-2.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-vestidor-1": {
+  "src": "/img/arq-vestidor-1.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-vestidor-2": {
+  "src": "/img/arq-vestidor-2.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arq-vestidor-3": {
+  "src": "/img/arq-vestidor-3.webp",
+  "w": 1600,
+  "h": 900
+ },
+ "arquitectura-1": {
+  "src": "/img/arquitectura-1.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "arquitectura-2": {
+  "src": "/img/arquitectura-2.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "blog-likes-estrategia": {
+  "src": "/img/blog-likes-estrategia.webp",
+  "w": 1100,
+  "h": 299
+ },
+ "branding-1": {
+  "src": "/img/branding-1.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "branding-2": {
+  "src": "/img/branding-2.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "crm-1": {
+  "src": "/img/crm-1.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "crm-2": {
+  "src": "/img/crm-2.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "hero-equipo-revolyiu": {
+  "src": "/img/hero-equipo-revolyiu.webp",
+  "w": 646,
+  "h": 763
+ },
+ "isotipo-revolyiu": {
+  "src": "/img/isotipo-revolyiu.png",
+  "w": 299,
+  "h": 286
+ },
+ "logo-cliente-01": {
+  "src": "/img/logo-cliente-01.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-cliente-02": {
+  "src": "/img/logo-cliente-02.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-cliente-03": {
+  "src": "/img/logo-cliente-03.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-cliente-04": {
+  "src": "/img/logo-cliente-04.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-cliente-05": {
+  "src": "/img/logo-cliente-05.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-cliente-06": {
+  "src": "/img/logo-cliente-06.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-cliente-07": {
+  "src": "/img/logo-cliente-07.webp",
+  "w": 800,
+  "h": 800
+ },
+ "logo-revolyiu": {
+  "src": "/img/logo-revolyiu.png",
+  "w": 1128,
+  "h": 286
+ },
+ "marketing-1": {
+  "src": "/img/marketing-1.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "marketing-2": {
+  "src": "/img/marketing-2.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "nosotros-1": {
+  "src": "/img/nosotros-1.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "nosotros-2": {
+  "src": "/img/nosotros-2.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "portada-musical-1": {
+  "src": "/img/portada-musical-1.webp",
+  "w": 600,
+  "h": 600
+ },
+ "portada-musical-2": {
+  "src": "/img/portada-musical-2.webp",
+  "w": 600,
+  "h": 600
+ },
+ "portada-musical-3": {
+  "src": "/img/portada-musical-3.webp",
+  "w": 600,
+  "h": 600
+ },
+ "portada-musical-4": {
+  "src": "/img/portada-musical-4.webp",
+  "w": 600,
+  "h": 600
+ },
+ "portada-musical-5": {
+  "src": "/img/portada-musical-5.webp",
+  "w": 600,
+  "h": 600
+ },
+ "portada-musical-6": {
+  "src": "/img/portada-musical-6.webp",
+  "w": 600,
+  "h": 600
+ },
+ "proyecto-destacado": {
+  "src": "/img/proyecto-destacado.webp",
+  "w": 518,
+  "h": 555
+ },
+ "web-1": {
+  "src": "/img/web-1.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "web-2": {
+  "src": "/img/web-2.webp",
+  "w": 900,
+  "h": 1284
+ },
+ "web-adornosilu": {
+  "src": "/img/web-adornosilu.webp",
+  "w": 1400,
+  "h": 690
+ },
+ "web-drip4you": {
+  "src": "/img/web-drip4you.webp",
+  "w": 1400,
+  "h": 690
+ },
+ "web-ideaholiks": {
+  "src": "/img/web-ideaholiks.webp",
+  "w": 1400,
+  "h": 690
+ },
+ "web-revolyiu": {
+  "src": "/img/web-revolyiu.webp",
+  "w": 1400,
+  "h": 690
+ },
+ "youragensee-logo": {
+  "src": "/img/youragensee-logo.webp",
+  "w": 320,
+  "h": 320
+ }
+}
