@@ -9,7 +9,6 @@ export default function Page() {
       <h2>Cookies que usamos</h2>
       <ul>
         <li><strong>ilu_consent</strong> (necesaria, propia, 6 meses): guarda tu elección sobre cookies.</li>
-        <li><strong>Carrito</strong> (necesaria, propia, sesión): recuerda los productos de tu carrito. [PENDIENTE al construir la tienda]</li>
         <li><strong>Análisis</strong> (opcional): [PENDIENTE — no hay ninguna instalada todavía].</li>
         <li><strong>Marketing</strong> (opcional): [PENDIENTE — no hay ninguna instalada todavía].</li>
       </ul>

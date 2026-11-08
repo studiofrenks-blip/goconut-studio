@@ -69,7 +69,7 @@ export default function CookieBanner() {
           Usamos cookies
         </h2>
         <p className="mt-2 text-sm leading-relaxed">
-          Usamos cookies necesarias para que la web y la tienda funcionen. Con tu permiso, también
+          Usamos cookies necesarias para que la web funcione. Con tu permiso, también
           usaremos cookies de análisis y de marketing. Puedes aceptarlas, rechazarlas o elegir cuáles.
           Más información en la{" "}
           <Link href="/cookies" className="underline underline-offset-2">
@@ -84,7 +84,7 @@ export default function CookieBanner() {
             <label className="flex items-start gap-3">
               <input type="checkbox" checked disabled className="mt-1 size-4" />
               <span>
-                <strong>Necesarias</strong> — carrito, seguridad y esta elección. Siempre activas.
+                <strong>Necesarias</strong> — seguridad y esta elección. Siempre activas.
               </span>
             </label>
             <label className="flex items-start gap-3">

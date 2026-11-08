@@ -41,15 +41,15 @@ export default async function Producto({ params }: { params: Promise<{ slug: str
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Tienda", item: `${site.url}/tienda` },
-      { "@type": "ListItem", position: 2, name: c.name, item: `${site.url}/tienda/${c.slug}` },
+      { "@type": "ListItem", position: 1, name: "Catálogo", item: `${site.url}/catalogo` },
+      { "@type": "ListItem", position: 2, name: c.name, item: `${site.url}/catalogo/${c.slug}` },
       { "@type": "ListItem", position: 3, name: p.name },
     ],
   };
   return (
     <article className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <nav aria-label="Migas de pan" className="text-sm">
-        <Link href="/tienda" className="underline-offset-2 hover:underline">Tienda</Link> / <Link href={`/tienda/${c.slug}`} className="underline-offset-2 hover:underline">{c.name}</Link> / {p.name}
+        <Link href="/catalogo" className="underline-offset-2 hover:underline">Catálogo</Link> / <Link href={`/catalogo/${c.slug}`} className="underline-offset-2 hover:underline">{c.name}</Link> / {p.name}
       </nav>
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
         <div className="grid grid-cols-2 gap-3">

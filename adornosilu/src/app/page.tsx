@@ -25,7 +25,7 @@ export default function Home() {
           y recuerdos inolvidables.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/tienda" className="rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-[var(--paper)]">
+          <Link href="/catalogo" className="rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-[var(--paper)]">
             Ver productos
           </Link>
           <Link href="/nosotros" className="rounded-full border-2 border-[var(--ink)] px-6 py-3 text-sm font-semibold">
@@ -39,7 +39,7 @@ export default function Home() {
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((c) => (
             <li key={c.slug}>
-              <Link href={`/tienda/${c.slug}`} className="block h-full rounded-2xl border border-[var(--line)] p-6 hover:border-[var(--gold)]">
+              <Link href={`/catalogo/${c.slug}`} className="block h-full rounded-2xl border border-[var(--line)] p-6 hover:border-[var(--gold)]">
                 <h3 className="font-display text-xl">{c.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed">{c.intro}</p>
               </Link>
@@ -79,7 +79,7 @@ export default function Home() {
             <li key={t} className="before:mr-2 before:text-[var(--gold)] before:content-['✦']">{t}</li>
           ))}
         </ul>
-        <Link href="/tienda/pinos-gigantes" className="mt-8 inline-block rounded-full bg-[var(--gold)] px-6 py-3 text-sm font-semibold text-[var(--ink)]">
+        <Link href="/catalogo/pinos-gigantes" className="mt-8 inline-block rounded-full bg-[var(--gold)] px-6 py-3 text-sm font-semibold text-[var(--ink)]">
           Conocer los pinos gigantes
         </Link>
         </div>
