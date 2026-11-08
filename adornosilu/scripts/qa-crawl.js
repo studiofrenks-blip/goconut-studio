@@ -3,7 +3,7 @@ const { chromium, devices } = require('playwright');
 const B=process.env.QA_URL||'http://localhost:3100';
 (async () => {
   const b = await chromium.launch();
-  const ctx = await b.newContext({ ...devices['iPhone 13'] });
+  const ctx = await b.newContext({ ...devices['iPhone 13'], extraHTTPHeaders: process.env.QA_BYPASS ? { 'x-vercel-protection-bypass': process.env.QA_BYPASS } : {} });
   const p = await ctx.newPage();
   const errs=[]; p.on('pageerror',e=>errs.push(e.message)); p.on('console',m=>{if(m.type()==='error')errs.push(m.text())});
   // rastrear todos los enlaces internos
