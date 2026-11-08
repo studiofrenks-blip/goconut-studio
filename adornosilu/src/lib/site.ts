@@ -10,8 +10,11 @@ export const site = {
     rif: "J-50539722-2",
     address:
       "Zona Industrial Soco, Avenida El Parque, galpón No. 19, La Victoria, Edo. Aragua, Venezuela",
-    email: "", // PENDIENTE: confirmar del respaldo
-    phone: "", // PENDIENTE: confirmar del respaldo
+    email: "ilucompanyca@gmail.com",
+    phone: "+58 414-947 48 36",
+    phoneHref: "+584149474836",
+    whatsapp: "584149474836",
+    hours: "Lunes a viernes, de 9:00 a 18:00",
   },
   // Solo la web aprobada en producción se indexa. Cualquier otra dirección (prueba) lleva noindex.
   indexable: process.env.NEXT_PUBLIC_INDEXABLE === "true",
