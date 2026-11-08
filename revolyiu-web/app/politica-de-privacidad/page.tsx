@@ -17,7 +17,7 @@ export default function Privacidad() {
         <li><strong>Contacto:</strong> <a href={`mailto:${owner.email}`}>{owner.email}</a> · {owner.phone}</li>
       </ul>
       <h2>2. Qué datos tratamos y para qué</h2>
-      <table>
+      <table tabIndex={0} aria-label="Tratamientos de datos">
         <thead><tr><th>Tratamiento</th><th>Datos</th><th>Finalidad</th><th>Base legal</th></tr></thead>
         <tbody>
           <tr><td>Formulario de contacto</td><td>Nombre, correo, teléfono (opcional), empresa (opcional), servicios de interés y mensaje</td><td>Responder a tu consulta y, si lo pides, enviarte un presupuesto</td><td>Tu consentimiento (art. 6.1.a RGPD) y la aplicación de medidas precontractuales a petición tuya (art. 6.1.b)</td></tr>

@@ -123,9 +123,9 @@ for (const [label, opts] of [["móvil", devices["iPhone 13"]], ["escritorio", { 
     });
 
     if (label === "móvil") {
-      if (!d.title || d.title.length > 70) W(p, `title de ${d.title.length} caracteres: "${d.title}"`);
+      if (!d.title || d.title.length > 60) E(p, `title de ${d.title.length} caracteres (máx. 60): "${d.title}"`);
       if (!d.desc) E(p, "sin meta description");
-      else if (d.desc.length < 70 || d.desc.length > 165) W(p, `description de ${d.desc.length} caracteres`);
+      else if (d.desc.length < 110 || d.desc.length > 160) E(p, `description de ${d.desc.length} caracteres (110–160)`);
       if (!d.canonical) E(p, "sin canonical");
       if (d.lang !== "es") E(p, `lang="${d.lang}"`);
       if (d.h1.length !== 1) E(p, `${d.h1.length} h1 (debe haber 1)`);
@@ -144,6 +144,14 @@ for (const [label, opts] of [["móvil", devices["iPhone 13"]], ["escritorio", { 
     if (d.overflow) E(p, `${label}: desborde horizontal (${d.overflow}px)`);
     d.brokenImgs.forEach((s) => E(p, `${label}: imagen rota ${s}`));
     d.small.forEach((s) => W(p, `${label}: objetivo táctil pequeño ${s}`));
+    // axe WCAG AA
+    await page.addScriptTag({ path: "node_modules/axe-core/axe.min.js" });
+    const ax = await page.evaluate(async () => (await window.axe.run(document, { runOnly: ["wcag2a", "wcag2aa"], resultTypes: ["violations"] })).violations.map((v) => `${v.id} (${v.nodes.length}): ${v.nodes[0]?.target?.join(" ")}`));
+    ax.forEach((v) => E(p, `${label}: axe ${v}`));
+    // logo y textos de plantilla prohibidos
+    const tpl = await page.evaluate(() => ({ logo: !!document.querySelector(".hdr__logo img"), txt: document.body.innerText }));
+    if (!tpl.logo) E(p, "sin logo en la cabecera");
+    for (const t of ["Lorem ipsum", "Steve Bullack", "Fortune 500", "Hannah Montana", "Read All Posts", "Latest Posts", "Best Team Ever", "youremail@", "+1 234"]) if (tpl.txt.includes(t)) E(p, `${label}: texto de plantilla «${t}»`);
     const bad = await page.evaluate(contrastScript);
     bad.forEach((b) => E(p, `${label}: contraste insuficiente ${b}`));
   }

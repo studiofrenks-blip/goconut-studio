@@ -62,20 +62,24 @@ export default function Motion() {
     };
   }, [path]);
 
-  // FX 09 brillo de cursor
+  // Cursor propio: crece sobre enlaces (solo ratón)
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;
-    const g = document.querySelector<HTMLElement>(".cursor-glow");
-    if (!g) return;
-    let x = 0, y = 0, raf = 0;
+    const c = document.querySelector<HTMLElement>(".cursor");
+    if (!c) return;
+    document.documentElement.classList.add("has-cursor");
+    let raf = 0;
     const move = (e: PointerEvent) => {
-      x = e.clientX; y = e.clientY;
-      g.classList.add("is-on");
+      c.classList.add("is-on");
+      const t = e.target as Element | null;
+      c.classList.toggle("is-big", !!t?.closest?.("a, button, summary, label"));
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => (g.style.transform = `translate(${x - 260}px, ${y - 260}px)`));
+      raf = requestAnimationFrame(() => { c.style.left = `${e.clientX}px`; c.style.top = `${e.clientY}px`; });
     };
+    const out = () => c.classList.remove("is-on");
     window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
+    document.addEventListener("pointerleave", out);
+    return () => { window.removeEventListener("pointermove", move); document.removeEventListener("pointerleave", out); document.documentElement.classList.remove("has-cursor"); };
   }, []);
 
   return null;

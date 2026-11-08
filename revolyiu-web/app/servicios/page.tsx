@@ -1,14 +1,14 @@
 import { getServices } from "@/lib/data";
 import { crumbsLd, pageMeta } from "@/lib/seo";
 import Link from "next/link";
-import ServiceCards from "@/components/ServiceCards";
+import ServiceStack from "@/components/ServiceStack";
 import CtaBlock from "@/components/CtaBlock";
 import Split from "@/components/Split";
 import JsonLd from "@/components/JsonLd";
 
 export const metadata = pageMeta({
   title: "Servicios: branding, web, marketing, CRM y más",
-  description: "Seis disciplinas, un único equipo: diseño gráfico y branding, desarrollo web, marketing creativo, soluciones CRM, gestión de talentos y arquitectura e interiorismo.",
+  description: "Seis disciplinas, un único equipo: branding, desarrollo web, marketing creativo, CRM, gestión de talentos y arquitectura e interiorismo.",
   path: "/servicios/",
 });
 
@@ -26,7 +26,7 @@ export default async function Servicios() {
         </div>
       </section>
       <section className="section section--tight" style={{ paddingTop: 0 }}>
-        <div className="wrap"><ServiceCards items={services} headingLevel={2} /></div>
+        <div className="wrap"><ServiceStack items={services} headingLevel={2} /></div>
       </section>
       <CtaBlock />
     </>

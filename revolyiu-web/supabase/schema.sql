@@ -74,7 +74,7 @@ create policy "cualquiera puede enviar" on public.contact_messages for insert wi
 insert into public.posts (slug, title, excerpt, category, body_md, cover, status, qa_score, qa_notes, qa_checked_at, published_at)
 values (
   'likes-no-pagan-las-cuentas',
-  'Los likes no pagan las cuentas (una buena estrategia, sí)',
+  'Los likes no pagan las cuentas: la estrategia, sí',
   '¿Publicas todos los días y aun así nadie compra? Quizá no te falta contenido, sino una estrategia creativa que convierta tus redes en una máquina de resultados.',
   'Marketing',
   $md$¿Publicas todos los días y aun así nadie compra? Quizá no te falta contenido, sino una **estrategia creativa** que convierta tus redes en una máquina de resultados.

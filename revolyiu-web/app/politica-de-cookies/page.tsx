@@ -12,7 +12,7 @@ export default function Cookies() {
       <h2>1. Qué son las cookies</h2>
       <p>Son pequeños archivos o registros que una web guarda en tu navegador para recordar información sobre tu visita. Algunas son imprescindibles para que la web funcione; otras sirven para medir el uso o para publicidad, y solo se activan si las aceptas.</p>
       <h2>2. Cookies que usamos ahora</h2>
-      <table>
+      <table tabIndex={0} aria-label="Cookies que usamos">
         <thead><tr><th>Nombre</th><th>Tipo</th><th>Titular</th><th>Finalidad</th><th>Duración</th></tr></thead>
         <tbody>
           <tr><td>rv-consent</td><td>Necesaria (almacenamiento local)</td><td>Revolyiu</td><td>Recordar si has aceptado o rechazado las cookies para no volver a preguntarte</td><td>12 meses</td></tr>

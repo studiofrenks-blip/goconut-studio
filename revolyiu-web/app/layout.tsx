@@ -28,8 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <a href="#main" className="skip">Saltar al contenido</a>
-        <div className="stars" aria-hidden="true" />
-        <div className="cursor-glow" aria-hidden="true" />
+                <div className="cursor" aria-hidden="true" />
         <Header />
         <main id="main">{children}</main>
         <Footer />

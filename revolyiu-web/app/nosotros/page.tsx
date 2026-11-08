@@ -8,7 +8,7 @@ import JsonLd from "@/components/JsonLd";
 import ServiceList from "@/components/ServiceList";
 
 export const metadata = pageMeta({
-  title: "Nosotros: la agencia creativa que hace crecer tu negocio",
+  title: "Nosotros: agencia creativa integral",
   description: "Conoce Revolyiu: una agencia creativa integral que combina estrategia, diseño y tecnología para transformar ideas en marcas memorables.",
   path: "/nosotros/",
 });

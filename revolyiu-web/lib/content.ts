@@ -41,6 +41,7 @@ export type Service = {
   faq: { q: string; a: string }[];
   seo: { title: string; description: string };
   soon?: boolean;
+  orbit?: { title: string; items: { label: string; text: string }[] };
 };
 
 export const services: Service[] = [
@@ -445,6 +446,17 @@ export const services: Service[] = [
         a: `Escríbenos a ${"youragensee@gmail.com"} o llámanos al +34 661 144 170 y te respondemos lo antes posible.`,
       },
     ],
+    orbit: {
+      title: "Todo lo que gestionamos por ti",
+      items: [
+        { label: "Representación", text: "Representamos a influencers, artistas y creadores." },
+        { label: "Campañas", text: "Campañas con marcas de principio a fin." },
+        { label: "Patrocinios", text: "Negociamos patrocinios y alianzas estratégicas." },
+        { label: "Marca personal", text: "Desarrollamos tu marca personal." },
+        { label: "Contenido", text: "Te acompañamos en la producción de contenido." },
+        { label: "Resultados", text: "Medimos el impacto y lo compartimos con ambas partes." },
+      ],
+    },
     seo: {
       title: "Gestión de talentos e influencers",
       description:
@@ -620,7 +632,7 @@ export type Post = {
 export const fallbackPosts: Post[] = [
   {
     slug: "likes-no-pagan-las-cuentas",
-    title: "Los likes no pagan las cuentas (una buena estrategia, sí)",
+    title: "Los likes no pagan las cuentas: la estrategia, sí",
     excerpt:
       "¿Publicas todos los días y aun así nadie compra? Quizá no te falta contenido, sino una estrategia creativa que convierta tus redes en una máquina de resultados.",
     category: "Marketing",

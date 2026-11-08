@@ -7,6 +7,7 @@ import { crumbsLd, pageMeta } from "@/lib/seo";
 import { site } from "@/lib/content";
 import Split from "@/components/Split";
 import Gallery from "@/components/Gallery";
+import TalentOrbit from "@/components/TalentOrbit";
 import CtaBlock from "@/components/CtaBlock";
 import JsonLd from "@/components/JsonLd";
 import { Arrow } from "@/components/Icons";
@@ -87,6 +88,19 @@ export default async function ServicePage({ params }: P) {
           </ol>
         </div>
       </section>
+
+      {s.orbit && (
+        <section className="section section--tight" aria-labelledby="orb-t">
+          <div className="wrap split">
+            <div>
+              <p className="kicker">Gestión de talentos</p>
+              <h2 id="orb-t" className="h-lg stretch">{s.orbit.title}</h2>
+              <p className="lead" style={{ marginTop: 24 }}>Toca cada servicio para ver qué incluye.</p>
+            </div>
+            <TalentOrbit items={s.orbit.items} />
+          </div>
+        </section>
+      )}
 
       {s.gallery && (
         <section className="section section--tight" aria-labelledby="gal-t">
