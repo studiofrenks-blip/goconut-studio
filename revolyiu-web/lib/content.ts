@@ -26,6 +26,7 @@ export type Service = {
   slug: string;
   code: string;
   name: string;
+  navLabel: string;
   short: string;
   kicker: string;
   intro: string;
@@ -45,6 +46,7 @@ export type Service = {
 export const services: Service[] = [
   {
     slug: "diseno-grafico-branding",
+    navLabel: "Diseño",
     code: "01",
     name: "Diseño Gráfico & Branding",
     short:
@@ -139,6 +141,7 @@ export const services: Service[] = [
   },
   {
     slug: "desarrollo-web",
+    navLabel: "Desarrollo Web",
     code: "02",
     name: "Desarrollo Web",
     short:
@@ -231,6 +234,7 @@ export const services: Service[] = [
   },
   {
     slug: "marketing-creativo",
+    navLabel: "Marketing",
     code: "03",
     name: "Marketing Creativo",
     short:
@@ -314,6 +318,7 @@ export const services: Service[] = [
   },
   {
     slug: "soluciones-crm",
+    navLabel: "CRM",
     code: "04",
     name: "Soluciones CRM",
     short:
@@ -387,6 +392,7 @@ export const services: Service[] = [
   },
   {
     slug: "gestion-de-talentos",
+    navLabel: "Talentos",
     code: "05",
     name: "Gestión de Talentos",
     short:
@@ -447,6 +453,7 @@ export const services: Service[] = [
   },
   {
     slug: "arquitectura-interiorismo",
+    navLabel: "Arquitectura",
     code: "06",
     name: "Arquitectura & Interiorismo",
     short:

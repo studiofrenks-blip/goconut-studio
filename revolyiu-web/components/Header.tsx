@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { nav, services, site } from "@/lib/content";
+import { services, site } from "@/lib/content";
 import { Arrow } from "./Icons";
 
 export default function Header() {
@@ -35,14 +35,16 @@ export default function Header() {
             <img src={site.logo.src} width={site.logo.w} height={site.logo.h} alt="Revolyiu" />
           </Link>
           <nav className="hdr__nav" aria-label="Principal">
-            {nav.slice(1).map((n) => (
-              <Link key={n.href} href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>
-                {n.label}
+            {services.map((s) => (
+              <Link key={s.slug} href={`/${s.slug}/`} aria-current={path?.startsWith(`/${s.slug}`) ? "page" : undefined}>
+                {s.navLabel}
               </Link>
             ))}
+            <Link href="/nosotros/" aria-current={isCurrent("/nosotros/") ? "page" : undefined}>Nosotros</Link>
+            <Link href="/blog/" aria-current={isCurrent("/blog/") ? "page" : undefined}>Blog</Link>
           </nav>
           <Link href="/contacto/" className="btn btn--primary hdr__cta" data-magnetic>
-            Empecemos <Arrow />
+            Escríbenos <Arrow />
           </Link>
           <button className="hdr__burger" aria-expanded={open} aria-controls="menu" aria-label={open ? "Cerrar menú" : "Abrir menú"} onClick={() => setOpen(!open)}>
             <span /><span />

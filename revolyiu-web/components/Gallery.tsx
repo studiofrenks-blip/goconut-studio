@@ -17,7 +17,7 @@ export default function Gallery({ items, layout }: { items: Img[]; layout: "wide
   const sizes = layout === "wide" ? "(max-width: 700px) 100vw, 33vw" : "(max-width: 700px) 50vw, 20vw";
   return (
     <>
-      <div className={`gallery gallery--${layout}`} data-fx="06">
+      <div className={`gallery gallery--${layout}${items.length % 3 && items.length % 2 === 0 && items.length <= 4 ? " gallery--pairs" : ""}`} data-fx="06">
         {items.map((im, n) => (
           <button key={im.src} type="button" onClick={() => setI(n)} aria-label={`Ampliar: ${im.alt}`}>
             <Image src={im.src} alt={im.alt} width={im.w} height={im.h} sizes={sizes} />
