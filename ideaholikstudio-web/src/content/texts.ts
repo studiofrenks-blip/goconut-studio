@@ -1,0 +1,397 @@
+// Textos de la web. Son los valores por defecto: si Supabase tiene un texto
+// con la misma clave e idioma (tabla site_texts), manda el de Supabase.
+// Contenido de la web original, corregido y optimizado. Sin relleno de plantilla.
+import type { Locale } from "@/lib/i18n";
+
+const es = {
+  "meta.siteName": "Ideaholiks Studio",
+  "nav.home": "Inicio",
+  "nav.about": "Nosotros",
+  "nav.work": "Proyectos",
+  "nav.blog": "Blog",
+  "nav.contact": "Contacto",
+  "nav.cta": "Hablemos",
+  "nav.menu": "Menú",
+  "nav.close": "Cerrar",
+  "nav.skip": "Saltar al contenido",
+  "nav.langSwitch": "English",
+  "nav.langSwitchLabel": "Ver esta página en inglés",
+
+  "home.metaTitle": "Ideaholiks Studio · Marcas, shows y movimientos digitales",
+  "home.metaDesc":
+    "Estudio creativo que une branding, web, marketing de influencers y producción de shows. Creamos marcas que destacan y entretenimiento que conecta.",
+  "home.eyebrow": "Estudio creativo · Branding · Digital · Shows",
+  "home.h1a": "Donde las ideas se convierten",
+  "home.h1b": "en marcas, shows y movimientos digitales",
+  "home.lead":
+    "Creamos marcas que destacan, plataformas digitales que se comparten y experiencias de entretenimiento que la gente recuerda.",
+  "home.ctaPrimary": "Cuéntanos tu idea",
+  "home.ctaSecondary": "Ver proyectos",
+  "home.scrollHint": "Desliza",
+  "home.heroAlt": "Manu AleRod en el escenario ante un público que ilumina la sala con sus móviles",
+
+  "home.whoKicker": "Quiénes somos",
+  "home.whoTitle": "No somos un estudio más. Somos Ideaholiks.",
+  "home.whoBody":
+    "Un mismo equipo de marketing, diseño, desarrollo y creación de shows. Unimos estrategia y espontaneidad, imagen y emoción, rendimiento y propósito. No solo construimos cosas: producimos momentos que importan.",
+  "home.orbitHint": "Toca una pieza para ver cómo trabajamos.",
+  "home.orbitCore": "Ideaholiks",
+  "home.trait1": "Multidisciplinar",
+  "home.trait1Text": "Diseño, tecnología, marketing y entretenimiento en un solo equipo, sin intermediarios.",
+  "home.trait2": "Cultura",
+  "home.trait2Text": "Trabajamos desde lo que la gente comparte, comenta y vive hoy.",
+  "home.trait3": "Estrategia",
+  "home.trait3Text": "Cada pieza creativa responde a un objetivo de negocio medible.",
+  "home.trait4": "Entretenimiento",
+  "home.trait4Text": "Sabemos producir shows. Y eso se nota en todo lo que contamos.",
+
+  "home.servicesKicker": "Qué hacemos",
+  "home.servicesTitle": "Un estudio completo: del diseño digital a los shows virales",
+  "home.servicesBody":
+    "Conectamos diseño, tecnología, marketing y entretenimiento en una sola fuerza creativa para hacer crecer marcas, creadores y experiencias culturales.",
+  "home.s1Title": "Entretenimiento y shows en directo",
+  "home.s1Text":
+    "Producimos entretenimiento pensado para lo digital, eventos en vivo y formatos de reality de citas que generan audiencia y conversación.",
+  "home.s2Title": "Marketing de influencers y estrategia de contenido",
+  "home.s2Text":
+    "Campañas en redes, gestión de talento e influencers: conectamos marcas y creadores con la cultura que mueve a su público.",
+  "home.s3Title": "Diseño gráfico y branding",
+  "home.s3Text":
+    "Logotipos con personalidad, piezas que frenan el scroll y sistemas de marca que conectan con personas reales.",
+  "home.s4Title": "Desarrollo web y CRM",
+  "home.s4Text": "Webs a medida e integraciones CRM escalables, bonitas y pensadas para convertir.",
+
+  "home.showKicker": "En escena",
+  "home.showTitle": "Sabemos llenar una sala. Y una pantalla.",
+  "home.showBody":
+    "La producción de shows es nuestro terreno: del concepto y el casting al escenario y a las redes. Lo que aprendemos ante el público lo aplicamos a cada marca.",
+  "home.showCta": "Ver proyectos",
+
+  "cta.kicker": "Tu visión, nuestra obsesión",
+  "cta.title": "¿Trabajamos juntos?",
+  "cta.body":
+    "Lanzamiento de marca, estrategia de contenido, plataforma web o un show: sea cual sea tu siguiente paso, lo construimos contigo.",
+  "cta.button": "Escríbenos",
+
+  "about.metaTitle": "Nosotros · Ideaholiks Studio",
+  "about.metaDesc":
+    "Conoce a Ideaholiks Studio: diseñadores, desarrolladores, marketers y productores de entretenimiento que convierten ideas en experiencias memorables.",
+  "about.kicker": "Nosotros",
+  "about.h1": "Más que un estudio: un movimiento de creadores, narradores y arquitectos culturales",
+  "about.p1":
+    "Ideaholiks Studio nace de una idea sencilla: la creatividad tiene que mover a las personas y a los negocios. Somos un equipo transversal de diseño, desarrollo, marketing y producción de entretenimiento con una misión: convertir ideas atrevidas en experiencias digitales, sociales y en directo que no se olvidan.",
+  "about.p2":
+    "Tanto si creamos una marca desde cero, como si desarrollamos una plataforma interactiva, gestionamos talento o producimos contenido y shows virales, aportamos una mirada creativa respaldada por estrategia, tecnología y conocimiento cultural.",
+  "about.m1a": "No solo diseñamos marcas.",
+  "about.m1b": "Construimos comunidades.",
+  "about.m2a": "No solo producimos contenido.",
+  "about.m2b": "Provocamos conversaciones.",
+  "about.m3a": "No solo presentamos shows.",
+  "about.m3b": "Creamos momentos.",
+  "about.teamKicker": "El equipo",
+  "about.teamTitle": "Las mentes creativas detrás de la locura",
+  "about.teamBody": "De los manuales de marca a los pases de backstage: lo hemos hecho todo.",
+  "about.member1": "Francisco ACM",
+  "about.member1Role": "Cofundador",
+  "about.member1Alt": "Retrato de Francisco ACM, cofundador de Ideaholiks Studio, con sombrero y gafas de sol",
+  "about.member2": "Manuel ARJ",
+  "about.member2Role": "Cofundador",
+  "about.member2Alt": "Retrato de Manuel ARJ, cofundador de Ideaholiks Studio, sonriendo",
+  "about.ctaTitle": "Construyamos tu próxima gran idea",
+  "about.ctaBody": "Marca, plataforma o producción. Empieza el viaje con nosotros.",
+
+  "work.metaTitle": "Proyectos · Ideaholiks Studio",
+  "work.metaDesc":
+    "Shows en directo, personajes y producción de entretenimiento de Ideaholiks Studio. Lo que aprendemos ante el público lo llevamos a cada marca.",
+  "work.kicker": "Proyectos",
+  "work.h1": "Shows, personajes y proyectos",
+  "work.lead": "Una muestra de lo que producimos. Iremos sumando proyectos de marca, web y campañas.",
+  "work.p1Title": "Show en directo",
+  "work.p1Tag": "Producción de shows",
+  "work.p1Text": "Una sala llena que ilumina el escenario con sus móviles. Producción, puesta en escena y difusión en redes.",
+  "work.p1Alt": "Vista desde el escenario de un show en directo con el público iluminando la sala con los móviles",
+  "work.p2Title": "Manu AleRod en escena",
+  "work.p2Tag": "Talento y entretenimiento",
+  "work.p2Text": "Gestión de talento y producción de espectáculos de humor en directo.",
+  "work.p2Alt": "Manu AleRod actuando con micrófono sobre el escenario, con su nombre proyectado al fondo",
+  "work.p3Title": "Personajes del show",
+  "work.p3Tag": "Formatos y personajes",
+  "work.p3Text": "Creación de personajes y formatos de humor pensados para el escenario y para las redes.",
+  "work.p3Alt": "Cuatro personajes del show caracterizados con pelucas y vestuario, uno de ellos cargado en brazos",
+
+  "contact.metaTitle": "Contacto · Ideaholiks Studio",
+  "contact.metaDesc":
+    "Cuéntanos tu proyecto de marca, web, contenido o show. Respondemos con una llamada para entender tus objetivos y cómo podemos ayudarte.",
+  "contact.kicker": "Contacto",
+  "contact.h1": "Hablemos de tu próxima idea",
+  "contact.lead": "Rellena el formulario y te proponemos una llamada para conocer tu proyecto.",
+  "contact.name": "Nombre",
+  "contact.email": "Email",
+  "contact.subject": "¿Qué necesitas?",
+  "contact.subjectPick": "Elige un servicio",
+  "contact.subjectOther": "Otra cosa",
+  "contact.message": "Mensaje",
+  "contact.consent": "He leído y acepto la",
+  "contact.consentLink": "política de privacidad",
+  "contact.send": "Enviar mensaje",
+  "contact.sending": "Enviando…",
+  "contact.ok": "¡Recibido! Te escribimos muy pronto.",
+  "contact.error": "No se ha podido enviar. Inténtalo de nuevo en unos minutos.",
+  "contact.invalid": "Revisa los campos marcados.",
+  "contact.privacyNote":
+    "Usamos tus datos solo para responder a tu mensaje. Puedes ejercer tus derechos en cualquier momento, como explicamos en la política de privacidad.",
+  "contact.faqTitle": "Preguntas frecuentes",
+  "contact.q1": "¿Qué servicios ofrece Ideaholiks Studio?",
+  "contact.a1":
+    "Ofrecemos servicios creativos y estratégicos completos: diseño de producto, desarrollo web, branding, marketing de influencers, configuración de CRM, creación de contenido y producción de entretenimiento, como formatos de reality de citas y eventos en directo.",
+  "contact.q2": "¿Trabajáis con clientes internacionales?",
+  "contact.a2":
+    "Sí. Nuestro equipo trabaja en remoto y colaboramos con clientes de todo el mundo, adaptándonos a distintas zonas horarias, culturas e idiomas.",
+  "contact.q3": "¿Puedo pedir un paquete de servicios a medida?",
+  "contact.a3":
+    "Por supuesto. Cada idea es distinta, así que preparamos propuestas a medida de tus objetivos: lanzar una marca, producir un show o hacer crecer tu presencia online.",
+  "contact.q4": "¿Cómo empieza un proyecto con vosotros?",
+  "contact.a4":
+    "Rellena el formulario de contacto. Te proponemos una llamada para entender tus necesidades y objetivos, y cómo podemos ayudarte a hacer realidad tu idea.",
+  "contact.q5": "¿Hacéis producción de entretenimiento?",
+  "contact.a5":
+    "Sí. Estamos especializados en crear y producir contenido digital, series pensadas para redes y formatos de reality de citas, desde el concepto y el casting hasta la ejecución final.",
+
+  "blog.metaTitle": "Blog · Ideaholiks Studio",
+  "blog.metaDesc":
+    "Ideas sobre branding, contenido, influencers, web y entretenimiento. Lo que aprendemos creando marcas y produciendo shows, contado sin rodeos.",
+  "blog.kicker": "Blog",
+  "blog.h1": "Ideas, aprendizajes y entre bastidores",
+  "blog.lead": "Branding, contenido, influencers, web y entretenimiento.",
+  "blog.empty": "Muy pronto, los primeros artículos. Mientras tanto, cuéntanos tu idea.",
+  "blog.read": "Leer artículo",
+  "blog.back": "Volver al blog",
+  "blog.minutes": "min de lectura",
+
+  "footer.tagline":
+    "Ideaholiks Studio une diseño atrevido, tecnología y relato cultural para crear marcas que destacan y entretenimiento que se comparte. No seguimos tendencias: ayudamos a crearlas.",
+  "footer.explore": "Explorar",
+  "footer.services": "Servicios",
+  "footer.legal": "Legal",
+  "footer.notice": "Aviso legal",
+  "footer.privacy": "Política de privacidad",
+  "footer.cookies": "Política de cookies",
+  "footer.cookieSettings": "Configurar cookies",
+  "footer.rights": "Todos los derechos reservados.",
+
+  "cookies.title": "Cookies",
+  "cookies.body":
+    "Usamos cookies técnicas necesarias para que la web funcione. Con tu permiso, usaríamos también cookies de análisis para entender cómo se usa la web. Puedes aceptarlas, rechazarlas o elegir.",
+  "cookies.accept": "Aceptar",
+  "cookies.reject": "Rechazar",
+  "cookies.configure": "Configurar",
+  "cookies.save": "Guardar mi elección",
+  "cookies.necessary": "Necesarias",
+  "cookies.necessaryText": "Guardan tu elección de cookies. Siempre activas.",
+  "cookies.analytics": "Análisis",
+  "cookies.analyticsText": "Nos dicen qué páginas se visitan, de forma agregada. Desactivadas salvo que las aceptes.",
+  "cookies.more": "Ver la política de cookies",
+
+  "notFound.title": "Esta página no existe",
+  "notFound.body": "Puede que el enlace haya cambiado. Vuelve al inicio o escríbenos.",
+  "notFound.home": "Ir al inicio",
+};
+
+export type TextKey = keyof typeof es;
+type Dict = Record<TextKey, string>;
+
+const en: Dict = {
+  "meta.siteName": "Ideaholiks Studio",
+  "nav.home": "Home",
+  "nav.about": "About",
+  "nav.work": "Work",
+  "nav.blog": "Blog",
+  "nav.contact": "Contact",
+  "nav.cta": "Let's talk",
+  "nav.menu": "Menu",
+  "nav.close": "Close",
+  "nav.skip": "Skip to content",
+  "nav.langSwitch": "Español",
+  "nav.langSwitchLabel": "View this page in Spanish",
+
+  "home.metaTitle": "Ideaholiks Studio · Brands, Shows & Digital Movements",
+  "home.metaDesc":
+    "Creative studio blending branding, web, influencer marketing and show production. We build standout brands and entertainment that connects.",
+  "home.eyebrow": "Creative studio · Branding · Digital · Shows",
+  "home.h1a": "Where ideas become",
+  "home.h1b": "brands, shows & digital movements",
+  "home.lead":
+    "We build standout brands, digital platforms people share, and entertainment experiences people remember.",
+  "home.ctaPrimary": "Tell us your idea",
+  "home.ctaSecondary": "See our work",
+  "home.scrollHint": "Scroll",
+  "home.heroAlt": "Manu AleRod on stage in front of an audience lighting up the venue with their phones",
+
+  "home.whoKicker": "Who we are",
+  "home.whoTitle": "Not just another studio. We're Ideaholiks.",
+  "home.whoBody":
+    "One team of marketers, designers, developers and show creators. We bridge strategy and spontaneity, visuals and emotion, performance and purpose. We don't just build things: we produce moments that matter.",
+  "home.orbitHint": "Tap a piece to see how we work.",
+  "home.orbitCore": "Ideaholiks",
+  "home.trait1": "Multidisciplinary",
+  "home.trait1Text": "Design, tech, marketing and entertainment in one team, no middlemen.",
+  "home.trait2": "Culture",
+  "home.trait2Text": "We work from what people share, discuss and live today.",
+  "home.trait3": "Strategy",
+  "home.trait3Text": "Every creative piece answers a measurable business goal.",
+  "home.trait4": "Entertainment",
+  "home.trait4Text": "We know how to produce shows. It shows in every story we tell.",
+
+  "home.servicesKicker": "What we do",
+  "home.servicesTitle": "A full-spectrum studio: from digital design to viral shows",
+  "home.servicesBody":
+    "We connect design, technology, marketing and entertainment into one creative force, built to grow brands, creators and cultural experiences.",
+  "home.s1Title": "Entertainment & live shows",
+  "home.s1Text":
+    "We produce digital-first entertainment, live events and dating reality formats that drive views and conversation.",
+  "home.s2Title": "Influencer marketing & content strategy",
+  "home.s2Text":
+    "Social campaigns, talent and influencer management: we connect brands and creators with the culture that moves their audience.",
+  "home.s3Title": "Graphic design & branding",
+  "home.s3Text": "Logos with personality, scroll-stopping visuals and brand systems that connect with real people.",
+  "home.s4Title": "Web & CRM development",
+  "home.s4Text": "Custom websites and CRM integrations that are scalable, beautiful and built to convert.",
+
+  "home.showKicker": "On stage",
+  "home.showTitle": "We know how to fill a room. And a screen.",
+  "home.showBody":
+    "Show production is our home turf: from concept and casting to the stage and social media. What we learn in front of an audience, we bring to every brand.",
+  "home.showCta": "See our work",
+
+  "cta.kicker": "Your vision, our obsession",
+  "cta.title": "Let's work together",
+  "cta.body":
+    "Brand launch, content strategy, web platform or a show: whatever your next step is, we'll build it with you.",
+  "cta.button": "Get in touch",
+
+  "about.metaTitle": "About · Ideaholiks Studio",
+  "about.metaDesc":
+    "Meet Ideaholiks Studio: designers, developers, marketers and entertainment producers turning bold ideas into experiences people remember.",
+  "about.kicker": "About us",
+  "about.h1": "More than a studio: a movement of makers, storytellers and cultural architects",
+  "about.p1":
+    "Ideaholiks Studio was born from a simple idea: creativity should move people and businesses forward. We're a cross-functional team of designers, developers, marketers and entertainment producers with one mission: to turn bold ideas into unforgettable digital, social and live experiences.",
+  "about.p2":
+    "Whether we're crafting a brand from scratch, building an interactive platform, managing talent or producing viral content and shows, we bring a creative edge powered by strategy, technology and cultural insight.",
+  "about.m1a": "We don't just design brands.",
+  "about.m1b": "We build communities.",
+  "about.m2a": "We don't just produce content.",
+  "about.m2b": "We spark conversations.",
+  "about.m3a": "We don't just host shows.",
+  "about.m3b": "We create moments.",
+  "about.teamKicker": "The team",
+  "about.teamTitle": "The creative minds behind the madness",
+  "about.teamBody": "From brand books to backstage passes: we've done it all.",
+  "about.member1": "Francisco ACM",
+  "about.member1Role": "Co-founder",
+  "about.member1Alt": "Portrait of Francisco ACM, co-founder of Ideaholiks Studio, wearing a hat and sunglasses",
+  "about.member2": "Manuel ARJ",
+  "about.member2Role": "Co-founder",
+  "about.member2Alt": "Portrait of Manuel ARJ, co-founder of Ideaholiks Studio, smiling",
+  "about.ctaTitle": "Let's build your next big idea",
+  "about.ctaBody": "Brand, platform or production. Start your journey with us.",
+
+  "work.metaTitle": "Work · Ideaholiks Studio",
+  "work.metaDesc":
+    "Live shows, characters and entertainment production by Ideaholiks Studio. What we learn in front of an audience, we bring to every brand.",
+  "work.kicker": "Work",
+  "work.h1": "Shows, characters and projects",
+  "work.lead": "A selection of what we produce. Brand, web and campaign projects coming soon.",
+  "work.p1Title": "Live show",
+  "work.p1Tag": "Show production",
+  "work.p1Text": "A packed venue lighting up the stage with their phones. Production, staging and social media rollout.",
+  "work.p1Alt": "View from the stage of a live show with the audience lighting up the venue with their phones",
+  "work.p2Title": "Manu AleRod on stage",
+  "work.p2Tag": "Talent & entertainment",
+  "work.p2Text": "Talent management and live comedy show production.",
+  "work.p2Alt": "Manu AleRod performing with a microphone on stage, his name projected behind him",
+  "work.p3Title": "Show characters",
+  "work.p3Tag": "Formats & characters",
+  "work.p3Text": "Characters and comedy formats created for the stage and for social media.",
+  "work.p3Alt": "Four show characters in wigs and costumes, one of them being carried",
+
+  "contact.metaTitle": "Contact · Ideaholiks Studio",
+  "contact.metaDesc":
+    "Tell us about your brand, web, content or show project. We'll set up a call to understand your goals and how we can help you get there.",
+  "contact.kicker": "Contact",
+  "contact.h1": "Let's talk about your next idea",
+  "contact.lead": "Fill in the form and we'll set up a call to learn about your project.",
+  "contact.name": "Name",
+  "contact.email": "Email",
+  "contact.subject": "What do you need?",
+  "contact.subjectPick": "Choose a service",
+  "contact.subjectOther": "Something else",
+  "contact.message": "Message",
+  "contact.consent": "I have read and accept the",
+  "contact.consentLink": "privacy policy",
+  "contact.send": "Send message",
+  "contact.sending": "Sending…",
+  "contact.ok": "Got it! We'll be in touch very soon.",
+  "contact.error": "We couldn't send it. Please try again in a few minutes.",
+  "contact.invalid": "Please check the highlighted fields.",
+  "contact.privacyNote":
+    "We only use your data to reply to your message. You can exercise your rights at any time, as explained in our privacy policy.",
+  "contact.faqTitle": "Frequently asked questions",
+  "contact.q1": "What services does Ideaholiks Studio offer?",
+  "contact.a1":
+    "We provide a full spectrum of creative and strategic services: product design, web development, branding, influencer marketing, CRM setup, content creation and entertainment production, such as dating reality formats and live events.",
+  "contact.q2": "Do you work with international clients?",
+  "contact.a2":
+    "Yes. Our team is remote-ready and we work with clients all over the world, adapting to different time zones, cultures and languages.",
+  "contact.q3": "Can I request a custom service package?",
+  "contact.a3":
+    "Absolutely. Every idea is different, so we build proposals around your goals: launching a brand, producing a show or growing your online presence.",
+  "contact.q4": "How do I start a project with you?",
+  "contact.a4":
+    "Fill in the contact form. We'll set up a discovery call to understand your needs and goals, and how we can help bring your idea to life.",
+  "contact.q5": "Do you offer entertainment production?",
+  "contact.a5":
+    "Yes. We specialise in creating and producing digital content, social-first series and dating reality formats, from concept and casting to final execution.",
+
+  "blog.metaTitle": "Blog · Ideaholiks Studio",
+  "blog.metaDesc":
+    "Ideas on branding, content, influencers, web and entertainment. What we learn building brands and producing shows, told straight.",
+  "blog.kicker": "Blog",
+  "blog.h1": "Ideas, lessons and behind the scenes",
+  "blog.lead": "Branding, content, influencers, web and entertainment.",
+  "blog.empty": "The first articles are coming very soon. In the meantime, tell us your idea.",
+  "blog.read": "Read article",
+  "blog.back": "Back to the blog",
+  "blog.minutes": "min read",
+
+  "footer.tagline":
+    "Ideaholiks Studio blends bold design, technology and cultural storytelling to build standout brands and entertainment people share. We don't follow trends: we help create them.",
+  "footer.explore": "Explore",
+  "footer.services": "Services",
+  "footer.legal": "Legal",
+  "footer.notice": "Legal notice",
+  "footer.privacy": "Privacy policy",
+  "footer.cookies": "Cookie policy",
+  "footer.cookieSettings": "Cookie settings",
+  "footer.rights": "All rights reserved.",
+
+  "cookies.title": "Cookies",
+  "cookies.body":
+    "We use technical cookies the site needs to work. With your permission, we'd also use analytics cookies to understand how the site is used. You can accept, reject or choose.",
+  "cookies.accept": "Accept",
+  "cookies.reject": "Reject",
+  "cookies.configure": "Settings",
+  "cookies.save": "Save my choice",
+  "cookies.necessary": "Necessary",
+  "cookies.necessaryText": "They store your cookie choice. Always on.",
+  "cookies.analytics": "Analytics",
+  "cookies.analyticsText": "They tell us which pages are visited, in aggregate. Off unless you accept them.",
+  "cookies.more": "Read the cookie policy",
+
+  "notFound.title": "This page doesn't exist",
+  "notFound.body": "The link may have changed. Go back home or drop us a line.",
+  "notFound.home": "Go home",
+};
+
+export const defaults: Record<Locale, Dict> = { es, en };
+export type Texts = Dict;
