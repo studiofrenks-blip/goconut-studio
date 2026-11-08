@@ -58,7 +58,7 @@ export default async function PostPage({ params }: P) {
           <div className="wrap"><h2 id="more-t" className="h-md" style={{ marginBottom: 32 }}>Sigue leyendo</h2><div className="posts">{more.map((m) => <PostCard key={m.slug} post={m} />)}</div></div>
         </section>
       )}
-      <CtaBlock line="¿Tu marca está lista para sonar fuerte? Hablemos." />
+      <CtaBlock title="¿Tu marca está lista para sonar fuerte?" />
     </>
   );
 }

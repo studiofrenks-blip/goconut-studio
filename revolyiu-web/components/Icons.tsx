@@ -16,10 +16,7 @@ export const YouTube = () => (
 /** Iconos de los tres pilares (dibujados en línea, en el degradado de marca). */
 export const PillarIcon = ({ n }: { n: number }) => (
   <svg className="pillar__ico" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-    <defs>
-      <linearGradient id={`pg${n}`} x1="0" y1="0" x2="64" y2="64"><stop stopColor="#0cf4ed" /><stop offset="1" stopColor="#08ff89" /></linearGradient>
-    </defs>
-    <g stroke={`url(#pg${n})`} strokeWidth="1.6">
+    <g stroke="currentColor" strokeWidth="1.6">
       {n === 0 && (<><circle cx="32" cy="32" r="26" /><circle cx="32" cy="32" r="16" /><circle cx="32" cy="32" r="6" /><path d="M32 2v12M32 50v12M2 32h12M50 32h12" /></>)}
       {n === 1 && (<><path d="M32 6c10 8 14 20 12 34H20C18 26 22 14 32 6Z" /><circle cx="32" cy="26" r="5" /><path d="M20 40l-8 10h10M44 40l8 10H42M28 48l4 10 4-10" /></>)}
       {n === 2 && (<><ellipse cx="32" cy="32" rx="28" ry="11" /><ellipse cx="32" cy="32" rx="28" ry="11" transform="rotate(60 32 32)" /><ellipse cx="32" cy="32" rx="28" ry="11" transform="rotate(120 32 32)" /><circle cx="32" cy="32" r="4" /></>)}

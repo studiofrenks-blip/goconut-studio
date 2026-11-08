@@ -118,7 +118,7 @@ export default async function ServicePage({ params }: P) {
         </Link>
       </div>
 
-      <CtaBlock line={s.ctaLine} />
+      <CtaBlock title={s.ctaLine} />
     </>
   );
 }

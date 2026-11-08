@@ -2,8 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getHome, getPosts, getServices } from "@/lib/data";
 import { pageMeta } from "@/lib/seo";
-import { site } from "@/lib/content";
-import ServiceList from "@/components/ServiceList";
+import ServiceCards from "@/components/ServiceCards";
 import CtaBlock from "@/components/CtaBlock";
 import Split from "@/components/Split";
 import PostCard from "@/components/PostCard";
@@ -73,11 +72,11 @@ export default async function Home() {
           <div className="svc-head">
             <div>
               <p className="kicker">Nuestros servicios</p>
-              <h2 id="svc-t" className="h-lg" data-fx="03"><Split text="Todo lo que tu marca necesita," /> <span className="grad"><Split text="en órbita." offset={5} /></span></h2>
+              <h2 id="svc-t" className="h-lg" data-fx="03"><Split text="Todo lo que tu marca necesita," /> <span className="grad"><Split text="en un solo equipo" offset={5} /></span></h2>
             </div>
-            <p className="lead" style={{ maxWidth: "38ch" }}>Seis disciplinas, un único equipo. Para que estrategia, imagen y ejecución vayan en la misma dirección.</p>
+            <p className="lead" style={{ maxWidth: "38ch" }}>Seis disciplinas coordinadas para que estrategia, imagen y ejecución vayan en la misma dirección.</p>
           </div>
-          <ServiceList items={services} />
+          <ServiceCards items={services} />
         </div>
       </section>
 
@@ -99,8 +98,8 @@ export default async function Home() {
       </section>
 
       <section className="section" aria-labelledby="vis-t">
-        <div className="wrap split">
-          <div className="frame" data-fx="05" style={{ maxWidth: 520 }}>
+        <div className="wrap"><div className="vision-card split">
+          <div className="frame" data-fx="05" style={{ maxWidth: 440 }}>
             <Image src={home.visionImg.src} alt={home.visionImg.alt} width={home.visionImg.w} height={home.visionImg.h} sizes="(max-width: 900px) 100vw, 45vw" />
           </div>
           <div>
@@ -111,7 +110,7 @@ export default async function Home() {
               <Link href="/contacto/" className="btn btn--primary" style={{ marginTop: 16 }} data-magnetic>Envíanos un mensaje <Arrow /></Link>
             </div>
           </div>
-        </div>
+        </div></div>
       </section>
 
       <section className="section" aria-labelledby="ab-t">
@@ -149,7 +148,7 @@ export default async function Home() {
         </section>
       )}
 
-      <CtaBlock line={`En ${site.name} queremos conocer tu visión y ayudarte a hacerla realidad.`} />
+      <CtaBlock />
     </>
   );
 }

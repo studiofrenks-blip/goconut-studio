@@ -1,7 +1,7 @@
 import { getServices } from "@/lib/data";
 import { crumbsLd, pageMeta } from "@/lib/seo";
 import Link from "next/link";
-import ServiceList from "@/components/ServiceList";
+import ServiceCards from "@/components/ServiceCards";
 import CtaBlock from "@/components/CtaBlock";
 import Split from "@/components/Split";
 import JsonLd from "@/components/JsonLd";
@@ -26,7 +26,7 @@ export default async function Servicios() {
         </div>
       </section>
       <section className="section section--tight" style={{ paddingTop: 0 }}>
-        <div className="wrap"><ServiceList items={services} headingLevel={2} /></div>
+        <div className="wrap"><ServiceCards items={services} headingLevel={2} /></div>
       </section>
       <CtaBlock />
     </>

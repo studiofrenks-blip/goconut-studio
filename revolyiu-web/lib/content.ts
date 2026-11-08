@@ -432,7 +432,7 @@ export const services: Service[] = [
       { title: "Resultados", text: "Medimos el impacto y compartimos un informe claro con ambas partes." },
     ],
     hero: [
-      img("marketing-1", "Creadora de contenido trabajando con Revolyiu"),
+      img("marketing-2", "Creadora de contenido trabajando con Revolyiu"),
       img("nosotros-2", "Equipo de Revolyiu coordinando una campaña con talentos"),
     ],
     faq: [
