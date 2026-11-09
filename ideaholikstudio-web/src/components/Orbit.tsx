@@ -66,7 +66,7 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
         <div className="orbit-ring" />
         <div className="orbit-ping" />
         <div className="orbit-ping b" />
-        <div className="orbit-core" aria-live="polite">
+        <div className="orbit-core">
           <div>
             {cur ? (
               <strong>{cur.label}</strong>
@@ -84,15 +84,16 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
             className={`orbit-node n${i + 1}`}
             aria-pressed={active === i}
             onClick={() => {
+              // Primer toque: abre la pieza tocada (aunque ya se estuviera mostrando).
+              setActive((v) => (manual && v === i ? -1 : i));
               setManual(true);
-              setActive((v) => (v === i ? -1 : i));
             }}
           >
             {it.label}
           </button>
         ))}
       </div>
-      <p className="orbit-caption" aria-live="polite">
+      <p className="orbit-caption" aria-live={manual ? "polite" : "off"}>
         {cur ? cur.text : "\u00a0"}
       </p>
       <div className="orbit-dots" aria-hidden="true">

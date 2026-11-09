@@ -21,7 +21,7 @@ export default async function Contact({ params }: P) {
 
   return (
     <>
-      <PageHero kicker={t["contact.kicker"]} title={t["contact.h1"]} lead={t["contact.lead"]} watermark="Hola" size="xl" />
+      <PageHero kicker={t["contact.kicker"]} title={t["contact.h1"]} lead={t["contact.lead"]} watermark={lang === "es" ? "Hola" : "Hello"} size="xl" />
       <section className="wrap contact-grid">
         <ContactForm
           locale={lang}

@@ -58,6 +58,23 @@ export default function CookieBanner({ t, policyHref }: { t: T; policyHref: stri
     return () => window.removeEventListener("ih:open-cookies", reopen);
   }, []);
 
+  // Mientras el aviso está abierto, la portada se aparta para que no tape el botón principal.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!show) {
+      root.style.removeProperty("--cookie-h");
+      delete root.dataset.cookie;
+      return;
+    }
+    root.dataset.cookie = "open";
+    const el = document.querySelector<HTMLElement>(".cookie");
+    const set = () => el && root.style.setProperty("--cookie-h", `${el.offsetHeight + 16}px`);
+    set();
+    const ro = el ? new ResizeObserver(set) : null;
+    if (el && ro) ro.observe(el);
+    return () => ro?.disconnect();
+  }, [show, prefs]);
+
   if (!show) return null;
   const decide = (a: boolean) => {
     save(a);

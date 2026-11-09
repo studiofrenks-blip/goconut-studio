@@ -18,7 +18,7 @@ export default function ScrollFill({ text, className = "" }: { text: string; cla
       raf = 0;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const prog = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      const prog = Math.min(1, Math.max(0, (vh * 1.0 - r.top) / (r.height + vh * 0.25)));
       const n = Math.round(prog * spans.length);
       spans.forEach((s, i) => (s.dataset.on = i < n ? "1" : "0"));
     };

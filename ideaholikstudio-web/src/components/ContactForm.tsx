@@ -30,7 +30,6 @@ export default function ContactForm({
   // Al fallar, el cursor va al primer campo con error.
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
-    if (state.values?.subject) setSubject(state.values.subject);
     if (state.status !== "invalid") return;
     formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
   }, [state]);
@@ -47,7 +46,8 @@ export default function ContactForm({
   }
 
   return (
-    <form className="form" action={action} noValidate ref={formRef}>
+    // La clave cambia con cada intento: el formulario se monta de nuevo con lo que se escribió.
+    <form className="form" action={action} noValidate ref={formRef} key={`${subject}|${JSON.stringify(state.values || {})}`}>
       <input type="hidden" name="locale" value={locale} />
       <div className="hp" aria-hidden="true">
         <label>
@@ -66,7 +66,7 @@ export default function ContactForm({
       </div>
       <div className="field">
         <label htmlFor="f-subject">{t.subject}</label>
-        <select id="f-subject" name="subject" value={subject} onChange={(e) => setSubject(e.target.value)}>
+        <select id="f-subject" name="subject" defaultValue={state.values?.subject || subject}>
           <option value="" disabled>
             {t.subjectPick}
           </option>
@@ -84,7 +84,7 @@ export default function ContactForm({
         {err("message") && <p className="err" id="e-msg">{t.errMessage}</p>}
       </div>
       <label className="check">
-        <input type="checkbox" name="consent" required aria-invalid={err("consent")} aria-describedby={err("consent") ? "e-consent" : undefined} />
+        <input type="checkbox" name="consent" defaultChecked={state.values?.consent} required aria-invalid={err("consent")} aria-describedby={err("consent") ? "e-consent" : undefined} />
         <span>
           {t.consent} <a href={privacyHref}>{t.consentLink}</a>.
         </span>

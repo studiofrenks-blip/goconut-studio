@@ -15,6 +15,7 @@ const enSlugs: Record<string, string> = {
 
 const config: NextConfig = {
   trailingSlash: false,
+  experimental: { globalNotFound: true },
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],

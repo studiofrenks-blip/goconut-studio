@@ -1848,9 +1848,8 @@ p {
 }
 @keyframes stretch {
   from {
-    font-stretch: 62%;
-    letter-spacing: 0.04em;
-    opacity: 0.2;
+    font-stretch: 66%;
+    letter-spacing: 0.03em;
   }
 }
 @keyframes stretchBig {
@@ -2255,4 +2254,152 @@ h3 {
 /* Frase pequeña del manifiesto: legible en el móvil. */
 .manifesto li span {
   font-size: max(15px, 0.42em);
+}
+
+/* ── Tercera ronda (2ª revisión independiente) ── */
+/* 1) Cabecera móvil a 360 y 320: todo cabe, el menú siempre 46×46. */
+@media (max-width: 900px) {
+  .menu-btn {
+    flex: 0 0 46px;
+  }
+  .site-header .header-cta {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 380px) {
+  .site-header .bar {
+    gap: 8px;
+  }
+  .logo img {
+    height: 48px;
+  }
+  .site-header .header-cta {
+    padding: 0 12px;
+    font-size: 14px;
+  }
+}
+/* 2) Con el aviso de cookies abierto, el contenido de la portada sube. */
+.sh-content {
+  padding-bottom: calc(clamp(40px, 7vh, 80px) + var(--cookie-h, 0px));
+}
+/* 9) Móvil en horizontal: el primer pantallazo enseña el botón. */
+@media (max-height: 500px) {
+  .sh-content {
+    padding-top: 84px;
+  }
+  .sh-eyebrow {
+    display: none;
+  }
+  .sh-title {
+    font-size: clamp(28px, 11vh, 48px);
+  }
+  .sh-lead {
+    display: none;
+  }
+  .sh-foot {
+    margin-top: 14px;
+  }
+  .sh-foot .ctas {
+    flex-direction: row;
+  }
+}
+/* 10) Palabra de fondo: solo en pantallas grandes y siempre entera. */
+.watermark {
+  bottom: 0;
+}
+@media (max-width: 700px) {
+  .watermark {
+    display: none;
+  }
+}
+/* 11) Proporciones: crecen de verdad entre móvil y ordenador. */
+:root {
+  --fs-h1: clamp(34px, calc(3.6vw + 18px), 64px);
+  --fs-h2: clamp(28px, calc(2.6vw + 16px), 48px);
+  --fs-cta: clamp(40px, calc(5vw + 20px), 96px);
+}
+/* 7) «Sabemos llenar…» en el móvil: titular a todo el ancho. */
+@media (max-width: 700px) {
+  .xr-line {
+    max-width: none;
+  }
+}
+.xr {
+  height: 170vh;
+}
+/* 13) Equipo: placa sólida (sin bordes raros) y cara de Manuel a la vista. */
+.member figcaption {
+  backdrop-filter: none;
+  background: rgba(11, 8, 23, 0.88);
+}
+.member img[src*="manuel"] {
+  object-position: center 22%;
+}
+.member {
+  isolation: isolate;
+}
+/* 14) Menos huecos en el móvil. */
+@media (max-width: 700px) {
+  .who {
+    gap: 28px;
+  }
+  .orbit-hint {
+    margin-bottom: 0;
+  }
+  .flow-sec {
+    padding-bottom: 40px;
+  }
+}
+/* 15) Texto que se enciende: lo apagado se sigue leyendo; titulares sin apagarse. */
+.fw {
+  color: rgba(211, 205, 234, 0.66);
+}
+/* 16) Pie en móvil pequeño: una columna y enlaces cómodos de tocar. */
+@media (max-width: 400px) {
+  .foot-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.foot-links a,
+.foot-links button {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+}
+/* 18) Cierre: color liso (el degradado partía palabras). */
+.big-cta-title {
+  background: none;
+  color: var(--ink);
+}
+/* Con el aviso abierto en pantallas bajas, la portada se queda en lo esencial. */
+@media (max-height: 820px) and (max-width: 900px) {
+  html[data-cookie="open"] .sh-lead {
+    display: none;
+  }
+}
+/* Móvil en horizontal: el aviso es una sola franja. */
+@media (max-height: 500px) {
+  .cookie {
+    max-width: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+  }
+  .cookie p {
+    flex: 1;
+    font-size: 13px;
+  }
+  .cookie-prefs {
+    display: none;
+  }
+  .cookie-actions {
+    margin: 0;
+    grid-template-columns: repeat(3, auto);
+  }
+  .cookie-actions .btn {
+    min-height: 44px;
+    padding: 0 14px;
+  }
 }

@@ -48,13 +48,13 @@ export default function ExpandReveal(p: Props) {
       const r = el.getBoundingClientRect();
       const total = el.offsetHeight - window.innerHeight;
       const prog = clamp(-r.top / (total || 1));
-      const grow = ease(clamp(prog / 0.6));
+      const grow = ease(clamp((prog - 0.12) / 0.55)); // primero se lee el titular entero, luego crece la foto
       const after = clamp((prog - 0.55) / 0.3);
       el.style.setProperty("--hs", String(small + (1 - small) * grow));
       el.style.setProperty("--hy", String(offY * (1 - grow)));
       el.style.setProperty("--hr", String(28 * (1 - grow)));
       el.style.setProperty("--hx", String(grow * 24));
-      el.style.setProperty("--tl", String(1 - clamp(grow * 5)));
+      el.style.setProperty("--tl", String(1 - clamp(grow * 1.8)));
       el.style.setProperty("--ho", String(grow));
       el.style.setProperty("--ha", String(after));
       setLive(after > 0.6);

@@ -1,7 +1,7 @@
 "use server";
 import { supabaseService } from "@/lib/supabase";
 
-export type ContactValues = { name: string; email: string; subject: string; message: string };
+export type ContactValues = { name: string; email: string; subject: string; message: string; consent: boolean };
 export type ContactState = { status: "idle" | "ok" | "invalid" | "error"; fields?: string[]; values?: ContactValues };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -23,7 +23,7 @@ export async function sendContact(_prev: ContactState, fd: FormData): Promise<Co
   if (message.length < 10) bad.push("message");
   if (!consent) bad.push("consent");
   // Devolvemos lo escrito para que no se pierda al mostrar los errores.
-  const values = { name, email, subject, message };
+  const values = { name, email, subject, message, consent };
   if (bad.length) return { status: "invalid", fields: bad, values };
 
   const sb = supabaseService();
