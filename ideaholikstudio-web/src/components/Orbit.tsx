@@ -24,7 +24,7 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
     io.observe(el);
     const place = () => {
       const w = el.clientWidth;
-      const radius = w * (w < 460 ? 0.3 : 0.38);
+      const radius = w * (w < 460 ? 0.35 : 0.38);
       nodes.current.forEach((n, i) => {
         if (!n) return;
         const a = ((i / items.length) * 360 + angle) * (Math.PI / 180);

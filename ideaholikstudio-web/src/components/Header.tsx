@@ -2,16 +2,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { translatePath } from "@/lib/i18n";
+import { pageKeyOf, translatePath, type PageKey } from "@/lib/i18n";
 
-type NavItem = { href: string; label: string };
+type NavItem = { href: string; label: string; key?: PageKey };
 type Props = {
   homeHref: string;
   items: NavItem[];
   cta: NavItem;
   locale: "es" | "en";
   lang: { label: string; aria: string };
-  t: { menu: string; close: string; logoAlt: string };
+  t: { menu: string; close: string; logoAlt: string; mainNav: string; mobileNav: string };
 };
 
 export default function Header({ homeHref, items, cta, locale, lang, t }: Props) {
@@ -37,7 +37,8 @@ export default function Header({ homeHref, items, cta, locale, lang, t }: Props)
 
   const other = locale === "es" ? "en" : "es";
   const langHref = translatePath(pathname, other);
-  const isCurrent = (h: string) => pathname === h || (h !== homeHref && pathname.startsWith(h + "/"));
+  const currentKey = pageKeyOf(pathname)?.key;
+  const isCurrent = (i: NavItem) => !!i.key && i.key === currentKey;
 
   return (
     <header className="site-header" data-solid={solid || open ? "1" : "0"}>
@@ -46,9 +47,9 @@ export default function Header({ homeHref, items, cta, locale, lang, t }: Props)
           {/* SVG del logo: 64 px de alto (antes 438 px). */}
           <img src="/img/ideaholiks-logo.svg" alt={t.logoAlt} width={151} height={64} />
         </Link>
-        <nav className="nav" aria-label="Principal">
+        <nav className="nav" aria-label={t.mainNav}>
           {items.map((i) => (
-            <Link key={i.href} href={i.href} aria-current={isCurrent(i.href) ? "page" : undefined}>
+            <Link key={i.href} href={i.href} aria-current={isCurrent(i) ? "page" : undefined}>
               {i.label}
             </Link>
           ))}
@@ -69,9 +70,9 @@ export default function Header({ homeHref, items, cta, locale, lang, t }: Props)
         </button>
       </div>
       <div id="mobile-panel" className="mobile-panel" data-open={open ? "1" : "0"} hidden={!open}>
-        <nav aria-label="Móvil">
+        <nav aria-label={t.mobileNav}>
           {items.map((i) => (
-            <Link key={i.href} href={i.href} aria-current={isCurrent(i.href) ? "page" : undefined}>
+            <Link key={i.href} href={i.href} aria-current={isCurrent(i) ? "page" : undefined}>
               {i.label}
             </Link>
           ))}

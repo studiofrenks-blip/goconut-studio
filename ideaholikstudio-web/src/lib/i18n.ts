@@ -44,16 +44,34 @@ export function alternates(locale: Locale, page: PageKey, extra?: Partial<Record
   return { canonical: url(locale), languages };
 }
 
+// Rutas internas (las de las carpetas de Next). Durante el prerender,
+// usePathname() devuelve estas y no las públicas.
+const internal: Partial<Record<PageKey, string>> = {
+  about: "about",
+  work: "work",
+  contact: "contact",
+  notice: "legal/notice",
+  privacy: "legal/privacy",
+  cookies: "legal/cookies",
+};
+
+/** Qué página es una ruta (pública o interna). */
+export function pageKeyOf(pathname: string): { locale: Locale; key: PageKey | null; rest: string } | null {
+  const m = pathname.match(/^\/(es|en)(?:\/(.*))?$/);
+  if (!m) return null;
+  const locale = m[1] as Locale;
+  const rest = (m[2] || "").replace(/\/$/, "");
+  if (!rest) return { locale, key: "home", rest };
+  for (const key of Object.keys(slugs) as PageKey[]) {
+    if (slugs[key][locale] === rest || internal[key] === rest) return { locale, key, rest };
+  }
+  if (rest.startsWith("blog/")) return { locale, key: "blog", rest };
+  return { locale, key: null, rest };
+}
+
 /** Ruta equivalente en el otro idioma (para el botón ES/EN). */
 export function translatePath(pathname: string, to: Locale): string {
-  const m = pathname.match(/^\/(es|en)(?:\/(.*))?$/);
-  if (!m) return `/${to}`;
-  const from = m[1] as Locale;
-  const rest = (m[2] || "").replace(/\/$/, "");
-  if (!rest) return `/${to}`;
-  for (const key of Object.keys(slugs) as PageKey[]) {
-    if (slugs[key][from] === rest) return href(to, key);
-  }
-  if (rest.startsWith("blog/")) return href(to, "blog");
-  return `/${to}`;
+  const k = pageKeyOf(pathname);
+  if (!k || !k.key) return `/${to}`;
+  return href(to, k.key);
 }

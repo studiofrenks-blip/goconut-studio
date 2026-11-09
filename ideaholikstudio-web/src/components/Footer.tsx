@@ -3,7 +3,7 @@ import CookieSettingsLink from "./CookieSettingsLink";
 import { href, type Locale } from "@/lib/i18n";
 import type { Texts } from "@/content/texts";
 
-export default function Footer({ locale, t }: { locale: Locale; t: Texts }) {
+export default function Footer({ locale, t, hasPosts }: { locale: Locale; t: Texts; hasPosts: boolean }) {
   const year = new Date().getFullYear();
   return (
     <footer className="site-footer">
@@ -19,7 +19,7 @@ export default function Footer({ locale, t }: { locale: Locale; t: Texts }) {
               <li><Link href={href(locale, "home")}>{t["nav.home"]}</Link></li>
               <li><Link href={href(locale, "about")}>{t["nav.about"]}</Link></li>
               <li><Link href={href(locale, "work")}>{t["nav.work"]}</Link></li>
-              <li><Link href={href(locale, "blog")}>{t["nav.blog"]}</Link></li>
+              {hasPosts && <li><Link href={href(locale, "blog")}>{t["nav.blog"]}</Link></li>}
               <li><Link href={href(locale, "contact")}>{t["nav.contact"]}</Link></li>
             </ul>
           </div>

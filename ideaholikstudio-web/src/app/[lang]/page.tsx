@@ -42,7 +42,7 @@ export default async function Home({ params }: P) {
 
       <Tapes
         a={[t["home.trait1"], "Branding", t["home.trait4"], "Web & CRM", t["home.trait2"], "Influencers"]}
-        b={["Shows", t["home.trait3"], "Live", "Content", t["home.rot1"], "Ideaholiks"]}
+        b={["Shows", t["home.trait3"], t["tape.live"], t["tape.content"], t["home.rot1"], "Ideaholiks"]}
       />
 
       <section className="section who-sec" aria-labelledby="who-title">

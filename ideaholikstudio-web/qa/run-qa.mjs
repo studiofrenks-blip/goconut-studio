@@ -34,6 +34,16 @@ const warnings = [];
 const err = (page, msg) => errors.push(`${page} · ${msg}`);
 const warn = (page, msg) => warnings.push(`${page} · ${msg}`);
 
+// Guardia: si los estilos no cargan, todo lo demás no vale (pasó una vez).
+{
+  const html = await (await fetch(BASE + "/es")).text();
+  const css = [...html.matchAll(/href="([^"]+\.css)"/g)].map((m) => m[1]);
+  if (!css.length) { console.log("ERROR: la página no enlaza ningún CSS"); process.exit(3); }
+  for (const c of css) {
+    const r = await fetch(new URL(c, BASE));
+    if (r.status !== 200) { console.log(`ERROR: el CSS ${c} da HTTP ${r.status}: la web se ve sin estilos`); process.exit(3); }
+  }
+}
 const browser = await chromium.launch();
 
 async function checkPage(ctx, path, label) {
@@ -72,6 +82,14 @@ async function checkPage(ctx, path, label) {
       imgs,
       links: [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")),
       text: document.body.innerText,
+      // Titulares en mayúsculas con interlineado tan justo que tildes, Q y comas chocan entre líneas.
+      tightCaps: [...document.querySelectorAll("h1,h2,h3,.mega,.big-cta-title,.xr-line,.ln")]
+        .filter((el) => {
+          const cs = getComputedStyle(el);
+          const lines = Math.round(el.getBoundingClientRect().height / parseFloat(cs.lineHeight || "0"));
+          return cs.textTransform === "uppercase" && parseFloat(cs.lineHeight) / parseFloat(cs.fontSize) < 0.98 && lines > 1 && /[áéíóúñqQ,]/i.test(el.textContent || "");
+        })
+        .map((el) => (el.textContent || "").trim().slice(0, 40)),
       jsonld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => {
         try { JSON.parse(s.textContent); return true; } catch { return false; }
       }),
@@ -97,6 +115,7 @@ async function checkPage(ctx, path, label) {
     if (!i.ok) err(path, `${label}: imagen rota ${i.src}`);
     if (!i.hidden && (!i.alt || i.alt.trim().length < 3)) err(path, `${label}: imagen sin texto alternativo ${i.src}`);
   }
+  for (const h of info.tightCaps) err(path, `${label}: interlineado muy justo, chocan tildes/Q/comas en «${h}»`);
   if (info.smallTargets.length) warn(path, `${label}: zonas táctiles < 24px: ${info.smallTargets.slice(0, 4).join(", ")}`);
 
   if (label === "móvil") {

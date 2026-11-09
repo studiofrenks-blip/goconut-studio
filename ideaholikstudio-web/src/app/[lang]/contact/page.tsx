@@ -30,6 +30,7 @@ export default async function Contact({ params }: P) {
           t={pick([
             "name", "email", "subject", "subjectPick", "subjectOther", "message", "consent", "consentLink",
             "send", "sending", "ok", "error", "invalid", "privacyNote",
+            "errName", "errEmail", "errMessage", "errConsent",
           ])}
         />
         <div className="faq">

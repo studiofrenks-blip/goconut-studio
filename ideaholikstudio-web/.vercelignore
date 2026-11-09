@@ -1,0 +1,4 @@
+.next
+node_modules
+qa/report
+.env*.local

@@ -31,7 +31,7 @@ function probe() {
     while (a) {
       const s = getComputedStyle(a);
       if (parseFloat(s.opacity) < 0.6 || s.visibility === "hidden") return false;
-      if (a.matches?.("[aria-hidden=true], .sr-only, .hp, .marquee, .tapes, .watermark, .cur-dot, .cur-ring")) return false;
+      if (a.matches?.("[aria-hidden=true], .sr-only, .hp, .marquee, .tapes, .watermark, .float-cta")) return false;
       a = a.parentElement;
     }
     return true;
@@ -40,13 +40,35 @@ function probe() {
   const vw = innerWidth, vh = innerHeight;
   const els = [...document.querySelectorAll(SEL)].filter((e) => e.innerText?.trim() && vis(e));
   const boxes = [];
+  // Para saber qué texto se ve de verdad, todo debe poder "tocarse".
+  const tmp = document.createElement("style");
+  tmp.textContent = "*{pointer-events:auto!important}";
+  document.head.appendChild(tmp);
   for (const el of els) {
-    // Usa los rectángulos reales del texto (Range) y no la caja.
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    const rects = [...range.getClientRects()].filter((r) => r.width > 2 && r.height > 2);
+    // Rectángulos reales del texto propio (sin texto oculto para lectores de pantalla).
+    const rects = [];
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) {
+      if (!n.data.trim() || n.parentElement.closest(".sr-only, [aria-hidden=true]")) continue;
+      const range = document.createRange();
+      range.selectNodeContents(n);
+      for (const r of range.getClientRects()) if (r.width > 2 && r.height > 2) rects.push(r);
+    }
     for (const r of rects) {
       if (r.bottom < 76 || r.top > vh) continue; // fuera de pantalla o bajo la cabecera
+      // ¿Se ve este texto, o lo tapa otra cosa opaca (p. ej. la tarjeta de encima)?
+      const cx = Math.min(vw - 1, Math.max(0, r.left + r.width / 2)), cy = r.top + r.height / 2;
+      // Tapado = hay encima algo con fondo opaco (tarjeta, cabecera…). Texto sobre texto NO cuenta como tapado.
+      let covered = false;
+      for (const e of document.elementsFromPoint(cx, cy)) {
+        if (e === el || el.contains(e) || e.contains(el)) break;
+        const cs = getComputedStyle(e);
+        const bg = cs.backgroundColor;
+        const opaque = (bg && bg !== "transparent" && !/rgba\(.*,\s*0(\.0+)?\)$/.test(bg) && !/rgba\(.*,\s*0\.[0-4]\d*\)$/.test(bg)) || (cs.backgroundImage !== "none" && !e.matches(".grain, .sh-haze, .sh-dark"));
+        if (opaque) { covered = true; break; }
+      }
+      if (covered) continue;
       boxes.push({ el, r });
       if (r.left < -1 || r.right > vw + 1) out.push(["fuera-de-pantalla", el, r]);
     }
@@ -65,12 +87,11 @@ function probe() {
         // ¿Está uno tapado por un fondo opaco encima (p. ej. tarjetas apiladas)? Mira qué hay en el punto central.
         const cx = Math.max(A.r.left, B.r.left) + ix / 2, cy = Math.max(A.r.top, B.r.top) + iy / 2;
         const top = document.elementFromPoint(cx, cy);
-        const covered = top && !(A.el.contains(top) || B.el.contains(top) || top.contains(A.el) || top.contains(B.el));
-        if (!covered) out.push(["se-pisan", A.el, A.r, B.el]);
+        out.push(["se-pisan", A.el, A.r, B.el]);
       }
     }
   }
-  // Cabecera tapando el H1 al cargar
+  tmp.remove();
   const h1 = document.querySelector("h1:not(.sr-only)");
   const label = (e) => (e.innerText || "").trim().replace(/\s+/g, " ").slice(0, 50);
   return out.map(([t, el, r, el2]) => ({
@@ -80,6 +101,16 @@ function probe() {
   }));
 }
 
+// Guardia: si los estilos no cargan, todo lo demás no vale (pasó una vez).
+{
+  const html = await (await fetch(BASE + "/es")).text();
+  const css = [...html.matchAll(/href="([^"]+\.css)"/g)].map((m) => m[1]);
+  if (!css.length) { console.log("ERROR: la página no enlaza ningún CSS"); process.exit(3); }
+  for (const c of css) {
+    const r = await fetch(new URL(c, BASE));
+    if (r.status !== 200) { console.log(`ERROR: el CSS ${c} da HTTP ${r.status}: la web se ve sin estilos`); process.exit(3); }
+  }
+}
 const browser = await chromium.launch();
 // Autoprueba: provoca un solape y exige que se detecte (si no, el detector no vale).
 {

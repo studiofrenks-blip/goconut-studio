@@ -8,6 +8,7 @@ import CookieBanner from "@/components/CookieBanner";
 import FloatCta from "@/components/FloatCta";
 import { href, isLocale, locales, siteUrl, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
+import { listPosts } from "@/lib/posts";
 import { JsonLd, orgJsonLd } from "@/lib/seo";
 
 const display = localFont({
@@ -36,6 +37,8 @@ export default async function LangLayout({ children, params }: { children: React
   if (!isLocale(lang)) notFound();
   const locale = lang as Locale;
   const t = await getTexts(locale);
+  // El blog solo sale en el menú cuando tiene artículos publicados.
+  const hasPosts = (await listPosts(locale)).length > 0;
 
   return (
     <html lang={locale} className={`${display.variable} ${sans.variable}`}>
@@ -47,17 +50,23 @@ export default async function LangLayout({ children, params }: { children: React
           locale={locale}
           homeHref={href(locale, "home")}
           items={[
-            { href: href(locale, "about"), label: t["nav.about"] },
-            { href: href(locale, "work"), label: t["nav.work"] },
-            { href: href(locale, "blog"), label: t["nav.blog"] },
-            { href: href(locale, "contact"), label: t["nav.contact"] },
+            { href: href(locale, "about"), label: t["nav.about"], key: "about" as const },
+            { href: href(locale, "work"), label: t["nav.work"], key: "work" as const },
+            ...(hasPosts ? [{ href: href(locale, "blog"), label: t["nav.blog"], key: "blog" as const }] : []),
+            { href: href(locale, "contact"), label: t["nav.contact"], key: "contact" as const },
           ]}
           cta={{ href: href(locale, "contact"), label: t["nav.cta"] }}
           lang={{ label: t["nav.langSwitch"], aria: t["nav.langSwitchLabel"] }}
-          t={{ menu: t["nav.menu"], close: t["nav.close"], logoAlt: "Ideaholiks Studio" }}
+          t={{
+            menu: t["nav.menu"],
+            close: t["nav.close"],
+            logoAlt: "Ideaholiks Studio",
+            mainNav: t["nav.mainLabel"],
+            mobileNav: t["nav.mobileLabel"],
+          }}
         />
         <main id="main">{children}</main>
-        <Footer locale={locale} t={t} />
+        <Footer locale={locale} t={t} hasPosts={hasPosts} />
         <CookieBanner
           policyHref={href(locale, "cookies")}
           t={{

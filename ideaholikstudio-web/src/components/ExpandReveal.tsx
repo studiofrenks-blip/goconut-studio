@@ -40,7 +40,7 @@ export default function ExpandReveal(p: Props) {
       const vh = window.innerHeight;
       const top = a.offsetTop + a.offsetHeight + 20;
       const bottom = b.offsetTop - 20;
-      small = Math.min(0.55, Math.max(0.16, (bottom - top) / vh));
+      small = Math.min(0.55, Math.max(vh < 520 ? 0.34 : 0.16, (bottom - top) / vh));
       offY = (top + bottom) / 2 - vh / 2;
     };
     const update = () => {
@@ -53,8 +53,8 @@ export default function ExpandReveal(p: Props) {
       el.style.setProperty("--hs", String(small + (1 - small) * grow));
       el.style.setProperty("--hy", String(offY * (1 - grow)));
       el.style.setProperty("--hr", String(28 * (1 - grow)));
-      el.style.setProperty("--hx", String(grow * 60));
-      el.style.setProperty("--tl", String(1 - clamp(grow * 1.6)));
+      el.style.setProperty("--hx", String(grow * 24));
+      el.style.setProperty("--tl", String(1 - clamp(grow * 5)));
       el.style.setProperty("--ho", String(grow));
       el.style.setProperty("--ha", String(after));
       setLive(after > 0.6);
