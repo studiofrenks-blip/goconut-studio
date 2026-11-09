@@ -26,7 +26,7 @@ export default async function AboutView({ lang }: { lang: Lang }) {
         ))}
       </section>
       <section className="section mx-auto max-w-5xl px-4 sm:px-8">
-        <WordGlow text={c["about.p1"]} className="font-display text-[clamp(22px,2.6vw,38px)] font-semibold leading-[1.15]" />
+        <WordGlow text={c["about.p1"]} className="text-[clamp(22px,2.6vw,34px)] font-semibold leading-[1.3] tracking-[-0.01em]" />
         <div className="mt-12 grid gap-8 text-lg leading-relaxed text-[var(--cream-2)] md:grid-cols-2">
           <InView as="p" className="reveal">{c["about.p2"]}</InView>
           <InView as="p" className="reveal" delay={0.1}>{c["about.p3"]}</InView>

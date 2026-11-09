@@ -69,7 +69,7 @@ const bad = (u, m) => problems.push(`${u} → ${m}`);
           noalt: [...document.images].filter((im) => !im.hasAttribute("alt")).length,
           links: [...document.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")),
           text: document.body.innerText, lang: document.documentElement.lang,
-          small: [...document.querySelectorAll("a,button,summary,input,select,textarea")].filter((e) => { const r = e.getBoundingClientRect(); const inText = (e.tagName === "A" || e.tagName === "BUTTON") && e.closest("p,address,dd,article li"); const hidden = r.width <= 1 || e.classList.contains("sr-only"); return !hidden && r.height > 0 && r.height < (e.closest("footer li,header nav li") ? 24 : 44) && !inText; }).map((e) => (e.textContent || e.getAttribute("aria-label") || e.tagName).trim().slice(0, 30)),
+          small: [...document.querySelectorAll("a,button,summary,input,select,textarea")].filter((e) => { const r = e.getBoundingClientRect(); const inText = (e.tagName === "A" || e.tagName === "BUTTON") && e.closest("p,address,dd,article li"); const hidden = r.width <= 1 || e.classList.contains("sr-only") || getComputedStyle(e).opacity === "0" || e.closest("[data-hidden=\"1\"]"); return !hidden && r.height > 0 && r.height < (e.closest("footer li,header nav li") ? 24 : 44) && !inText; }).map((e) => (e.textContent || e.getAttribute("aria-label") || e.tagName).trim().slice(0, 30)),
         };
       });
       const tag = `(${name})`;

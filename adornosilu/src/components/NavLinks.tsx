@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 // Menú principal con la página actual marcada (subrayado dorado).
 export default function NavLinks({ items, home }: { items: readonly (readonly [string, string])[]; home: string }) {
   const p = usePathname() || "/";
-  const on = (h: string) => (h === home ? p === h : p === h || p.startsWith(h + "/"));
+  const on = (h: string) => (h === home ? p === h : p === h || p.startsWith(h + "/") || (/catalog/.test(h) && /\/(producto|product)\//.test(p)));
   return (
     <ul className="flex gap-7 text-sm text-[var(--cream-2)]">
       {items.map(([h, l]) => (

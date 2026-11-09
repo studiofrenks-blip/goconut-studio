@@ -13,8 +13,8 @@ export default function Footer({ lang }: { lang: Lang }) {
   const legal = [[path("legal", lang), d.legalNav.legal], [path("privacy", lang), d.legalNav.privacy], [path("cookies", lang), d.legalNav.cookies], [path("terms", lang), d.legalNav.terms], [path("withdrawal", lang), d.legalNav.withdrawal]] as const;
   const h = "eyebrow";
   return (
-    <footer className="section border-t border-[var(--line)]">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+    <footer className="mt-24 border-t border-[var(--line)] sm:mt-32">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-8 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
         <div>
           <Image src="/marca/logo-ilu-blanco.png" alt="Adornos ILU" width={605} height={892} className="h-14 w-auto sm:h-20" />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-[var(--cream-2)]">{d.tagline}.</p>
@@ -24,7 +24,7 @@ export default function Footer({ lang }: { lang: Lang }) {
         <nav aria-label={d.footer.catalog}><p className={h}>{d.footer.catalog}</p>
           <ul className="mt-4 space-y-1 text-sm">{categories.map((k) => <li key={k.slug}><Link href={path("category", lang, k.slug)} className="inline-flex min-h-8 items-center text-[var(--cream-2)] hover:text-[var(--cream)]">{catText(k, lang).name}</Link></li>)}</ul></nav>
         <div className="text-sm"><p className={h}>{d.footer.contact}</p>
-          <ul className="mt-4 space-y-2 text-[var(--cream-2)]">
+          <ul className="mt-4 space-y-2 text-[var(--cream-2)] [&>li]:whitespace-nowrap">
             <li><a href={`https://wa.me/${c.whatsapp}`} target="_blank" rel="noopener" className="inline-flex min-h-8 items-center hover:text-[var(--cream)]">WhatsApp {c.phone}</a></li>
             <li><a href={`mailto:${c.email}`} className="inline-flex min-h-8 items-center hover:text-[var(--cream)]">{c.email}</a></li>
             <li>{lang === "es" ? c.hours : "Monday to Friday, 9:00 to 18:00"}</li>

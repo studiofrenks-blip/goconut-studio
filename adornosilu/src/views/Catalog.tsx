@@ -11,12 +11,12 @@ export default function CatalogView({ lang, only }: { lang: Lang; only?: string 
   const es = lang === "es";
   const cur = only ? categories.find((c) => c.slug === only)! : null;
   const ct = cur ? catText(cur, lang) : null;
-  const chip = (on: boolean) => `inline-flex min-h-11 shrink-0 items-center rounded-full px-5 text-sm font-semibold ${on ? "bg-[var(--accent)] text-[var(--bg)]" : "border border-[var(--line)] hover:border-[var(--cream)]"}`;
+  const chip = (on: boolean) => `inline-flex min-h-11 shrink-0 items-center rounded-full px-4 sm:px-5 text-sm font-semibold ${on ? "bg-[var(--accent)] text-[var(--bg)]" : "border border-[var(--line)] hover:border-[var(--cream)]"}`;
   return (
     <>
       <PageIntro eyebrow={es ? "Catálogo" : "Catalog"} a={ct ? ct.title : es ? "Catálogo" : "Catalog"}
         lead={ct ? ct.intro : es ? "Pinos, coronas y guirnaldas fabricados en Venezuela. Elige el modelo y te enviamos disponibilidad por WhatsApp." : "Trees, wreaths and garlands made in Venezuela. Pick a model and we will send you availability on WhatsApp."}>
-        <nav aria-label={es ? "Categorías" : "Categories"} className="no-bar sticky top-16 z-30 -mx-4 mt-8 flex gap-2 overflow-x-auto bg-[var(--bg)]/90 px-4 py-3 pr-12 backdrop-blur [mask-image:linear-gradient(to_right,#000_82%,transparent)] sm:-mx-8 sm:flex-wrap sm:px-8 sm:[mask-image:none]">
+        <nav aria-label={es ? "Categorías" : "Categories"} className="sticky top-16 z-30 -mx-4 mt-8 flex flex-wrap gap-2 bg-[var(--bg)]/90 px-4 py-3 backdrop-blur sm:-mx-8 sm:px-8">
           <Link href={path("catalog", lang)} aria-current={!only ? "page" : undefined} className={chip(!only)}>{es ? "Todo" : "All"}</Link>
           {categories.map((c) => <Link key={c.slug} href={path("category", lang, c.slug)} aria-current={only === c.slug ? "page" : undefined} className={chip(only === c.slug)}>{catText(c, lang).name}</Link>)}
         </nav>

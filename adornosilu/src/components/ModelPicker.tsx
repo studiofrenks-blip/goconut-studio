@@ -26,11 +26,11 @@ export default function ModelPicker({ models, title, cta, msg, whatsapp, bar }: 
           </div>
         </fieldset>
       )}
-      <a data-wa href={href} target="_blank" rel="noopener" className="mt-6 hidden min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 text-base font-semibold text-[var(--bg)] sm:inline-flex">
+      <a data-wa href={href} target="_blank" rel="noopener" className="mt-6 hidden min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 text-base font-semibold text-[var(--bg)] lg:inline-flex">
         <WhatsAppIcon /> {cta}{sel && models.length > 0 ? ` · ${sel}` : ""}
       </a>
-      <div className="wa-bar fixed inset-x-0 bottom-0 z-30 border-t border-[var(--line)] bg-[var(--bg)]/95 p-3 backdrop-blur sm:hidden">
-        <a data-wa href={href} target="_blank" rel="noopener" className="flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[var(--accent)] font-semibold text-[var(--bg)]"><WhatsAppIcon /> {bar}{sel && models.length > 0 ? ` · ${sel}` : ""}</a>
+      <div className="wa-bar fixed inset-x-0 bottom-0 z-30 border-t border-[var(--line)] bg-[var(--bg)]/95 p-3 backdrop-blur lg:hidden">
+        <a data-wa href={href} target="_blank" rel="noopener" className="mx-auto flex min-h-14 max-w-xl items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[var(--accent)] px-5 text-base font-semibold text-[var(--bg)]"><WhatsAppIcon className="size-5 shrink-0" /> {bar}{sel && models.length > 0 ? ` · ${sel}` : ""}</a>
       </div>
     </>
   );

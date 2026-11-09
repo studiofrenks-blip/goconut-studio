@@ -76,7 +76,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   /* el cursor del sistema se mantiene: el propio solo acompaña */
 }
 
-@media (max-width: 639px) { body:has(.wa-bar) .wa-float { display: none; } main { padding-bottom: 88px; } }
+body:has(.wa-bar) .wa-float { display: none; }
+@media (max-width: 1023px) { main { padding-bottom: 96px; } }
 .wa-float[data-hidden="1"] { opacity: 0; pointer-events: none; transform: scale(.8); }
 
 @media (prefers-reduced-motion: reduce) {

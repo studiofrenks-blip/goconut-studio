@@ -46,7 +46,7 @@ export default function ProductView({ p, lang }: { p: Product; lang: Lang }) {
               models={p.models.map((m) => ({ code: m.code, specs: m.specs.map(([k, v]) => [L(k, lang), N(v, lang)] as [string, string]) }))}
               title={d.modelsTitle}
               cta={p.quote ? d.askQuote : d.askWa}
-              bar={p.quote ? d.askQuote : d.askWa}
+              bar={lang === "es" ? (p.quote ? "Pedir presupuesto" : "Pedir por WhatsApp") : p.quote ? "Request a quote" : "Order on WhatsApp"}
               msg={d.productMsg(p.name, p.models.length ? "{model}" : p.code)}
               whatsapp={site.company.whatsapp}
             />

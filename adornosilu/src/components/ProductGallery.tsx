@@ -6,11 +6,11 @@ export default function ProductGallery({ images, name, label }: { images: string
   const [i, setI] = useState(0);
   return (
     <div className="lg:sticky lg:top-24">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] bg-white sm:aspect-square sm:rounded-[32px]">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] bg-white lg:aspect-square lg:rounded-[32px]">
         <Image key={images[i]} src={images[i]} alt={i === 0 ? name : `${name} · ${i + 1}`} fill priority sizes="(min-width:1024px) 50vw, 100vw" className="animate-[fade_.4s_ease] object-cover" />
       </div>
       {images.length > 1 && (
-        <ul className="no-bar mt-3 flex gap-2 overflow-x-auto pb-1 pr-10 [mask-image:linear-gradient(to_right,#000_85%,transparent)]">
+        <ul className="mt-3 flex flex-wrap gap-2">
           {images.map((src, k) => (
             <li key={src} className="shrink-0">
               <button type="button" onClick={() => setI(k)} aria-label={`${label} ${k + 1}`} aria-current={k === i}
