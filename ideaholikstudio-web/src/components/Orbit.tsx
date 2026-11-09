@@ -69,10 +69,7 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
         <div className="orbit-core" aria-live="polite">
           <div>
             {cur ? (
-              <>
-                <strong>{cur.label}</strong>
-                <p>{cur.text}</p>
-              </>
+              <strong>{cur.label}</strong>
             ) : (
               <img src="/img/ideaholiks-logo.svg" alt={core} width={150} height={64} className="orbit-logo" />
             )}
@@ -95,6 +92,9 @@ export default function Orbit({ core, items, hint }: { core: string; items: Item
           </button>
         ))}
       </div>
+      <p className="orbit-caption" aria-live="polite">
+        {cur ? cur.text : "\u00a0"}
+      </p>
       <div className="orbit-dots" aria-hidden="true">
         {items.map((it, i) => (
           <i key={it.label} data-on={i === active ? "1" : "0"} />

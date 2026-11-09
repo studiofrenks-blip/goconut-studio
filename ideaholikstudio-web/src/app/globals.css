@@ -2069,27 +2069,6 @@ p {
   }
 }
 
-/* Botón fijo «Hablemos» en el móvil: aparece tras la portada y se esconde en el pie. */
-.float-cta {
-  display: none;
-}
-@media (max-width: 900px) {
-  .float-cta {
-    display: inline-flex;
-    position: fixed;
-    right: 16px;
-    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-    z-index: 60;
-    min-height: 52px;
-    padding: 0 22px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-    transform: translateY(140%);
-    transition: transform 0.35s var(--ease);
-  }
-  .float-cta[data-on="1"] {
-    transform: none;
-  }
-}
 .stack-link {
   display: inline-flex;
   align-items: center;
@@ -2203,4 +2182,77 @@ h1,
 h2,
 h3 {
   text-wrap: balance;
+}
+
+/* ── Segunda ronda de arreglos ───────────── */
+/* Órbita: el centro solo lleva el nombre; la explicación va debajo, legible. */
+.orbit-caption {
+  text-align: center;
+  max-width: 34ch;
+  margin: 18px auto 0;
+  min-height: 3.2em;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+/* Cabecera en móvil y tablet: «Hablemos» siempre a mano y menú de icono. */
+@media (max-width: 900px) {
+  .site-header .header-cta {
+    display: inline-flex;
+    margin-left: auto;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 14.5px;
+  }
+  .menu-btn {
+    margin-left: 8px;
+    width: 46px;
+    padding: 0;
+    justify-content: center;
+  }
+  .logo img {
+    height: 60px;
+  }
+}
+.burger {
+  position: relative;
+  width: 18px;
+  height: 12px;
+  display: block;
+}
+.burger i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.3s var(--ease), top 0.3s var(--ease);
+}
+.burger i:first-child {
+  top: 1px;
+}
+.burger i:last-child {
+  top: 9px;
+}
+.burger[data-open="1"] i:first-child {
+  top: 5px;
+  transform: rotate(45deg);
+}
+.burger[data-open="1"] i:last-child {
+  top: 5px;
+  transform: rotate(-45deg);
+}
+/* Tarjetas de servicios: altura según contenido, sin huecos vacíos. */
+.stack-card {
+  min-height: 0 !important;
+  padding-block: clamp(26px, 3.4vw, 48px);
+}
+/* Titular de «Quiénes somos» en una o dos líneas, no en una columna estrecha. */
+.who-sec .mega {
+  max-width: 24ch;
+}
+/* Frase pequeña del manifiesto: legible en el móvil. */
+.manifesto li span {
+  font-size: max(15px, 0.42em);
 }

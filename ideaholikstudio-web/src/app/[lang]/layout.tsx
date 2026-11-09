@@ -5,7 +5,6 @@ import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
-import FloatCta from "@/components/FloatCta";
 import { href, isLocale, locales, siteUrl, type Locale } from "@/lib/i18n";
 import { getTexts } from "@/lib/texts";
 import { listPosts } from "@/lib/posts";
@@ -83,7 +82,6 @@ export default async function LangLayout({ children, params }: { children: React
             more: t["cookies.more"],
           }}
         />
-        <FloatCta href={href(locale, "contact")} label={t["nav.cta"]} />
         <JsonLd data={orgJsonLd(locale)} />
       </body>
     </html>

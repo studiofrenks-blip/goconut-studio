@@ -51,6 +51,7 @@ function probe() {
     let n;
     while ((n = w.nextNode())) {
       if (!n.data.trim() || n.parentElement.closest(".sr-only, [aria-hidden=true]")) continue;
+      if (!vis(n.parentElement)) continue; // texto desvaneciéndose (opacidad baja): no se ve
       const range = document.createRange();
       range.selectNodeContents(n);
       for (const r of range.getClientRects()) if (r.width > 2 && r.height > 2) rects.push(r);

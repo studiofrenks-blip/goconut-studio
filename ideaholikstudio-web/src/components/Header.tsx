@@ -66,7 +66,11 @@ export default function Header({ homeHref, items, cta, locale, lang, t }: Props)
           aria-controls="mobile-panel"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? t.close : t.menu}
+          <span className="sr-only">{open ? t.close : t.menu}</span>
+          <span className="burger" data-open={open ? "1" : "0"} aria-hidden="true">
+            <i />
+            <i />
+          </span>
         </button>
       </div>
       <div id="mobile-panel" className="mobile-panel" data-open={open ? "1" : "0"} hidden={!open}>
