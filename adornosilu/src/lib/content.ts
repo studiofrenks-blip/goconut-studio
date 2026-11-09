@@ -8,7 +8,7 @@ const defaults = {
   "home.lead1": { es: "Donde nace la", en: "Where" },
   "home.lead2": { es: "", en: "is born" },
   "home.words": { es: "Navidad|magia|tradición|ilusión", en: "Christmas|magic|tradition|wonder" },
-  "home.sub": { es: "Pinos, coronas y guirnaldas fabricados en Venezuela para que la Navidad dure años. Pasa el dedo por el árbol.", en: "Trees, wreaths and garlands made in Venezuela so Christmas lasts for years. Run your finger over the tree." },
+  "home.sub": { es: "Pinos, coronas y guirnaldas fabricados en Venezuela para que la Navidad dure años.", en: "Trees, wreaths and garlands made in Venezuela so Christmas lasts for years." },
   "home.manifesto": { es: "Somos una empresa familiar venezolana. Desde hace más de 60 años fabricamos pinos, coronas y guirnaldas que conservan su forma, su brillo y su estructura temporada tras temporada. No decoramos espacios: creamos el lugar donde se reúne la familia.", en: "We are a Venezuelan family business. For more than 60 years we have made trees, wreaths and garlands that keep their shape, shine and structure season after season. We don't just decorate spaces: we create the place where families gather." },
   "home.catTitle": { es: "Lo que fabricamos", en: "What we make" },
   "home.projTitle": { es: "Pinos gigantes", en: "Giant trees" },

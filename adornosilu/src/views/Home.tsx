@@ -43,7 +43,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
       {/* Portada: metáfora de marca */}
       <section aria-labelledby="h1" className="relative overflow-hidden">
         <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_75%_40%,rgba(111,19,33,.6),transparent_70%)]" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 pb-6 pt-10 sm:px-8 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.25fr_1fr] lg:pt-0">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-6 px-4 pb-6 pt-10 sm:px-8 md:grid-cols-[1.3fr_1fr] lg:min-h-[calc(100svh-4rem)] lg:pt-0">
           <div className="relative z-10">
             <p className="eyebrow">{c["home.kicker"]}</p>
             <h1 id="h1" className="sr-only">{c["home.h1"]}</h1>
@@ -68,7 +68,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
               </ul>
             </nav>
           </div>
-          <div className="relative mx-auto mt-6 h-[300px] w-full sm:h-[380px] lg:mt-0 lg:h-[82svh]">
+          <div className="relative mx-auto mt-6 h-[300px] w-full md:mt-0 md:h-[520px] lg:h-[82svh]">
             <HeroTree label={es ? "Árbol de luces de Adornos ILU que se enciende al pasar el dedo" : "Adornos ILU tree of lights that lights up under your finger"} />
             {stickers.map((s, i) => (
               <span key={s} aria-hidden className={`font-display absolute hidden rounded-full border border-[var(--line)] bg-[var(--bg-2)]/90 px-4 py-2 text-sm backdrop-blur lg:block ${["left-0 top-[18%] -rotate-6", "right-0 top-[48%] rotate-3", "left-[8%] bottom-[10%] rotate-[-2deg]"][i]}`}>{s}</span>

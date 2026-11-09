@@ -8,11 +8,11 @@ export default function Closing({ lang }: { lang: Lang }) {
   const d = t(lang);
   return (
     <section aria-labelledby="cierre" className="section mx-auto max-w-7xl px-4 sm:px-8">
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <h2 id="cierre" className="font-display condensed t-close">
         {d.closing.line1}<br /><span className="text-[var(--accent)]">{d.closing.line2}</span>
       </h2>
-      <div className="lg:pb-4">
+      <div className="md:pb-4">
         <Magnetic href={`https://wa.me/${site.company.whatsapp}?text=${encodeURIComponent(d.whatsappMsg)}`} label={d.whatsappCta}>{d.whatsappCta}</Magnetic>
       </div>
       </div>

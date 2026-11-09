@@ -24,7 +24,7 @@ export default function Footer({ lang }: { lang: Lang }) {
         <nav aria-label={d.footer.catalog}><p className={h}>{d.footer.catalog}</p>
           <ul className="mt-4 space-y-1 text-sm">{categories.map((k) => <li key={k.slug}><Link href={path("category", lang, k.slug)} className="inline-flex min-h-8 items-center text-[var(--cream-2)] hover:text-[var(--cream)]">{catText(k, lang).name}</Link></li>)}</ul></nav>
         <div className="text-sm"><p className={h}>{d.footer.contact}</p>
-          <ul className="mt-4 space-y-2 text-[var(--cream-2)] [&>li]:whitespace-nowrap">
+          <ul className="mt-4 space-y-1 text-[var(--cream-2)] [&>li]:flex [&>li]:min-h-8 [&>li]:items-center [&>li]:whitespace-nowrap">
             <li><a href={`https://wa.me/${c.whatsapp}`} target="_blank" rel="noopener" className="inline-flex min-h-8 items-center hover:text-[var(--cream)]">WhatsApp {c.phone}</a></li>
             <li><a href={`mailto:${c.email}`} className="inline-flex min-h-8 items-center hover:text-[var(--cream)]">{c.email}</a></li>
             <li>{lang === "es" ? c.hours : "Monday to Friday, 9:00 to 18:00"}</li>

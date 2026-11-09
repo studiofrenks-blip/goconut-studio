@@ -33,7 +33,7 @@ export default function WhatsAppFloat({ lang }: { lang: Lang }) {
   }, []);
   return (
     <a ref={ref} href={`https://wa.me/${site.company.whatsapp}?text=${encodeURIComponent(d.whatsappMsg)}`} target="_blank" rel="noopener" aria-label={d.whatsappCta}
-      data-hidden="1" className="wa-float fixed bottom-4 right-4 z-30 grid size-12 sm:size-14 place-items-center rounded-full border border-[var(--accent)]/40 bg-[#6f1321] text-[var(--accent)] shadow-[0_10px_30px_rgba(0,0,0,.4)] transition-[opacity,transform] duration-300 sm:right-6">
+      data-hidden="1" className="wa-float fixed bottom-6 right-6 z-30 grid size-12 sm:size-14 place-items-center rounded-full border border-[var(--accent)]/40 bg-[#6f1321] text-[var(--accent)] shadow-[0_10px_30px_rgba(0,0,0,.4)] transition-[opacity,transform] duration-300 sm:right-6">
       <WhatsAppIcon className="size-7" />
     </a>
   );
